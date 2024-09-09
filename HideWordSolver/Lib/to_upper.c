@@ -3,9 +3,10 @@
 
 void to_upper(char *str)
 {
-	size_t len = strlen(str);
-	for (size_t i = 0; i < len; i++)
+	size_t i = 0;
+	while (str[i])
 	{
 		str[i] = char_to_upper(str[i]);
+		i++;
 	}
 }

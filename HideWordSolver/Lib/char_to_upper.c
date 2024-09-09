@@ -2,7 +2,7 @@
 
 char char_to_upper(char c)
 {
-	if (c < 'z' || c > 'a')
+	if (c <= 'z' && c >= 'a')
 	{
 		return c - 32;
 	}
