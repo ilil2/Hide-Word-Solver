@@ -13,5 +13,8 @@ char strcomp(const char *str1, const char *str2);
 void strconcat(char *str1, const char *str2);
 void ctoa(char c, char *str);
 void strcopy(char *dest, const char *src);
+void itox(int i, char *hexa);
+void xtoRGB(const char hexa[6], int* rgb[3]);
+int xtoi(const char *hexa);
 
 #endif
