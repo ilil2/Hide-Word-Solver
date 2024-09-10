@@ -2,9 +2,9 @@
 #define __SOLVER_H__
 
 #include <stddef.h>
-#include <err.h>
 #include <stdio.h>
-#define MAX_SIZE 500
+
+#define MAX_SIZE 100
 
 int main(int argc, char** argv);
 

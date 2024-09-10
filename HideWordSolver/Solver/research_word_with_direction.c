@@ -1,5 +1,4 @@
 #include "solver.h"
-#define MAX_SIZE 500
 
 char research_word_with_direction(
 		const char grid[MAX_SIZE][MAX_SIZE],

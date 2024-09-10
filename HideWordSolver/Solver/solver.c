@@ -1,6 +1,6 @@
+#include <err.h>
 #include "solver.h"
 #include "../Lib/lib.h"
-#define MAX_SIZE 500
 
 int main(int argc, char** argv)
 {
@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 		fgets(file_content[0], MAX_SIZE, file);
 
 		size_t i = 1;
-		
+
 		while (file_content[i - 1][0] != 0)
 		{
 			fgets(file_content[i], MAX_SIZE, file);
@@ -33,7 +33,8 @@ int main(int argc, char** argv)
 		fclose(file);
 
 		to_upper(argv[2]);
-		is_word_find = research_word(file_content, strlen(file_content[0]), i, argv[2], strlen(argv[2]), word_position);
+		is_word_find = research_word(file_content, strlen(file_content[0]),
+				i, argv[2], strlen(argv[2]), word_position);
 
 		if(is_word_find)
 		{
@@ -47,6 +48,7 @@ int main(int argc, char** argv)
 	}
 	else
 	{
+		fclose(file);
 		errx(404, "The file is not found.");
 	}
 
