@@ -1,4 +1,4 @@
-#include "lib.c"
+#include "lib.h"
 #include <err.h>
 
 int xtoi(const char *hexa)
