@@ -48,7 +48,6 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		fclose(file);
 		errx(404, "The file is not found.");
 	}
 
