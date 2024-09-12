@@ -4,6 +4,7 @@
 #include <err.h>
 #include <unistd.h>
 #include <stdint.h>
+#include "Preprocessing.h"
 
 int main(int argc, char **argv)
 {
@@ -33,25 +34,14 @@ int main(int argc, char **argv)
 	if(NULL == texture)
 	{
     	fprintf(stderr, "Erreur SDL_CreateTextureFromSurface : %s", SDL_GetError());
-    	//goto Quit;
 	}
-
-	//int bytesPerPixel = tmp->format->BytesPerPixel;
-	Uint32 *pixels = (Uint32 *)tmp->pixels;
 
 	int width = tmp->w;
-	int height = tmp->h;
+    int height = tmp->h;
 
-	for (int y = 0; y < height; ++y) {
-    	for (int x = 0; x < width; ++x) {
-        	int index = y * tmp->pitch / 4 + x;
+	int pixel[width*height][3];
 
-        	Uint32 pixel = pixels[index];
-
-        	Uint8 r, g, b, a;
-        	SDL_GetRGBA(pixel, tmp->format, &r, &g, &b, &a);
-    	}
-	}
+	get_RGB(tmp, pixel);
 
 	SDL_FreeSurface(tmp);
 

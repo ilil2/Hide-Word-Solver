@@ -2,8 +2,9 @@
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -lSDL2
-SRC = main.c
-OBJ = $(SRC:.c=.o)
+SRC = main.c get_RGB.c
+LIB = ../Lib/itox.c ../Lib/xtoRGB.c ../Lib/intlen.c ../Lib/itoc.c
+OBJ = $(SRC:.c=.o) $(LIB:.c=.o)
 EXE = Prepross
 
 # Règle pour générer l'exécutable
