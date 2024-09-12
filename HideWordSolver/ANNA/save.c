@@ -11,10 +11,10 @@ void save(double w_input[input_neuron][hidden_neuron],
 	FILE* file_b_input = NULL;
 	FILE* file_b_output = NULL;
 
-	file_w_input = fopen("w_input.csv", "w");
-	file_w_output = fopen("w_output.csv", "w");
-	file_b_input = fopen("b_input.csv", "w");
-	file_b_output = fopen("b_output.csv", "w");
+	file_w_input = fopen("ANNAParameter/w_input.csv", "w");
+	file_w_output = fopen("ANNAParameter/w_output.csv", "w");
+	file_b_input = fopen("ANNAParameter/b_input.csv", "w");
+	file_b_output = fopen("ANNAParameter/b_output.csv", "w");
 
 	if (file_w_input != NULL)
 	{

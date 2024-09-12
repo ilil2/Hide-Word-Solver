@@ -2,13 +2,12 @@
 #include <stdlib.h>
 #include <time.h>
 
-int main(int argc, char** argv)
+void reset_parameter(double w_input[input_neuron][hidden_neuron],
+		    double w_output[hidden_neuron][output_neuron],
+		    double b_input[hidden_neuron],
+		    double b_output[output_neuron])
 {
-    double w_input[input_neuron][hidden_neuron];
-    double w_output[hidden_neuron][output_neuron];
-    double b_input[hidden_neuron];
-    double b_output[output_neuron];
-
+    
     srand(time(0));
 
     for (int i = 0; i < input_neuron; i++)
@@ -38,5 +37,4 @@ int main(int argc, char** argv)
     }
 
     save(w_input, w_output, b_input, b_output);
-    return 0;
 }
