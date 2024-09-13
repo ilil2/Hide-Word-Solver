@@ -14,7 +14,7 @@ int main(int argc, char **argv)
 		char buffer[100];
 		for (int i = atoi(argv[4]); i < atoi(argv[3]); i++)
 		{
-			buffer = {0};
+			//buffer = {};
 			sprintf(buffer, "%s%i.jpg", argv[1], i);
 			add_to_dataset(buffer, argv[2]);
 		}
