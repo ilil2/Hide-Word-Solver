@@ -31,8 +31,6 @@ void add_to_dataset(const char *img, const char *csv)
 				bmp_to_csv(tmp, csv);
 			}
 
-			bmp_to_csv(tmp, csv);
-
 			SDL_FreeSurface(tmp);
 			SDL_Quit();
 		}
