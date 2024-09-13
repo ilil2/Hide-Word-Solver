@@ -22,5 +22,7 @@ void matrix_product(size_t row1, size_t col1, const double mat1[row1][col1],
 	double res[row1][col2]);
 void matrix_transpose(size_t x, size_t y, const double mat[x][y],
 		double res[y][x]);
+void matrix_addition(size_t row, size_t col, const double mat1[row][col],
+		const double mat2[row][col], double res[row][col]);
 
 #endif
