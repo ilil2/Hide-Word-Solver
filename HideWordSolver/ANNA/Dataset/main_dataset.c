@@ -16,6 +16,8 @@ int main(int argc, char **argv)
 		{
 			//buffer = {};
 			sprintf(buffer, "%s%i.jpg", argv[1], i);
+			printf("Convert file: %i\n", i);
+			fflush(stdout);
 			add_to_dataset(buffer, argv[2]);
 		}
     }
