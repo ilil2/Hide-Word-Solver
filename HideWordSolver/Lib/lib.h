@@ -18,6 +18,9 @@ void xtoRGB(const char hexa[6], int* rgb[3]);
 int xtoi(const char *hexa);
 int atoi(const char *str);
 void matrix_product(size_t row1, size_t col1, const double mat1[row1][col1],
-    size_t row2,size_t col2, const double mat2[row2][col2], double res[row1][col2]);
+    size_t row2,size_t col2, const double mat2[row2][col2],
+	double res[row1][col2]);
+void matrix_transpose(size_t x, size_t y, const double mat[x][y],
+		double res[y][x]);
 
 #endif
