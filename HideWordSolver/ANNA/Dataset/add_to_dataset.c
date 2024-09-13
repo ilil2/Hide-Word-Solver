@@ -1,4 +1,5 @@
 #include "../neural_network.h"
+#include <unistd.h>
 
 void add_to_dataset(const char *img, const char *csv)
 {   
@@ -22,7 +23,7 @@ void add_to_dataset(const char *img, const char *csv)
 
 	bmp_to_csv(tmp, csv);
 
-	SDL_FreeSurface(image);
+	SDL_FreeSurface(tmp);
     SDL_Quit();
 
 	execlp("rm", "rm", "image.bmp", NULL);

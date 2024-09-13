@@ -1,6 +1,7 @@
 #ifndef __NEURAL_NETWORK_H__
 #define __NEURAL_NETWORK_H__
 
+#include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stddef.h>
 #include <err.h>
@@ -17,10 +18,10 @@ void reset_parameter(double w_input[input_neuron][hidden_neuron],
 		    double w_output[hidden_neuron][output_neuron],
 		    double b_input[hidden_neuron],
 		    double b_output[output_neuron]);
-void save(double w_input[input_neuron][hidden_neuron],
-		double w_output[hidden_neuron][output_neuron],
-		double b_input[hidden_neuron],
-		double b_output[output_neuron]);
+void save(const double w_input[input_neuron][hidden_neuron],
+		const double w_output[hidden_neuron][output_neuron],
+		const double b_input[hidden_neuron],
+		const double b_output[output_neuron]);
 void load(double w_input[input_neuron][hidden_neuron],
 		double w_output[hidden_neuron][output_neuron],
         double b_input[hidden_neuron],
