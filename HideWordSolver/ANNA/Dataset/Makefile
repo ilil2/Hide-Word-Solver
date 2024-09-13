@@ -2,7 +2,7 @@
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g -lSDL2
-SRC = main_dataset.c add_to_dataset.c bmp_to_csv.c 
+SRC = main_dataset.c add_to_dataset.c bmp_to_csv.c ../../Lib/atoi.c ../../Lib/ctoi.c
 OBJ = $(SRC:.c=.o)
 EXE = add_data
 
