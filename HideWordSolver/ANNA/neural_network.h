@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stddef.h>
+#include <err.h>
 #include "../Lib/lib.h"
 
 #define input_neuron 1024
@@ -10,6 +11,8 @@
 #define output_neuron 5
 
 int main(int argc, char** argv);
+void add_to_dataset(const char *img, const char *csv);
+void bmp_to_csv(const SDL_Surface *tmp, const char *csv);
 void reset_parameter(double w_input[input_neuron][hidden_neuron],
 		    double w_output[hidden_neuron][output_neuron],
 		    double b_input[hidden_neuron],
