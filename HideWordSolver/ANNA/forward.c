@@ -1,10 +1,10 @@
 #include "neural_network.h"
 
-void forward(double input[1][input_neuron],
-		double syn_input[input_neuron][hidden_neuron],
-		double hidden[1][hidden_neuron],
-		double syn_output[hidden_neuron][output_neuron],
-		double output[1][output_neuron])
+void forward(double **input,
+		double **syn_input,
+		double **hidden,
+		double **syn_output,
+		double **output)
 {
 	matrix_product(1, input_neuron, input, input_neuron, hidden_neuron,
 			syn_input, hidden);
