@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stddef.h>
+#include <stdlib.h>
 #include <err.h>
 #include "../Lib/lib.h"
 
@@ -15,10 +16,10 @@ void reset_parameter(double **w_input,
 		double **w_output,
 		double *b_input,
 		double *b_output);
-void save_parameter(const double **w_input,
-		const double **w_output,
-		const double *b_input,
-		const double *b_output);
+void save_parameter(double **w_input,
+		double **w_output,
+		double *b_input,
+		double *b_output);
 void load_parameter(double **w_input,
 		double **w_output,
         double *b_input,
