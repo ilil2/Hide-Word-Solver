@@ -1,6 +1,6 @@
 #include "neural_network.h"
 
-void load(double w_input[input_neuron][hidden_neuron],
+void load_parameter(double w_input[input_neuron][hidden_neuron],
 		double w_output[hidden_neuron][output_neuron],
         double b_input[hidden_neuron],
         double b_output[output_neuron])

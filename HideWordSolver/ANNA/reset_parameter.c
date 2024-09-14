@@ -36,5 +36,5 @@ void reset_parameter(double w_input[input_neuron][hidden_neuron],
         b_output[i] = ((double)rand() / RAND_MAX) * 2.0 - 1.0;
     }
 
-    save(w_input, w_output, b_input, b_output);
+    save_parameter(w_input, w_output, b_input, b_output);
 }

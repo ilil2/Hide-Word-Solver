@@ -1,5 +1,4 @@
-#include "../neural_network.h"
-#include "../../Lib/lib.h"
+#include "main_dataset.h"
 
 int main(int argc, char **argv)
 {

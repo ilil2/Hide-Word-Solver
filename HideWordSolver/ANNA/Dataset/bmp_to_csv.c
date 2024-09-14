@@ -1,5 +1,4 @@
-#include <SDL2/SDL.h>
-#include "../neural_network.h"
+#include "main_dataset.h"
 
 void bmp_to_csv(const SDL_Surface *tmp, const char *csv)
 {

@@ -1,4 +1,4 @@
-#include "../neural_network.h"
+#include "main_dataset.h"
 #include <unistd.h>
 
 void add_to_dataset(const char *img, const char *csv)
@@ -37,6 +37,6 @@ void add_to_dataset(const char *img, const char *csv)
 	}
 	else
 	{
-		printf("The file does not exist\n");
+		printf("Error : The file does not exist\n");
 	}
 }

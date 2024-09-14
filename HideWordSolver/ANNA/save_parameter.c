@@ -1,6 +1,6 @@
 #include "neural_network.h"
 
-void save(const double w_input[input_neuron][hidden_neuron],
+void save_parameter(const double w_input[input_neuron][hidden_neuron],
 		const double w_output[hidden_neuron][output_neuron],
 		const double b_input[hidden_neuron],
 		const double b_output[output_neuron])
