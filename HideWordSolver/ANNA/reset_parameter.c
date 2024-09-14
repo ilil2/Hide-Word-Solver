@@ -2,10 +2,10 @@
 #include <stdlib.h>
 #include <time.h>
 
-void reset_parameter(double w_input[input_neuron][hidden_neuron],
-		    double w_output[hidden_neuron][output_neuron],
-		    double b_input[hidden_neuron],
-		    double b_output[output_neuron])
+void reset_parameter(double **w_input, // input_neuron x hidden_neuron
+		    double **w_output, // hidden_neuron x output_neuron
+		    double *b_input, // hidden_neuron
+		    double *b_output) // output_neuron
 {
     
     srand(time(0));

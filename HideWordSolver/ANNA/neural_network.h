@@ -11,26 +11,26 @@
 #define output_neuron 5
 
 int main(int argc, char** argv);
-void reset_parameter(double w_input[input_neuron][hidden_neuron],
-		    double w_output[hidden_neuron][output_neuron],
-		    double b_input[hidden_neuron],
-		    double b_output[output_neuron]);
-void save_parameter(const double w_input[input_neuron][hidden_neuron],
-		const double w_output[hidden_neuron][output_neuron],
-		const double b_input[hidden_neuron],
-		const double b_output[output_neuron]);
-void load_parameter(double w_input[input_neuron][hidden_neuron],
-		double w_output[hidden_neuron][output_neuron],
-        double b_input[hidden_neuron],
-        double b_output[output_neuron]);
-void load_image(const char *image_path, size_t file_size,
-		double image[file_size][input_neuron]);
+void reset_parameter(double **w_input,
+		double **w_output,
+		double *b_input,
+		double *b_output);
+void save_parameter(const double **w_input,
+		const double **w_output,
+		const double *b_input,
+		const double *b_output);
+void load_parameter(double **w_input,
+		double **w_output,
+        double *b_input,
+        double *b_output);
+void load_image(const char *csv_path, size_t file_size,
+		double **image);
 double sigmoid(double d);
 double sigmoid_prime(double d);
-void forward(double input[1][input_neuron],
-		double syn_input[input_neuron][hidden_neuron],
-		double hidden[1][hidden_neuron],
-		double syn_output[hidden_neuron][output_neuron],
-		double output[1][output_neuron]);
+void forward(double **input,
+		double **syn_input,
+		double **hidden,
+		double **syn_output,
+		double **output);
 
 #endif

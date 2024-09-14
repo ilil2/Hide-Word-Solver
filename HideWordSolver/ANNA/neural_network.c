@@ -3,11 +3,6 @@
 
 int main(int argc, char** argv)
 {
-    double w_input[input_neuron][hidden_neuron];
-    double w_output[hidden_neuron][output_neuron];
-    double b_input[hidden_neuron];
-    double b_output[output_neuron];
-
     if(argc > 1)
     {
         if (strcomp(argv[1], "reset"))
