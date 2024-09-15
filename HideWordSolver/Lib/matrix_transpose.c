@@ -1,7 +1,7 @@
 #include "lib.h"
 
-void matrix_transpose(size_t x, size_t y, const double mat1[x][y],
-		double res[y][x])
+void matrix_transpose(size_t x, size_t y, const double **mat1,
+		double **res)
 {
 	for (size_t i = 0; i < x; i++)
 	{
