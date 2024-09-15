@@ -1,7 +1,7 @@
 #include "lib.h"
 
-void matrix_addition(size_t row, size_t col, const double **mat1,
-		const double **mat2, double **res)
+void matrix_addition(size_t row, size_t col, double **mat1,
+		double **mat2, double **res)
 {
 	for (size_t i = 0; i < row; i++)
 	{

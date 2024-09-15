@@ -19,7 +19,7 @@ void load_image(const char *csv_path, size_t file_size,
     }
     else
     {
-		printf("Error opening %s files.", csv_path);
+		printf("Error opening %s files.\n", csv_path);
     }
 
 	fclose(file_image);

@@ -1,6 +1,6 @@
 #include "neural_network.h"
 
-char convert_output_to_char(double **output)
+char convert_output_to_char(double *output)
 {
 	double max = output[0];
 	size_t imax = 0;
@@ -13,5 +13,5 @@ char convert_output_to_char(double **output)
 		}
 	}
 
-	return 'A' + i;
+	return 'A' + imax;
 }

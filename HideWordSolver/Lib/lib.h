@@ -17,11 +17,11 @@ void itox(int i, char *hexa);
 void xtoRGB(const char hexa[6], int* rgb[3]);
 int xtoi(const char *hexa);
 int atoi(const char *str);
-void matrix_product(size_t row1, size_t col1, const double **mat1,
-    size_t row2, size_t col2, const double **mat2, double **res);
-void matrix_transpose(size_t x, size_t y, const double **mat,
+void matrix_product(size_t row1, size_t col1, double **mat1,
+    size_t row2, size_t col2, double **mat2, double **res);
+void matrix_transpose(size_t x, size_t y, double **mat,
 		double **res);
-void matrix_addition(size_t row, size_t col, const double **mat1,
-		const double **mat2, double **res);
+void matrix_addition(size_t row, size_t col, double **mat1,
+		double **mat2, double **res);
 
 #endif

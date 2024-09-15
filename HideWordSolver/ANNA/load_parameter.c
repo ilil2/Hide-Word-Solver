@@ -27,7 +27,7 @@ void load_parameter(double **w_input, // input_neuron x hidden_neuron
     }
     else
     {
-		printf("Error opening w_input.csv files.");
+		printf("Error opening w_input.csv files.\n");
     }
 
     if(file_w_output != NULL)
@@ -42,7 +42,7 @@ void load_parameter(double **w_input, // input_neuron x hidden_neuron
     }
     else
     {
-		printf("Error opening w_output.csv files.");  
+		printf("Error opening w_output.csv files.\n");  
     }
 
     if(file_b_input != NULL)
@@ -54,7 +54,7 @@ void load_parameter(double **w_input, // input_neuron x hidden_neuron
     }
     else
     {
-		printf("Error opening b_input.csv files.");  
+		printf("Error opening b_input.csv files.\n");  
     }
 
     if(file_b_output != NULL)
@@ -66,6 +66,6 @@ void load_parameter(double **w_input, // input_neuron x hidden_neuron
     }
     else
     {
-		printf("Error opening b_output.csv files."); 
+		printf("Error opening b_output.csv files.\n"); 
     }
 }

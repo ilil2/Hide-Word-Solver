@@ -34,7 +34,7 @@ void save_parameter(double **w_input, // input_neuron x hidden_neuron
     }
 	else
 	{
-		printf("Error opening w_input.csv files.");
+		printf("Error opening w_input.csv files.\n");
 	}
 
 	fclose(file_w_input);
@@ -58,7 +58,7 @@ void save_parameter(double **w_input, // input_neuron x hidden_neuron
     }
 	else
 	{
-		printf("Error opening w_output.csv files.");
+		printf("Error opening w_output.csv files.\n");
 	}
 
 	fclose(file_w_output);
@@ -72,7 +72,7 @@ void save_parameter(double **w_input, // input_neuron x hidden_neuron
     }
 	else
 	{
-		printf("Error opening b_input.csv files.");
+		printf("Error opening b_input.csv files.\n");
 	}
 
 	fclose(file_b_input);
@@ -86,7 +86,7 @@ void save_parameter(double **w_input, // input_neuron x hidden_neuron
     }
 	else
 	{
-		printf("Error opening b_output.csv files.");
+		printf("Error opening b_output.csv files.\n");
 	}
 
 	fclose(file_b_output);

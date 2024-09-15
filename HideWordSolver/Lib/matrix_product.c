@@ -1,8 +1,8 @@
 #include <err.h>
 #include "lib.h"
 
-void matrix_product(size_t row1, size_t col1, const double **mat1,
-		size_t row2, size_t col2, const double **mat2, double **res)
+void matrix_product(size_t row1, size_t col1, double **mat1,
+		size_t row2, size_t col2, double **mat2, double **res)
 {
 	if(col1 == row2)
 	{
