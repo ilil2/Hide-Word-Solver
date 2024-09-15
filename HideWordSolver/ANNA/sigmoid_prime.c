@@ -2,5 +2,5 @@
 
 double sigmoid_prime(double d)
 {
-	return 1 * (1-d);
+	return d * (1-d);
 }
