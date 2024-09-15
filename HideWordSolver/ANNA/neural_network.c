@@ -1,5 +1,5 @@
 #include "neural_network.h"
-#include <err.h>
+//#include <err.h>
 
 int main(int argc, char** argv)
 {
@@ -39,17 +39,17 @@ int main(int argc, char** argv)
             }
             else
             {
-                errx(10, "The number of images to be taken has not been indicated.");
+                //errx(10, "The number of images to be taken has not been indicated.");
             }
         }
         else
         {
-            errx(10, "Incorrect argument");
+            //errx(10, "Incorrect argument");
         }
     }
     else
     {
-        errx(400, "The number of arguments is invalid.");
+        //errx(400, "The number of arguments is invalid.");
     }
 
     for (int i = 0; i < input_neuron; i++)

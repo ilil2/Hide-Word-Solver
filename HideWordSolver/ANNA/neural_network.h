@@ -4,12 +4,21 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
-#include <err.h>
-#include "../Lib/lib.h"
+//#include <err.h>
+//#include "../Lib/lib.h"
 
 #define input_neuron 1024
 #define hidden_neuron 256
 #define output_neuron 26
+
+int atoi(const char *str);
+void matrix_product(size_t row1, size_t col1, double **mat1,
+    size_t row2, size_t col2, double **mat2, double **res);
+void matrix_transpose(size_t x, size_t y, double **mat,
+		double **res);
+void matrix_addition(size_t row, size_t col, double **mat1,
+		double **mat2, double **res);
+char strcomp(const char *str1, const char *str2);
 
 int main(int argc, char** argv);
 void reset_parameter(double **w_input,
@@ -33,12 +42,11 @@ void forward(double **input,
 		double **hidden,
 		double **syn_output,
 		double **output);
-void backward(double **input,
-		double **syn_input,
-		double **hidden,
-		double **real_output,
-		double **output,
-		double **syn_output);
+void backward(double **input, double **syn_input, double **hidden,
+		double **real_output, double **output, double **syn_output,
+		double** output_error, double** output_delta, double** t_syn_output,
+		double** hidden_error, double** hidden_delta, double** t_input, 
+		double** mult_syn_input, double** t_hidden, double** mult_syn_output);
 void train(int letter_nb,
 		double** syn_input,
 		double** syn_output,
