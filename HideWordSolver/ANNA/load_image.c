@@ -14,6 +14,7 @@ void load_image(const char *csv_path, size_t file_size,
             for (size_t j = 0; j < input_neuron; j++)
             {
                 fscanf(file_image, "%lf,", &image[i][0][j]);
+                image[i][0][j] /= 255.0;
             }
         }
     }
