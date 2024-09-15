@@ -6,10 +6,10 @@ void train(int letter_nb, double** syn_input, double** syn_output,
 	load_parameter(syn_input, syn_output, b_input, b_output);
 
 	unsigned long long loop = 0;
-	size_t nb_while = 10;
+	size_t nb_while = 42;
 	while (nb_while)
 	{
-		nb_while -= 1;
+		//nb_while -= 1;
 		loop++;
 		printf("Boucle numero : %llu\n", loop);
 
