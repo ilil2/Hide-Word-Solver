@@ -11,13 +11,13 @@ void train(int letter_nb, double** w_input, double** w_output,
 		input[i] = malloc(sizeof(double) * input_neuron);
 	}
 
-	double* hidden = malloc(sizeof(double*) * hidden_neuron);
+	double* hidden = malloc(sizeof(double) * hidden_neuron);
 
-	double* output = malloc(sizeof(double*) * output_neuron);
+	double* output = malloc(sizeof(double) * output_neuron);
 
-	double* expected_output = malloc(sizeof(double*) * output_neuron);
+	double* expected_output = malloc(sizeof(double) * output_neuron);
 
-	double* output_error = malloc(sizeof(double*) * output_neuron);
+	double* output_error = malloc(sizeof(double) * output_neuron);
 
 	double** dw_output = malloc(sizeof(double*) * output_neuron);
 	for (int i = 0; i < output_neuron; i++)
@@ -25,15 +25,9 @@ void train(int letter_nb, double** w_input, double** w_output,
 		dw_output[i] = malloc(sizeof(double) * hidden_neuron);
 	}
 
-	double* db_output = malloc(sizeof(double*) * output_neuron);
+	double* db_output = malloc(sizeof(double) * output_neuron);
 
-	double** t_w_output = malloc(sizeof(double*) * hidden_neuron);
-	for (int i = 0; i < hidden_neuron; i++)
-	{
-		t_w_output[i] = malloc(sizeof(double) * output_neuron);
-	}
-
-	double* hidden_error = malloc(sizeof(double*) * hidden_neuron);
+	double* hidden_error = malloc(sizeof(double) * hidden_neuron);
 
 	double** dw_input = malloc(sizeof(double*) * input_neuron);
 	for (size_t i = 0; i < input_neuron; i++)
@@ -41,7 +35,7 @@ void train(int letter_nb, double** w_input, double** w_output,
 		dw_input[i] = malloc(sizeof(double) * hidden_neuron);
 	}
 
-	double* db_input = malloc(sizeof(double*) * hidden_neuron);
+	double* db_input = malloc(sizeof(double) * hidden_neuron);
 
 	//////////////////////
 
@@ -73,8 +67,8 @@ void train(int letter_nb, double** w_input, double** w_output,
 				forward(input[j], hidden, output, w_input, w_output,
 					b_input, b_output);
 				backward(w_output, input[j], hidden, output, expected_output,
-					output_error, dw_output, db_output, t_w_output,
-					hidden_error, dw_input, db_input);
+					output_error, dw_output, db_output, hidden_error,
+					dw_input, db_input);
 				update(w_input, w_output, b_input, b_output, dw_output,
 					db_output, dw_input, db_input, learning_rate);
 			}
@@ -107,12 +101,6 @@ void train(int letter_nb, double** w_input, double** w_output,
 	free(dw_output);
 
 	free(db_output);
-
-	for (int i = 0; i < hidden_neuron; i++)
-	{
-		free(t_w_output[i]);
-	}
-	free(t_w_output);
 
 	free(hidden_error);
 

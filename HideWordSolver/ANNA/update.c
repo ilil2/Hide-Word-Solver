@@ -19,7 +19,7 @@ void update(double **w_input, // input_neuron x hidden_neuron
 
         for (size_t j = 0; j < output_neuron; j++)
         {
-            w_output[j][i] = w_output[j][i] - learning_rate * dw_output[j][i];
+            w_output[i][j] = w_output[i][j] - learning_rate * dw_output[j][i];
         }
 
         b_input[i] = b_input[i] - learning_rate * db_input[i];

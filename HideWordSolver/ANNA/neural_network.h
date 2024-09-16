@@ -43,7 +43,6 @@ void backward(double **w_output,
 		double *output_error,
 		double **dw_output,
 		double *db_output,
-		double **t_w_output,
 		double *hidden_error,
 		double **dw_input,
 		double *db_input);
@@ -61,7 +60,7 @@ void train(int letter_nb,
 		double** syn_output,
 		double* b_input,
 		double* b_output);
-void predict(double **input);
+char predict(double *input, double *output);
 void convert_char_to_output(char c, size_t size, double *output);
 char convert_output_to_char(double *output);
 
