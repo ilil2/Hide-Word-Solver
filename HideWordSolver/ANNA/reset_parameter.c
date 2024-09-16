@@ -30,12 +30,12 @@ void reset_parameter(double **w_input, // input_neuron x hidden_neuron
 
     for (int i = 0; i < hidden_neuron; i++)
     {
-        b_input[i] = 0.0;
+        b_input[i] = ((double)rand() / RAND_MAX) * 2.0 - 0.01;
     }
 
     for (int i = 0; i < output_neuron; i++)
     {
-        b_output[i] = 0.0;
+        b_output[i] = ((double)rand() / RAND_MAX) * 2.0 - 0.01;
     }
 
     save_parameter(w_input, w_output, b_input, b_output);

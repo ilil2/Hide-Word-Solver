@@ -25,26 +25,44 @@ void load_parameter(double **w_input,
         double *b_input,
         double *b_output);
 void load_image(const char *csv_path, size_t file_size,
-		double ***image);
+		double **image);
 double sigmoid(double d);
 double sigmoid_prime(double d);
-void forward(double **input,
-		double **syn_input,
-		double **hidden,
-		double **syn_output,
-		double **output);
-void backward(double **input, double **syn_input, double **hidden,
-		double **real_output, double **output, double **syn_output,
-		double** output_error, double** output_delta, double** t_syn_output,
-		double** hidden_error, double** hidden_delta, double** t_input, 
-		double** mult_syn_input, double** t_hidden, double** mult_syn_output);
+void forward(double *input,
+		double *hidden,
+		double *output,
+		double **w_input,
+		double **w_output,
+		double *b_input,
+		double *b_output);
+void backward(double **w_output,
+		double *input,
+		double *hidden,
+		double *output,
+		double *expected_output,
+		double *output_error,
+		double **dw_output,
+		double *db_output,
+		double **t_w_output,
+		double *hidden_error,
+		double **dw_input,
+		double *db_input);
+void update(double **w_input,
+		double **w_output,
+		double *b_input,
+		double *b_output,
+		double **dw_output,
+		double *db_output,
+		double **dw_input,
+		double *db_input,
+        double learning_rate);
 void train(int letter_nb,
 		double** syn_input,
 		double** syn_output,
 		double* b_input,
 		double* b_output);
 void predict(double **input);
-void convert_char_to_output(char c, double *output);
+void convert_char_to_output(char c, size_t size, double *output);
 char convert_output_to_char(double *output);
 
 #endif

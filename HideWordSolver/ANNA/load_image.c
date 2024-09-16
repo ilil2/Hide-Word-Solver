@@ -1,7 +1,7 @@
 #include "neural_network.h"
 
 void load_image(const char *csv_path, size_t file_size,
-        double ***image) //file_size x input_neuron
+        double **image) //file_size x input_neuron
 {
     FILE* file_image = NULL;
     
@@ -13,8 +13,8 @@ void load_image(const char *csv_path, size_t file_size,
         {
             for (size_t j = 0; j < input_neuron; j++)
             {
-                fscanf(file_image, "%lf,", &image[i][0][j]);
-                image[i][0][j] /= 255.0;
+                fscanf(file_image, "%lf,", &image[i][j]);
+                image[i][j] /= 255.0;
             }
         }
     }
