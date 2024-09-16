@@ -6,16 +6,26 @@ void forward(double **input,
 		double **syn_output,
 		double **output)
 {
-	matrix_product(1, input_neuron, input, input_neuron, hidden_neuron,
-			syn_input, hidden);
+	for (size_t i = 0; i < input_neuron; i++)
+	{
+		for (size_t j = 0; j < hidden_neuron; j++)
+		{
+			hidden[0][j] = input[0][i] * syn_input[i][j];
+		}
+	}
 
 	for (size_t i = 0; i < hidden_neuron; i++)
 	{
 		hidden[0][i] = sigmoid(hidden[0][i]);
 	}
 
-	matrix_product(1, hidden_neuron, hidden, hidden_neuron, output_neuron,
-			syn_output, output);
+	for (size_t i = 0; i < hidden_neuron; i++)
+	{
+		for (size_t j = 0; j < output_neuron; j++)
+		{
+			output[0][j] = hidden[0][i] * syn_output[i][j];
+		}
+	}
 
 	for (size_t i = 0; i < output_neuron; i++)
 	{
