@@ -44,7 +44,9 @@ void train(int letter_nb, double** w_input, double** w_output,
 
 	unsigned long long loop = 0;
 	size_t nb_while = 42;
-	char char_list[26] = {'A','B','C','A','A','A','A','A','A','A','A','A','A','A',};
+	char char_list[nb_symbols] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
+	shuffle(char_list, nb_symbols);
+	printf("%c\n", char_list[0]);
 
 	while (nb_while)
 	{
@@ -53,16 +55,16 @@ void train(int letter_nb, double** w_input, double** w_output,
 		printf("Boucle numero : %llu\n", loop);
 
 		float total = 0;
-		for (char i = 'A'; i <= 'Z'; i++)
+		for (int i = 0; i < nb_symbols; i++)
 		{
-			printf("\tLettre : %c\n", i);
+			printf("\tLettre : %c\n", char_list[i]);
 
 			char path[30];
-			sprintf(path, "Dataset/Train/%c.csv", i);
+			sprintf(path, "Dataset/Train/%c.csv", char_list[i]);
 
 			load_image(path, letter_nb, input);
 
-			convert_char_to_output(i, output_neuron, expected_output);
+			convert_char_to_output(i + 'A', output_neuron, expected_output);
 
 			char res = 0;
 			for (int j = 0; j < letter_nb; j++)
@@ -75,11 +77,11 @@ void train(int letter_nb, double** w_input, double** w_output,
 				update(w_input, w_output, b_input, b_output, dw_output,
 					db_output, dw_input, db_input, learning_rate);
 				
-				res += i == convert_output_to_char(output);
+				res += char_list[i] == convert_output_to_char(output);
 			}
 			total += res / (float)letter_nb;
 			printf("\t\t%2f\n", res / (float)letter_nb);
-			//printf("\t\tLog Loss = %f\n", log_loss(expected_output, output));
+			//printf("\t\tLog Loss = %f\n", log_loss(output, expected_output));
 		}
 		
 		printf("\t%2f\n", total / 26);

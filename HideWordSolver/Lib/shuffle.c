@@ -2,13 +2,14 @@
 #include <stdlib.h>
 #include <time.h>
 
-void shuffle(int *array, int n) {
+void shuffle(char array[], int n) {
     srand(time(NULL));
 
-    for (int i = n - 1; i > 0; i--) {
+    for (int i = n - 1; i > 0; i--)
+    {
         int j = rand() % (i + 1);
 
-        int temp = array[i];
+        char temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }
