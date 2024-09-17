@@ -1,32 +1,33 @@
 #include "neural_network.h"
 
-void forward(double *input,
-		double *hidden,
-		double *output,
-		double **w_input,
-		double **w_output,
-		double *b_input,
-		double *b_output)
+void forward(int nb_letter,
+		double **input, // input_neuron x nb_letter
+		double **hidden, // hidden_neuron x nb_letter
+		double **output, // output_neuron x nb_letter
+		double **w_input, // hidden_neuron x input_neuron
+		double **w_output, // output_neuron x hidden_neuron
+		double *b_input, // hidden_neuron
+		double *b_output) // output_neuron
 {
+	matrix_product(hidden_neuron, input_neuron, w_input, input_neuron, nb_letter, input, hidden, 1);
+
 	for (size_t i = 0; i < hidden_neuron; i++)
 	{
-		double sum = 0;
-		for (size_t j = 0; j < input_neuron; j++)
+		for (int j = 0; j < nb_letter; j++)
 		{
-			sum += input[j] * w_input[j][i];
+			hidden[i][j] += b_input[i];
+			hidden[i][j] = sigmoid(hidden[i][j]);
 		}
-		hidden[i] = sum + b_input[i];
-		hidden[i] = sigmoid(hidden[i]);
 	}
+
+	matrix_product(output_neuron, hidden_neuron, w_output, hidden_neuron, nb_letter, hidden, output, 1);
 
 	for (size_t i = 0; i < output_neuron; i++)
 	{
-		double sum = 0;
-		for (size_t j = 0; j < hidden_neuron; j++)
+		for (int j = 0; j < nb_letter; j++)
 		{
-			sum += hidden[j] * w_output[j][i];
+			output[i][j] += b_output[i];
+			output[i][j] = sigmoid(output[i][j]);
 		}
-		output[i] = sum + b_output[i];
-		output[i] = sigmoid(output[i]);
 	}
 }

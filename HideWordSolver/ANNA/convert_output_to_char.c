@@ -1,17 +1,21 @@
 #include "neural_network.h"
 
-char convert_output_to_char(double *output)
+void convert_output_to_char(int nb_letter,
+		double **output, // output_neuron x nb_letter
+		char *anna_result) // nb_letter
 {
-	double max = output[0];
-	size_t imax = 0;
 
-	for (size_t i = 1; i < output_neuron; i++)
+	for (int i = 1; i < nb_letter; i++)
 	{
-		if (output[i] > max)
+		double max = output[0][i];
+		size_t jmax = 0;
+		for (size_t j = 0; j < output_neuron; j++)
 		{
-			imax = i;
+			if (output[j][i] > max)
+			{
+				jmax = j;
+			}
 		}
+		anna_result[i] = 'A' + jmax;
 	}
-
-	return 'A' + imax;
 }

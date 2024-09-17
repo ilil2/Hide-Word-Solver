@@ -1,7 +1,7 @@
 #include "neural_network.h"
 
-void save_parameter(double **w_input, // input_neuron x hidden_neuron
-		double **w_output, // hidden_neuron x output_neuron
+void save_parameter(double **w_input, // hidden_neuron x input_neuron
+		double **w_output, // output_neuron x hidden_neuron
 		double *b_input, // hidden_neuron
 		double *b_output) // output_neuron
 {
@@ -17,13 +17,13 @@ void save_parameter(double **w_input, // input_neuron x hidden_neuron
 
 	if (file_w_input != NULL)
 	{
-		for (int i = 0; i < input_neuron; i++)
+		for (int i = 0; i < hidden_neuron; i++)
 		{
-        	for (int j = 0; j < hidden_neuron; j++)
+        	for (int j = 0; j < input_neuron; j++)
 			{
             	fprintf(file_w_input, "%f", w_input[i][j]);
 
-            	if (j < hidden_neuron - 1)
+            	if (j < input_neuron - 1)
 				{
                 	fprintf(file_w_input, ",");
             	}
@@ -41,13 +41,13 @@ void save_parameter(double **w_input, // input_neuron x hidden_neuron
 
 	if (file_w_output != NULL)
 	{
-		for (int i = 0; i < hidden_neuron; i++)
+		for (int i = 0; i < output_neuron; i++)
 		{
-        	for (int j = 0; j < output_neuron; j++)
+        	for (int j = 0; j < hidden_neuron; j++)
 			{
             	fprintf(file_w_output, "%f", w_output[i][j]);
 				
-            	if (j < output_neuron - 1)
+            	if (j < hidden_neuron - 1)
 				{
                 	fprintf(file_w_output, ",");
             	}

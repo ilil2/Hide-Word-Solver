@@ -1,7 +1,7 @@
 #include "neural_network.h"
 
-void load_parameter(double **w_input, // input_neuron x hidden_neuron
-		double **w_output, // hidden_neuron x output_neuron
+void load_parameter(double **w_input, // hidden_neuron x input_neuron
+		double **w_output, // output_neuron x hidden_neuron
         double *b_input, // hidden_neuron
         double *b_output) // output_neuron
 {
@@ -17,9 +17,9 @@ void load_parameter(double **w_input, // input_neuron x hidden_neuron
 
     if(file_w_input != NULL)
     {
-        for (int i = 0; i < input_neuron; i++)
+        for (int i = 0; i < hidden_neuron; i++)
         {
-            for (int j = 0; j < hidden_neuron; j++)
+            for (int j = 0; j < input_neuron; j++)
             {
                 fscanf(file_w_input, "%lf,", &w_input[i][j]);
             }
@@ -32,9 +32,9 @@ void load_parameter(double **w_input, // input_neuron x hidden_neuron
 
     if(file_w_output != NULL)
     {
-        for (int i = 0; i < hidden_neuron; i++)
+        for (int i = 0; i < output_neuron; i++)
         {
-            for (int j = 0; j < output_neuron; j++)
+            for (int j = 0; j < hidden_neuron; j++)
             {
                 fscanf(file_w_output, "%lf,", &w_output[i][j]);
             }

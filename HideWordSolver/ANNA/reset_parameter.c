@@ -2,26 +2,26 @@
 #include <math.h>
 #include <time.h>
 
-void reset_parameter(double **w_input, // input_neuron x hidden_neuron
-		    double **w_output, // hidden_neuron x output_neuron
+void reset_parameter(double **w_input, // hidden_neuron x input_neuron
+		    double **w_output, // output_neuron x hidden_neuron
 		    double *b_input, // hidden_neuron
 		    double *b_output) // output_neuron
 {
     srand(time(0));
 
-    double limit_w_input = sqrt(6.0 / (input_neuron + hidden_neuron));
-    for (int i = 0; i < input_neuron; i++)
+    double limit_w_input = sqrt(6.0 / (hidden_neuron + input_neuron));
+    for (int i = 0; i < hidden_neuron; i++)
     {
-        for (int j = 0; j < hidden_neuron; j++)
+        for (int j = 0; j < input_neuron; j++)
         {
             w_input[i][j] = ((double)rand() / RAND_MAX) * 2.0 * limit_w_input - limit_w_input;
         }
     }
 
-    double limit_w_output = sqrt(6.0 / (hidden_neuron + output_neuron));
-    for (int i = 0; i < hidden_neuron; i++)
+    double limit_w_output = sqrt(6.0 / (output_neuron + hidden_neuron));
+    for (int i = 0; i < output_neuron; i++)
     {
-        for (int j = 0; j < output_neuron; j++)
+        for (int j = 0; j < hidden_neuron; j++)
         {
             w_output[i][j] = ((double)rand() / RAND_MAX) * 2.0 * limit_w_output - limit_w_output;
         }

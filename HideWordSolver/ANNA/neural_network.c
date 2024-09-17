@@ -3,13 +3,13 @@
 
 int main(int argc, char** argv)
 {
-    double **w_input = malloc(input_neuron * sizeof(double *));
-    for (int i = 0; i < input_neuron; i++)
-        w_input[i] = malloc(hidden_neuron * sizeof(double));
-
-    double **w_output = malloc(hidden_neuron * sizeof(double *));
+    double **w_input = malloc(hidden_neuron * sizeof(double *));
     for (int i = 0; i < hidden_neuron; i++)
-        w_output[i] = malloc(output_neuron * sizeof(double));
+        w_input[i] = malloc(input_neuron * sizeof(double));
+
+    double **w_output = malloc(output_neuron * sizeof(double *));
+    for (int i = 0; i < output_neuron; i++)
+        w_output[i] = malloc(hidden_neuron * sizeof(double));
 
     double *b_input = malloc(hidden_neuron * sizeof(double));
 
@@ -26,16 +26,19 @@ int main(int argc, char** argv)
             printf("ANNA's parameters have been reset.\n");
         }
         else if (strcomp(argv[1], "start"))
-        {   
+        {
+            //char *anna_result = malloc(1 * sizeof(char));
             printf("ANNA's character recognition activated !\n");
         }
         else if (strcomp(argv[1], "train"))
         {
             if (argc > 2)
             {
+                int nb_letter = atoi(argv[2]);
+                char *anna_result = malloc(nb_letter * sizeof(char));
                 printf("ANNA's training start.\n");
 
-                train(atoi(argv[2]), w_input, w_output, b_input, b_output);
+                train(nb_letter, anna_result, w_input, w_output, b_input, b_output);
             }
             else
             {
@@ -52,11 +55,11 @@ int main(int argc, char** argv)
         errx(400, "The number of arguments is invalid.");
     }
 
-    for (int i = 0; i < input_neuron; i++)
+    for (int i = 0; i < hidden_neuron; i++)
         free(w_input[i]);
     free(w_input);
 
-    for (int i = 0; i < hidden_neuron; i++)
+    for (int i = 0; i < output_neuron; i++)
         free(w_output[i]);
     free(w_output);
 
