@@ -13,7 +13,9 @@ typedef struct
 	size_t col;
 	size_t both;
 	char trans_nbr;
-} MatrixProductThreadData
+} MatrixProductThreadData;
+
+void *_matrix_product_t(void *arg);
 
 void matrix_product_t(size_t row1, size_t col1, double **mat1,
         size_t row2, size_t col2, double **mat2, double **res,
@@ -29,24 +31,20 @@ void matrix_product_t(size_t row1, size_t col1, double **mat1,
 			size_t end_row = ((i + 1) * row1) / thread_nbr;
 
 
-			MatrixProductThreadData* data;
-			if (trans_nbr)
-			{
-				data = {mat1, mat2, res, start_row,
+			MatrixProductThreadData data = {mat1, mat2, res, start_row,
 					end_row, row1, row2, col1};
-			}
-			else
+			if (!trans_nbr)
 			{
-				data = {mat1, mat2, res, start_row,
-					end_row, col1, col2, row1};
-			}
-			
-			pthread_create(&threads[i], NULL, _matrix_product_t, data);
+				data.row = col1;
+				data.col = col2;
+				data.both = row1;
+			}			
+			pthread_create(&threads[i], NULL, _matrix_product_t, &data);
 		}
 
 		for (size_t i = 0; i < thread_nbr; i++)
 		{
-			thrd_join(threads[i]);
+			pthread_join(threads[i], NULL);
 		}
     }
     else
@@ -55,20 +53,20 @@ void matrix_product_t(size_t row1, size_t col1, double **mat1,
     }
 }
 
-void _matrix_product_t(void *arg)
+void *_matrix_product_t(void *arg)
 {
 	MatrixProductThreadData* data = (MatrixProductThreadData*)arg;
 
-	if (trans_nbr)
+	if (data->trans_nbr)
 	{
 		for (size_t i = data->start_row; i < data->end_row; i++)
 		{
 			for (size_t j = 0; i < data->col; j++)
 			{
-				mat3[i][j] = 0;
+				data->mat3[i][j] = 0;
 				for (size_t k = 0; k < data->both; k++)
 				{
-					mat3[i][j] += mat1[i][k] * mat2[j][k];
+					data->mat3[i][j] += data->mat1[i][k] * data->mat2[j][k];
 				}
 			}
 		}
@@ -79,10 +77,10 @@ void _matrix_product_t(void *arg)
 		{
 			for (size_t j = 0; j < data->col; j++)
 			{
-				mat3[i][j] = 0;
+				data->mat3[i][j] = 0;
 				for (size_t k = 0; k < data->both; k++)
 				{
-					mar3[i][j] += mat1[j][i] * mat2[k][j];
+					data->mat3[i][j] += data->mat1[j][i] * data->mat2[k][j];
 				}
 			}
 		}
