@@ -51,7 +51,7 @@ void train(int letter_nb, double** w_input, double** w_output,
 		loop++;
 		printf("Boucle numero : %llu\n", loop);
 
-		char total = 0;
+		float total = 0;
 		for (char i = 'A'; i <= 'Z'; i++)
 		{
 			printf("\tLettre : %c\n", i);
@@ -77,12 +77,12 @@ void train(int letter_nb, double** w_input, double** w_output,
 				res += i == convert_output_to_char(output);
 				
 			}
-			total += res;
+			total += res / (float)letter_nb;
 			printf("\t\t%2f\n", res / (float)letter_nb);
 			//printf("\t\tLog Loss = %f\n", log_loss(expected_output, output));
 		}
 		
-		printf("\t%2f\n", total / ((float)letter_nb * 26));
+		printf("\t%2f\n", total / 26);
 		save_parameter(w_input, w_output, b_input, b_output);
 		printf("\tsave ! \n");
 	}
