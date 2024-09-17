@@ -80,7 +80,7 @@ void *_matrix_product_t(void *arg)
 				data->mat3[i][j] = 0;
 				for (size_t k = 0; k < data->both; k++)
 				{
-					data->mat3[i][j] += data->mat1[j][i] * data->mat2[k][j];
+					data->mat3[i][j] += data->mat1[k][i] * data->mat2[k][j];
 				}
 			}
 		}
