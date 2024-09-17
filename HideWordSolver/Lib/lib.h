@@ -23,5 +23,6 @@ void matrix_transpose(size_t x, size_t y, double **mat,
 		double **res);
 void matrix_addition(size_t row, size_t col, double **mat1,
 		double **mat2, double **res);
+void shuffle(int *array, int n);
 
 #endif

@@ -39,11 +39,12 @@ void train(int letter_nb, double** w_input, double** w_output,
 
 	//////////////////////
 
-	double learning_rate = 0.1;
+	double learning_rate = 1;
 	load_parameter(w_input, w_output, b_input, b_output);
 
 	unsigned long long loop = 0;
 	size_t nb_while = 42;
+	char char_list[26] = {'A','B','C','A','A','A','A','A','A','A','A','A','A','A',};
 
 	while (nb_while)
 	{
@@ -75,7 +76,6 @@ void train(int letter_nb, double** w_input, double** w_output,
 					db_output, dw_input, db_input, learning_rate);
 				
 				res += i == convert_output_to_char(output);
-				
 			}
 			total += res / (float)letter_nb;
 			printf("\t\t%2f\n", res / (float)letter_nb);
