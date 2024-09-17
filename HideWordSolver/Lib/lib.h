@@ -19,6 +19,8 @@ int xtoi(const char *hexa);
 int atoi(const char *str);
 void matrix_product(size_t row1, size_t col1, double **mat1,
     size_t row2, size_t col2, double **mat2, double **res);
+void matrix_product_t(size_t row1, size_t col1, double **mat1,
+        size_t row2, size_t col2, double **mat2, double **res);
 void matrix_transpose(size_t x, size_t y, double **mat,
 		double **res);
 void matrix_addition(size_t row, size_t col, double **mat1,
