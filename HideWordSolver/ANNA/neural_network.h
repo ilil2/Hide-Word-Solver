@@ -61,6 +61,7 @@ void train(int letter_nb,
 		double* b_input,
 		double* b_output);
 char predict(double *input, double *output);
+double log_loss(double *expected_output, double *output);
 void convert_char_to_output(char c, size_t size, double *output);
 char convert_output_to_char(double *output);
 

@@ -51,6 +51,7 @@ void train(int letter_nb, double** w_input, double** w_output,
 		loop++;
 		printf("Boucle numero : %llu\n", loop);
 
+		char total = 0;
 		for (char i = 'A'; i <= 'Z'; i++)
 		{
 			printf("\tLettre : %c\n", i);
@@ -62,6 +63,7 @@ void train(int letter_nb, double** w_input, double** w_output,
 
 			convert_char_to_output(i, output_neuron, expected_output);
 
+			char res = 0;
 			for (int j = 0; j < letter_nb; j++)
 			{
 				forward(input[j], hidden, output, w_input, w_output,
@@ -71,9 +73,16 @@ void train(int letter_nb, double** w_input, double** w_output,
 					dw_input, db_input);
 				update(w_input, w_output, b_input, b_output, dw_output,
 					db_output, dw_input, db_input, learning_rate);
+				
+				res += i == convert_output_to_char(output);
+				
 			}
+			total += res;
+			printf("\t\t%2f\n", res / (float)letter_nb);
+			//printf("\t\tLog Loss = %f\n", log_loss(expected_output, output));
 		}
-
+		
+		printf("\t%2f\n", total / ((float)letter_nb * 26));
 		save_parameter(w_input, w_output, b_input, b_output);
 		printf("\tsave ! \n");
 	}
