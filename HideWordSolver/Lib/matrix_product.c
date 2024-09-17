@@ -16,7 +16,7 @@ typedef struct
 
 void matrix_product(size_t row1, size_t col1, double **mat1,
 		size_t row2, size_t col2, double **mat2, double **res,
-		size_t thread_nbr = 1)
+		size_t thread_nbr)
 {
 	if(col1 == row2)
 	{
