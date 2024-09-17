@@ -1,6 +1,6 @@
 #include <err.h>
 #include "lib.h"
-#include <threads.h>
+#include <pthread.h>
 
 typedef struct 
 {
@@ -20,7 +20,7 @@ void matrix_product(size_t row1, size_t col1, double **mat1,
 {
 	if(col1 == row2)
 	{
-		thrd_t threads[thread_nbr];
+		pthread_t threads[thread_nbr];
 
 		for (size_t i = 0; i < thread_nbr; i++)
 		{
@@ -29,12 +29,12 @@ void matrix_product(size_t row1, size_t col1, double **mat1,
 
 			MatrixProductThreadData* data = {mat1, mat2, res, start_row,
 				end_row, row1, col2, col1};
-			thrd_create(&threads[i], _matrix_product, data);
+			pthread_create(&threads[i], NULL, _matrix_product, data);
 		}
 
 		for (size_t i = 0; i < thread_nbr; i++)
 		{
-			thrd_join(threads[i], NULL);
+			pthread_join(threads[i], NULL);
 		}
 	}
 	else
