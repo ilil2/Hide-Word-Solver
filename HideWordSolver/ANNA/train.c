@@ -4,6 +4,11 @@ void train(int nb_letter, char *anna_result, double** w_input,
 			double** w_output, double* b_input, double* b_output,
 			char threads)
 {
+	if(nb_letter > 9750)
+	{
+		nb_letter = 9750;
+	}
+
 	//Memory allocations//
 
 	double** input = malloc(sizeof(double*) * input_neuron);
@@ -83,11 +88,11 @@ void train(int nb_letter, char *anna_result, double** w_input,
 			double success = 0;
 			for (int i = 0; i < nb_letter; i++)
 			{
-				success += anna_result[i] == i + 'A';
+				success += ((int)anna_result[i] == i) + '0';
 			}
-			//printf("\t\t%f\n", success / nb_letter);
+			//printf("\tSuccess = %f\n", success / nb_letter);
 			
-			printf("\t\tLog Loss = %f\n", log_loss(nb_letter, expected_output, output));
+			printf("\tLog Loss (%i) = %f\n", i, log_loss(nb_letter, expected_output, output));
 
 			backward(nb_letter, w_output, input, hidden, output, expected_output,
 				output_error, dw_output, db_output, hidden_error,

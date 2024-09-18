@@ -113,7 +113,7 @@ int main()
 	double learning_rate = 1;
 
 	unsigned long long loop = 0;
-	size_t nb_while = 250;
+	size_t nb_while = 10000;
 
 	while (nb_while)
 	{
