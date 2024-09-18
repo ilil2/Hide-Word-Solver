@@ -1,27 +1,44 @@
 #include "neural_network.h"
 
-void load_image(const char *csv_path, size_t file_size,
-        double **image) //input_neuron x file_size
+void load_image(char *file_path,
+        int file_nb,
+        size_t file_size,
+        double **input, // input_neuron x file_size
+        double **output) // output_neuron x file_size
 {
-    FILE* file_image = NULL;
+    FILE* input_file = NULL;
+    FILE* output_file = NULL;
     
-	file_image = fopen(csv_path, "r");
+    char xbuffer[50];
+    sprintf(xbuffer, "%sx%i.csv", file_path, file_nb);
+    char ybuffer[50];
+    sprintf(ybuffer, "%sy%i.csv", file_path, file_nb);
 
-    if(file_image != NULL)
+	input_file = fopen(xbuffer, "r");
+	output_file = fopen(ybuffer, "r");
+
+    if(input_file != NULL && output_file != NULL)
     {
-        for (size_t i = 0; i < input_neuron; i++)
+        for (size_t i = 0; i < file_size; i++)
         {
-            for (size_t j = 0; j < file_size; j++)
+            for (size_t j = 0; j < input_neuron; j++)
             {
-                fscanf(file_image, "%lf,", &image[i][j]);
-                image[i][j] /= 255.0;
+                fscanf(input_file, "%lf,", &input[j][i]);
+                input[j][i] /= 255.0;
             }
+
+            for (size_t j = 0; j < output_neuron; j++)
+            {
+                fscanf(output_file, "%lf,", &output[j][i]);
+            }
+            
         }
     }
     else
     {
-		printf("Error opening %s files.\n", csv_path);
+		printf("Error opening files.\n");
     }
 
-	fclose(file_image);
+	fclose(input_file);
+	fclose(output_file);
 }

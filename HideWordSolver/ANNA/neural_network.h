@@ -25,8 +25,11 @@ void load_parameter(double **w_input,
 		double **w_output,
         double *b_input,
         double *b_output);
-void load_image(const char *csv_path, size_t file_size,
-		double **image);
+void load_image(char *file_path,
+		int file_nb,
+        size_t file_size,
+        double **input,
+        double **output);
 double sigmoid(double d);
 double sigmoid_prime(double d);
 void forward(int nb_letter,

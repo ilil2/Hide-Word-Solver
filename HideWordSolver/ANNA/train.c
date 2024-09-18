@@ -65,26 +65,16 @@ void train(int nb_letter, char *anna_result, double** w_input,
 
 	unsigned long long loop = 0;
 	size_t nb_while = 42;
-	char char_list[nb_symbols] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-	printf("%c\n", char_list[0]);
 
 	while (nb_while)
 	{
 		//nb_while -= 1;
 		loop++;
-		shuffle(char_list, nb_symbols);
 		printf("Boucle numero : %llu\n", loop);
 
 		for (int i = 0; i < nb_symbols; i++)
 		{
-			printf("\tLettre : %c\n", char_list[i]);
-
-			char path[30];
-			sprintf(path, "Dataset/Train/%c.csv", char_list[i]);
-
-			load_image(path, nb_letter, input);
-
-			convert_char_to_output(i + 'A', output_neuron, nb_letter, expected_output);
+			load_image("Dataset/Train/", i, nb_letter, input, expected_output);
 
 			forward(nb_letter, input, hidden, output, w_input, w_output,
 				b_input, b_output, threads);

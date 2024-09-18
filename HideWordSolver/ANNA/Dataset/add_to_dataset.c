@@ -1,7 +1,7 @@
 #include "main_dataset.h"
 #include <unistd.h>
 
-void add_to_dataset(const char *img, const char *csv)
+void add_to_dataset(const char *img, int i, char output)
 {
 	FILE *file = fopen(img, "r");
 	if (file != NULL)
@@ -28,7 +28,7 @@ void add_to_dataset(const char *img, const char *csv)
 			}
 			else
 			{
-				bmp_to_csv(tmp, csv);
+				bmp_to_csv(tmp, i, output);
 			}
 
 			SDL_FreeSurface(tmp);
