@@ -2,15 +2,20 @@
 #include <stdlib.h>
 #include <time.h>
 
-void shuffle(char array[], int n) {
+void shuffle(double **array, double **array2, int n) {
     srand(time(NULL));
 
     for (int i = n - 1; i > 0; i--)
     {
         int j = rand() % (i + 1);
 
-        char temp = array[i];
+        double *temp = array[i];
+		double *temp2 = array2[i];
+
         array[i] = array[j];
         array[j] = temp;
+
+		array2[i] = array2[j];
+		array2[j] = temp2;
     }
 }

@@ -82,7 +82,7 @@ void predict(int nb_letter,
 double log_loss(int nb_letter,
         double **expected_output,
         double **output);
-void convert_char_to_output(char c, size_t row, size_t col, double **output);
+void convert_char_to_output(char *c, size_t row, size_t col, double **output);
 void convert_output_to_char(int nb_letter, double **output, char *anna_result);
 
 #endif

@@ -63,4 +63,6 @@ void *_matrix_product(void *arg)
 			}
 		}
 	}
+
+	return NULL;
 }

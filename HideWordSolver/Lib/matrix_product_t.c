@@ -92,4 +92,6 @@ void *_matrix_product_t(void *arg)
 			}
 		}
 	}
+
+	return NULL;
 }
