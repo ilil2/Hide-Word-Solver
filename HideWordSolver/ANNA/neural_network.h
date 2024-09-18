@@ -36,7 +36,8 @@ void forward(int nb_letter,
 		double **w_input,
 		double **w_output,
 		double *b_input,
-		double *b_output);
+		double *b_output,
+		char threads);
 void backward(int nb_letter,
 		double **w_output,
 		double **input,
@@ -48,7 +49,8 @@ void backward(int nb_letter,
 		double *db_output,
 		double **hidden_error,
 		double **dw_input,
-		double *db_input);
+		double *db_input,
+		char threads);
 void update(double **w_input,
 		double **w_output,
 		double *b_input,
@@ -63,7 +65,8 @@ void train(int nb_letter,
 		double** w_input,
 		double** w_output,
 		double* b_input,
-		double* b_output);
+		double* b_output,
+		char threads);
 void predict(int nb_letter,
 		char *anna_result,
 		double **input,

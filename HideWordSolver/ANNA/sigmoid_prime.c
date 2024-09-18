@@ -1,4 +1,5 @@
 #include <math.h>
+#include "neural_network.h"
 
 double sigmoid_prime(double d)
 {

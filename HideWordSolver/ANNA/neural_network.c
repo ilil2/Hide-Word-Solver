@@ -34,11 +34,16 @@ int main(int argc, char** argv)
         {
             if (argc > 2)
             {
+				char threads = 2;
+				if (argc > 3)
+				{
+					threads = atoi(argv[3]);
+				}
                 int nb_letter = atoi(argv[2]);
                 char *anna_result = malloc(nb_letter * sizeof(char));
                 printf("ANNA's training start.\n");
 
-                train(nb_letter, anna_result, w_input, w_output, b_input, b_output);
+                train(nb_letter, anna_result, w_input, w_output, b_input, b_output, threads);
             }
             else
             {

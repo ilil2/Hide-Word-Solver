@@ -1,7 +1,8 @@
 #include "neural_network.h"
 
 void train(int nb_letter, char *anna_result, double** w_input,
-			double** w_output, double* b_input, double* b_output)
+			double** w_output, double* b_input, double* b_output,
+			char threads)
 {
 	//Memory allocations//
 
@@ -86,7 +87,7 @@ void train(int nb_letter, char *anna_result, double** w_input,
 			convert_char_to_output(i + 'A', output_neuron, nb_letter, expected_output);
 
 			forward(nb_letter, input, hidden, output, w_input, w_output,
-				b_input, b_output);
+				b_input, b_output, threads);
 
 			convert_output_to_char(nb_letter, output, anna_result);
 			double success = 0;
@@ -100,7 +101,7 @@ void train(int nb_letter, char *anna_result, double** w_input,
 
 			backward(nb_letter, w_output, input, hidden, output, expected_output,
 				output_error, dw_output, db_output, hidden_error,
-				dw_input, db_input);
+				dw_input, db_input, threads);
 			update(w_input, w_output, b_input, b_output, dw_output,
 				db_output, dw_input, db_input, learning_rate);
 		}

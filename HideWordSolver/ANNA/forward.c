@@ -7,9 +7,10 @@ void forward(int nb_letter,
 		double **w_input, // hidden_neuron x input_neuron
 		double **w_output, // output_neuron x hidden_neuron
 		double *b_input, // hidden_neuron
-		double *b_output) // output_neuron
+		double *b_output,
+		char threads) // output_neuron
 {
-	matrix_product(hidden_neuron, input_neuron, w_input, input_neuron, nb_letter, input, hidden, 1);
+	matrix_product(hidden_neuron, input_neuron, w_input, input_neuron, nb_letter, input, hidden, threads);
 
 	for (size_t i = 0; i < hidden_neuron; i++)
 	{
@@ -20,7 +21,7 @@ void forward(int nb_letter,
 		}
 	}
 
-	matrix_product(output_neuron, hidden_neuron, w_output, hidden_neuron, nb_letter, hidden, output, 1);
+	matrix_product(output_neuron, hidden_neuron, w_output, hidden_neuron, nb_letter, hidden, output, threads);
 
 	for (size_t i = 0; i < output_neuron; i++)
 	{

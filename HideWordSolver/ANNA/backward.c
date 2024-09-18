@@ -11,7 +11,8 @@ void backward(int nb_letter,
 		double *db_output, // output_neuron
 		double **hidden_error, // hidden_neuron x nb_letter
 		double **dw_input, // hidden_neuron x input_neuron
-		double *db_input) // hidden_neuron
+		double *db_input,
+		char threads) // hidden_neuron
 {
 	for (size_t i = 0; i < output_neuron; i++)
 	{
@@ -21,7 +22,7 @@ void backward(int nb_letter,
 		}
 	}
 
-	matrix_product_t(output_neuron, nb_letter, output_error, hidden_neuron, nb_letter, hidden, dw_output, 1, 1);
+	matrix_product_t(output_neuron, nb_letter, output_error, hidden_neuron, nb_letter, hidden, dw_output, 1, threads);
 
 	for (size_t i = 0; i < output_neuron; i++)
 	{
@@ -42,7 +43,7 @@ void backward(int nb_letter,
 		db_output[i] = ((double)1 / nb_letter) * sum;
 	}
 
-	matrix_product_t(output_neuron, hidden_neuron, w_output, output_neuron, nb_letter, output_error, hidden_error, 0, 1);
+	matrix_product_t(output_neuron, hidden_neuron, w_output, output_neuron, nb_letter, output_error, hidden_error, 0, threads);
 
 	for (size_t i = 0; i < hidden_neuron; i++)
 	{
@@ -52,7 +53,7 @@ void backward(int nb_letter,
 		}
 	}
 
-	matrix_product_t(hidden_neuron, nb_letter, hidden_error, input_neuron, nb_letter, input, dw_input, 1, 1);
+	matrix_product_t(hidden_neuron, nb_letter, hidden_error, input_neuron, nb_letter, input, dw_input, 1, threads);
 
 	for (size_t i = 0; i < hidden_neuron; i++)
 	{
