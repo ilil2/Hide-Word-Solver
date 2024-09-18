@@ -65,13 +65,13 @@ void train(int nb_letter, char *anna_result, double** w_input,
 	unsigned long long loop = 0;
 	size_t nb_while = 42;
 	char char_list[nb_symbols] = {'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'};
-	shuffle(char_list, nb_symbols);
 	printf("%c\n", char_list[0]);
 
 	while (nb_while)
 	{
 		//nb_while -= 1;
 		loop++;
+		shuffle(char_list, nb_symbols);
 		printf("Boucle numero : %llu\n", loop);
 
 		for (int i = 0; i < nb_symbols; i++)
