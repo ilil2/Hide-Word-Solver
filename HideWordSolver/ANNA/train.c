@@ -9,6 +9,8 @@ void train(int nb_letter, char *anna_result, double** w_input,
 		nb_letter = 9750;
 	}
 
+	size_t test_size = 18772;
+
 	//Memory allocations//
 
 	double** input = malloc(sizeof(double*) * input_neuron);
@@ -63,6 +65,26 @@ void train(int nb_letter, char *anna_result, double** w_input,
 
 	double* db_input = malloc(sizeof(double) * hidden_neuron);
 
+	double** test_input = malloc(sizeof(double) * input_neuron);
+	for (size_t i = 0; i < input_neuron; i++)
+	{
+		test_input[i] = malloc(sizeof(double) * test_size);
+	}
+
+	double** test_hidden = malloc(sizeof(double) * hidden_neuron);
+	for (size_t i = 0; i < hidden_neuron; i++)
+	{
+		test_hidden[i] = malloc(sizeof(double) * test_size);
+	}
+
+	double** test_output = malloc(sizeof(double) * output_neuron);
+	double** test_expected = malloc(sizeof(double) * output_neuron);
+	for (size_t i = 0; i < output_neuron; i++)
+	{
+		test_output[i] = malloc(sizeof(double) * test_size);
+		test_expected[i] = malloc(sizeof(double) * test_size);
+	}
+
 	//////////////////////
 
 	double learning_rate = 1;
@@ -92,13 +114,20 @@ void train(int nb_letter, char *anna_result, double** w_input,
 			}
 			//printf("\tSuccess = %f\n", success / nb_letter);
 			
-			printf("\tLog Loss (%i) = %f\n", i, log_loss(nb_letter, expected_output, output));
+			printf("\tLog Loss (%i) = %f\n", i, log_loss(nb_letter,
+						expected_output, output));
 
-			backward(nb_letter, w_output, input, hidden, output, expected_output,
-				output_error, dw_output, db_output, hidden_error,
-				dw_input, db_input, threads);
+			backward(nb_letter, w_output, input, hidden, output,
+					expected_output, output_error, dw_output,
+					db_output, hidden_error, dw_input, db_input, threads);
 			update(w_input, w_output, b_input, b_output, dw_output,
 				db_output, dw_input, db_input, learning_rate);
+		}
+
+		if (nb_while % 1 == 0)
+		{
+			test(test_size, test_input, test_hidden, test_expected, test_output, w_input,
+					w_output, b_input, b_output, threads);
 		}
 
 		printf("\tsave ! \n");

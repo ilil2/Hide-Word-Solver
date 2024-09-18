@@ -10,9 +10,17 @@ void load_image(char *file_path,
     FILE* output_file = NULL;
     
     char xbuffer[50];
-    sprintf(xbuffer, "%sx%i.csv", file_path, file_nb);
-    char ybuffer[50];
-    sprintf(ybuffer, "%sy%i.csv", file_path, file_nb);
+	char ybuffer[50];
+    if (file_nb != -1)
+	{
+		sprintf(xbuffer, "%sx%i.csv", file_path, file_nb);
+		sprintf(ybuffer, "%sy%i.csv", file_path, file_nb);
+	}
+	else
+	{
+		sprintf(xbuffer, "%sx.csv", file_path);
+		sprintf(ybuffer, "%sy.csv", file_path);
+	}
 
 	input_file = fopen(xbuffer, "r");
 	output_file = fopen(ybuffer, "r");
