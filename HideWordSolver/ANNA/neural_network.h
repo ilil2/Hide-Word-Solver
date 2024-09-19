@@ -8,9 +8,9 @@
 #include "../Lib/lib.h"
 
 #define input_neuron 1024
-#define hidden_neuron 128
+#define hidden_neuron 256
 #define output_neuron 26
-#define nb_symbols 26
+#define nb_dataset 32
 
 int main(int argc, char** argv);
 void reset_parameter(double **w_input,
@@ -88,5 +88,6 @@ double test(size_t test_size, double **test_input, double **hidden,
                 double **expected, double **output, double **w_input,
                 double **w_output,double *b_input, double *b_output,
 				char thread_nbr);
+void save_stats(size_t i, double log_loss, double train_set, double test_set);
 
 #endif

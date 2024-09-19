@@ -47,7 +47,7 @@ double test(size_t test_size, double **test_input, double **hidden,
 	}
 	
 	test_sum /= (double)test_size;
-	printf("\tTest result : %f\n", test_sum);
+	printf("\ttTotal test success : %f\n", test_sum);
     fflush(stdout);
 
 	return test_sum;

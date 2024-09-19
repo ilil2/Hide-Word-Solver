@@ -85,7 +85,18 @@ void train(int nb_letter, char *anna_result, double** w_input,
 		test_expected[i] = malloc(sizeof(double) * test_size);
 	}
 
+	char* anna_expected_result = malloc(nb_letter * sizeof(char));
+
 	//////////////////////
+
+	char dataset_order[nb_dataset];
+
+	for (int i = 0; i < nb_dataset; i++)
+	{
+		dataset_order[i] = i;
+	}
+
+	shuffle(dataset_order, nb_dataset);
 
 	double learning_rate = 1;
 	load_parameter(w_input, w_output, b_input, b_output);
@@ -99,23 +110,35 @@ void train(int nb_letter, char *anna_result, double** w_input,
 		loop++;
 		printf("Boucle numero : %llu\n", loop);
 
-		for (int i = 0; i < nb_symbols; i++)
+		double train_success_t = 0;
+		double log_loss_t = 0;
+
+		for (int i = 0; i < nb_dataset; i++)
 		{
-			load_image("Dataset/Train/", i, nb_letter, input, expected_output);
+			printf("\t%i, Data Set %i :\n", i, dataset_order[i]);
+			load_image("Dataset/Train/", dataset_order[i], nb_letter, input, expected_output);
+
+			//matrix_shuffle(input, expected_output, output_neuron, nb_letter);
 
 			forward(nb_letter, input, hidden, output, w_input, w_output,
 				b_input, b_output, threads);
 
 			convert_output_to_char(nb_letter, output, anna_result);
+			convert_output_to_char(nb_letter, expected_output, anna_expected_result);
 			double success = 0;
 			for (int i = 0; i < nb_letter; i++)
 			{
-				success += ((int)anna_result[i] == i) + '0';
+				if (anna_result[i] == anna_expected_result[i])
+				{
+					success += 1;
+				}
 			}
-			//printf("\tSuccess = %f\n", success / nb_letter);
-			
-			printf("\tLog Loss (%i) = %f\n", i, log_loss(nb_letter,
-						expected_output, output));
+			double _log_loss = log_loss(nb_letter, expected_output, output);
+			train_success_t += success / nb_letter;
+			log_loss_t += _log_loss;
+
+			printf("\t\tSuccess (%i) = %f\n", i, success / nb_letter);
+			printf("\t\tLog Loss (%i) = %f\n", i, _log_loss);
 
 			backward(nb_letter, w_output, input, hidden, output,
 					expected_output, output_error, dw_output,
@@ -123,15 +146,19 @@ void train(int nb_letter, char *anna_result, double** w_input,
 			update(w_input, w_output, b_input, b_output, dw_output,
 				db_output, dw_input, db_input, learning_rate);
 		}
+		printf("\n");
 
 		if (nb_while % 1 == 0)
 		{
-			test(test_size, test_input, test_hidden, test_expected, test_output, w_input,
+			printf("\tTotal log loss = %f\n", log_loss_t / nb_dataset);
+			printf("\tTotal train success = %f\n", train_success_t / nb_dataset);
+			double test_succes_t = test(test_size, test_input, test_hidden, test_expected, test_output, w_input,
 					w_output, b_input, b_output, threads);
+			save_stats(nb_while, log_loss_t, train_success_t, test_succes_t);
 		}
 
-		printf("\tsave ! \n");
 		save_parameter(w_input, w_output, b_input, b_output);
+		printf("\tSave ! \n\n");
 	}
 
 	//Memory release//
