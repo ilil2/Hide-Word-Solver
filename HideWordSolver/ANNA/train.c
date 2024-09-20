@@ -154,7 +154,7 @@ void train(int nb_letter, char *anna_result, double** w_input,
 			printf("\tTotal train success = %f\n", train_success_t / nb_dataset);
 			double test_succes_t = test(test_size, test_input, test_hidden, test_expected, test_output, w_input,
 					w_output, b_input, b_output, threads);
-			save_stats(nb_while, log_loss_t, train_success_t, test_succes_t);
+			save_stats(loop, log_loss_t / nb_dataset, train_success_t / nb_dataset, test_succes_t);
 		}
 
 		save_parameter(w_input, w_output, b_input, b_output);
