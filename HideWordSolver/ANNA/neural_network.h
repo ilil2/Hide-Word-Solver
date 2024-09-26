@@ -7,6 +7,8 @@
 #include <err.h>
 #include "../Lib/lib.h"
 
+#define image_size 32
+#define filter_size 3
 #define input_neuron 1024
 #define hidden_neuron 256
 #define output_neuron 26
@@ -85,9 +87,14 @@ double log_loss(int nb_letter,
 void convert_char_to_output(char *c, size_t row, size_t col, double **output);
 void convert_output_to_char(int nb_letter, double **output, char *anna_result);
 double test(size_t test_size, double **test_input, double **hidden,
-                double **expected, double **output, double **w_input,
-                double **w_output,double *b_input, double *b_output,
-				char thread_nbr);
+        double **expected, double **output, double **w_input,
+    	double **w_output,double *b_input, double *b_output,
+		char thread_nbr);
 void save_stats(size_t i, double log_loss, double train_set, double test_set);
+void convolution(int nb_letter,
+        double **input,
+        double **output,
+        double *filter1,
+        double *filter2);
 
 #endif

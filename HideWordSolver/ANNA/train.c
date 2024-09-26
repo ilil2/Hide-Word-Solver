@@ -118,7 +118,7 @@ void train(int nb_letter, char *anna_result, double** w_input,
 			printf("\t%i, Data Set %i :\n", i, dataset_order[i]);
 			load_image("Dataset/Train/", dataset_order[i], nb_letter, input, expected_output);
 
-			//matrix_shuffle(input, expected_output, output_neuron, nb_letter);
+			matrix_shuffle(input, expected_output, input_neuron, output_neuron, nb_letter);
 
 			forward(nb_letter, input, hidden, output, w_input, w_output,
 				b_input, b_output, threads);
