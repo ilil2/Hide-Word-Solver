@@ -1,1 +1,10 @@
-Rotate
+Rotate :
+	deux versions :
+		- rotation_manuel :
+			//permet de faire rotation a une image il suffit de donner 
+				l'image et l'angle de rotation
+			./rotation_manuel image_rotation.png 335
+		- rotation_auto :
+			//permet de faire rotation a une image il suffit de donner 
+				uniquement une image
+			./rotation_auto image_rotation.png

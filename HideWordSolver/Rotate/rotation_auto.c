@@ -1,222 +1,218 @@
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_image.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
+#include <err.h>
 #include <math.h>
 
-#define SOBEL_THRESHOLD 100
-#define HOUGH_THRESHOLD 100
+#define SOBEL_SIZE 3
 
-// Détecter l'angle de rotation de l'image en utilisant Sobel et Hough
-double detectRotationAngle(SDL_Surface* surface) {
-    if (!surface) {
-        fprintf(stderr, "Erreur: surface image non valide\n");
-        return 0;
+// Create an SDL window
+SDL_Window* create_window(const char* title, int width, int height)
+{
+    SDL_Window* window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
+    if (!window)
+    {
+        printf("Error creating window: %s\n", SDL_GetError());
+        exit(EXIT_FAILURE);
+    }
+    return window;
+}
+
+// Create an SDL renderer
+SDL_Renderer* create_renderer(SDL_Window* window)
+{
+    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (!renderer)
+    {
+        printf("Error creating renderer: %s\n", SDL_GetError());
+        exit(EXIT_FAILURE);
+    }
+    return renderer;
+}
+
+// Load image as SDL texture
+SDL_Texture* load_image_as_texture(SDL_Renderer* renderer, const char* file)
+{
+    SDL_Surface* image = IMG_Load(file);
+    if (!image)
+    {
+        printf("Error loading image: %s\n", SDL_GetError());
+        exit(EXIT_FAILURE);
     }
 
-    int width = surface->w;
-    int height = surface->h;
-    Uint32* pixels = (Uint32*)surface->pixels;
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);
+    if (!texture)
+    {
+        printf("Error creating texture: %s\n", SDL_GetError());
+        SDL_FreeSurface(image);
+        exit(EXIT_FAILURE);
+    }
 
-    // Étape 1 : Appliquer le filtre de Sobel pour détecter les bords
-    double* sobelX = malloc(width * height * sizeof(double));
-    double* sobelY = malloc(width * height * sizeof(double));
-    memset(sobelX, 0, width * height * sizeof(double));
-    memset(sobelY, 0, width * height * sizeof(double));
+    SDL_FreeSurface(image);
+    return texture;
+}
 
-    // Matrices de convolution Sobel
-    int sobelKernelX[3][3] = {
+// Apply the Sobel operator to detect edges and calculate the angle
+double detectRotationAngle(SDL_Surface* image)
+{
+    int width = image->w;
+    int height = image->h;
+
+    // Allocate memory for gradient arrays
+    double* gradient_x = (double*)malloc(width * height * sizeof(double));
+    double* gradient_y = (double*)malloc(width * height * sizeof(double));
+    double* angles = (double*)malloc(width * height * sizeof(double));
+
+    // Sobel kernel for x and y directions
+    int sobel_x[3][3] = {
         {-1, 0, 1},
         {-2, 0, 2},
         {-1, 0, 1}
     };
     
-    int sobelKernelY[3][3] = {
-        {-1, -2, -1},
-        { 0,  0,  0},
-        { 1,  2,  1}
+    int sobel_y[3][3] = {
+        {1, 2, 1},
+        {0, 0, 0},
+        {-1, -2, -1}
     };
 
-    // Appliquer le filtre de Sobel
-    for (int y = 1; y < height - 1; ++y) {
-        for (int x = 1; x < width - 1; ++x) {
-            double gx = 0, gy = 0;
+    // Compute gradients
+    for (int y = 1; y < height - 1; ++y)
+    {
+        for (int x = 1; x < width - 1; ++x)
+        {
+            double gx = 0;
+            double gy = 0;
 
-            // Calcul de Sobel X et Y sur une fenêtre 3x3
-            for (int ky = -1; ky <= 1; ++ky) {
-                for (int kx = -1; kx <= 1; ++kx) {
-                    Uint32 pixel = pixels[(y + ky) * width + (x + kx)];
+            for (int ky = -1; ky <= 1; ++ky)
+            {
+                for (int kx = -1; kx <= 1; ++kx)
+                {
+                    Uint32 pixel = *((Uint32*)image->pixels + (y + ky) * width + (x + kx));
                     Uint8 r, g, b;
-                    SDL_GetRGB(pixel, surface->format, &r, &g, &b);
-                    int intensity = (r + g + b) / 3;  // Convertir en niveau de gris
+                    SDL_GetRGB(pixel, image->format, &r, &g, &b);
+                    double intensity = 0.299 * r + 0.587 * g + 0.114 * b; // Convert to grayscale
 
-                    gx += intensity * sobelKernelX[ky + 1][kx + 1];
-                    gy += intensity * sobelKernelY[ky + 1][kx + 1];
+                    gx += sobel_x[ky + 1][kx + 1] * intensity;
+                    gy += sobel_y[ky + 1][kx + 1] * intensity;
                 }
             }
 
-            sobelX[y * width + x] = gx;
-            sobelY[y * width + x] = gy;
+            gradient_x[y * width + x] = gx;
+            gradient_y[y * width + x] = gy;
+            angles[y * width + x] = atan2(gy, gx) * (180.0 / M_PI); // Angle in degrees
         }
     }
 
-    // Étape 2 : Calculer la magnitude des gradients et les directions
-    double* gradientMagnitudes = malloc(width * height * sizeof(double));
-    double* gradientAngles = malloc(width * height * sizeof(double));
+    // Analyze angles to determine the predominant angle
+    double total_angle = 0;
+    int count = 0;
 
-    for (int y = 1; y < height - 1; ++y) {
-        for (int x = 1; x < width - 1; ++x) {
-            double gx = sobelX[y * width + x];
-            double gy = sobelY[y * width + x];
-
-            // Calcul de la magnitude et de l'angle du gradient
-            gradientMagnitudes[y * width + x] = sqrt(gx * gx + gy * gy);
-            gradientAngles[y * width + x] = atan2(gy, gx) * 180 / M_PI;  // Convertir en degrés
-        }
-    }
-
-    // Libérer la mémoire des matrices Sobel
-    free(sobelX);
-    free(sobelY);
-
-    // Étape 3 : Appliquer la transformation de Hough pour détecter les lignes
-    int houghWidth = 180;  // 180 angles possibles (de -90 à 90)
-    int houghHeight = sqrt(width * width + height * height);  // Taille de la diagonale de l'image
-    int* houghSpace = calloc(houghWidth * houghHeight, sizeof(int));
-
-    // Remplir l'accumulateur de Hough à partir des points détectés par Sobel
-    for (int y = 1; y < height - 1; ++y) {
-        for (int x = 1; x < width - 1; ++x) {
-            if (gradientMagnitudes[y * width + x] > SOBEL_THRESHOLD) {
-                for (int theta = -90; theta < 90; ++theta) {
-                    double thetaRad = theta * M_PI / 180;
-                    int rho = (int)(x * cos(thetaRad) + y * sin(thetaRad));
-                    if (rho >= 0 && rho < houghHeight) {
-                        houghSpace[(theta + 90) * houghHeight + rho]++;
-                    }
-                }
+    for (int y = 1; y < height - 1; ++y)
+    {
+        for (int x = 1; x < width - 1; ++x)
+        {
+            if (gradient_x[y * width + x] != 0 || gradient_y[y * width + x] != 0)
+            {
+                total_angle += angles[y * width + x];
+                count++;
             }
         }
     }
 
-    // Trouver la valeur maximale dans l'espace de Hough (la ligne la plus probable)
-    int maxVotes = 0;
-    int bestTheta = 0;
-    for (int theta = 0; theta < houghWidth; ++theta) {
-        for (int rho = 0; rho < houghHeight; ++rho) {
-            if (houghSpace[theta * houghHeight + rho] > maxVotes) {
-                maxVotes = houghSpace[theta * houghHeight + rho];
-                bestTheta = theta - 90;  // On retourne l'angle en degrés (-90 à 90)
-            }
+    double average_angle = count > 0 ? total_angle / count : 0;
+
+    // Clean up
+    free(gradient_x);
+    free(gradient_y);
+    free(angles);
+
+    return average_angle; // Return the detected rotation angle
+}
+
+// Handle SDL events
+void handle_events(int* quit)
+{
+    SDL_Event e;
+    while (SDL_PollEvent(&e))
+    {
+        if (e.type == SDL_QUIT)
+        {
+            *quit = 1;
         }
     }
-
-    // Libérer la mémoire de l'espace Hough et des gradients
-    free(gradientMagnitudes);
-    free(gradientAngles);
-    free(houghSpace);
-
-    // Retourner l'angle de la ligne principale détectée
-    return (double)bestTheta;
 }
 
-// Fonction pour créer une fenêtre SDL
-SDL_Window* createWindow(const char* title, int width, int height) {
-    SDL_Window* window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
-    if (!window) {
-        fprintf(stderr, "Erreur lors de la création de la fenêtre: %s\n", SDL_GetError());
-        exit(1);
+int main(int argc, char* argv[])
+{
+    // Ensure image file is provided
+    if (argc != 2)
+    {
+        errx(EXIT_FAILURE, "Usage: %s <image_file>", argv[0]);
     }
-    return window;
-}
 
-// Fonction pour créer un renderer SDL
-SDL_Renderer* createRenderer(SDL_Window* window) {
-    SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
-    if (!renderer) {
-        fprintf(stderr, "Erreur lors de la création du renderer: %s\n", SDL_GetError());
-        exit(1);
+    // Initialize SDL
+    if (SDL_Init(SDL_INIT_VIDEO) != 0)
+    {
+        printf("Error initializing SDL: %s\n", SDL_GetError());
+        return EXIT_FAILURE;
     }
-    return renderer;
-}
 
-// Fonction pour afficher l'image avec rotation
-void displayImage(SDL_Renderer* renderer, SDL_Texture* texture, int width, int height, double angle) {
-    SDL_RenderClear(renderer);
-    SDL_Rect dstRect = {0, 0, width, height};
-    SDL_RenderCopyEx(renderer, texture, NULL, &dstRect, angle, NULL, SDL_FLIP_NONE);
-    SDL_RenderPresent(renderer);
-}
-
-// Fonction pour gérer les événements SDL
-int handleEvents() {
-    SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT) {
-            return 0;  // Quitter la boucle
-        }
+    // Initialize SDL_image
+    if (IMG_Init(IMG_INIT_PNG) == 0)
+    {
+        printf("Error initializing SDL_image: %s\n", SDL_GetError());
+        SDL_Quit();
+        return EXIT_FAILURE;
     }
-    return 1;  // Continuer la boucle
-}
 
-// Fonction de nettoyage
-void cleanup(SDL_Texture* texture, SDL_Renderer* renderer, SDL_Window* window) {
+    // Load the image
+    SDL_Surface* image = IMG_Load(argv[1]);
+    if (!image)
+    {
+        printf("Error loading image: %s\n", SDL_GetError());
+        IMG_Quit();
+        SDL_Quit();
+        return EXIT_FAILURE;
+    }
+
+    // Detect rotation angle
+    double angle = detectRotationAngle(image);
+
+    // Create window matching image size
+    SDL_Window* window = create_window("Image Rotation Auto", image->w, image->h);
+
+    // Create renderer
+    SDL_Renderer* renderer = create_renderer(window);
+
+    // Convert surface to texture
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, image);
+    SDL_FreeSurface(image);
+
+    // Main event loop
+    int quit = 0;
+    while (!quit)
+    {
+        // Handle events
+        handle_events(&quit);
+
+        // Clear renderer
+        SDL_RenderClear(renderer);
+
+        // Copy texture with rotation
+        SDL_RenderCopyEx(renderer, texture, NULL, NULL, angle, NULL, SDL_FLIP_NONE);
+
+        // Present the renderer
+        SDL_RenderPresent(renderer);
+    }
+
+    // Clean up resources
     SDL_DestroyTexture(texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     IMG_Quit();
     SDL_Quit();
-}
 
-int main(int argc, char* argv[]) {
-    if (argc < 2) {
-        fprintf(stderr, "Usage: %s <image_file>\n", argv[0]);
-        return 1;
-    }
-
-    const char* imageFile = argv[1];  // Chemin de l'image
-
-    // Initialiser SDL et SDL_image
-    if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        fprintf(stderr, "Erreur SDL: %s\n", SDL_GetError());
-        return 1;
-    }
-
-    if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) == 0) {
-        fprintf(stderr, "Erreur SDL_image: %s\n", IMG_GetError());
-        SDL_Quit();
-        return 1;
-    }
-
-    // Charger l'image et récupérer ses dimensions
-    SDL_Surface* surface = IMG_Load(imageFile);
-    if (!surface) {
-        fprintf(stderr, "Erreur lors du chargement de l'image %s: %s\n", imageFile, IMG_GetError());
-        IMG_Quit();
-        SDL_Quit();
-        return 1;
-    }
-
-    // Détecter l'angle de rotation à partir de l'image
-    double rotationAngle = detectRotationAngle(surface);  // Calcul automatique de l'angle
-
-    // Créer une fenêtre et un renderer pour afficher l'image
-    SDL_Window* window = createWindow("Image Rotation Automatique", surface->w, surface->h);
-    SDL_Renderer* renderer = createRenderer(window);
-    
-    // Créer une texture à partir de la surface
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-    SDL_FreeSurface(surface);  // Libérer la surface après avoir créé la texture
-
-    // Boucle principale pour afficher l'image et gérer les événements
-    int running = 1;
-    while (running) {
-        running = handleEvents();  // Gérer les événements
-        displayImage(renderer, texture, surface->w, surface->h, rotationAngle);  // Afficher l'image avec rotation
-    }
-
-    // Nettoyer les ressources et quitter
-    cleanup(texture, renderer, window);
-
-    return 0;
+    return EXIT_SUCCESS;
 }
