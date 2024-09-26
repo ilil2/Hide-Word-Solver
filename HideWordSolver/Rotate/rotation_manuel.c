@@ -4,85 +4,85 @@
 #include <stdlib.h>
 #include <math.h>
 
-// Fonction pour initialiser SDL et créer une fenêtre
+// Function to initialize SDL and create a window
 SDL_Window* createWindow(const char* title, int width, int height) {
     SDL_Window* window = SDL_CreateWindow(title, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
     if (!window) {
-        fprintf(stderr, "Erreur lors de la création de la fenêtre : %s\n", SDL_GetError());
+        fprintf(stderr, "Error creating window: %s\n", SDL_GetError());
         SDL_Quit();
-        exit(1); // Quitter en cas d'erreur
+        exit(1); // Exit on error
     }
     return window;
 }
 
-// Fonction pour créer un renderer
+// Function to create a renderer
 SDL_Renderer* createRenderer(SDL_Window* window) {
     SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!renderer) {
-        fprintf(stderr, "Erreur lors de la création du renderer : %s\n", SDL_GetError());
+        fprintf(stderr, "Error creating renderer: %s\n", SDL_GetError());
         SDL_DestroyWindow(window);
         SDL_Quit();
-        exit(1); // Quitter en cas d'erreur
+        exit(1); // Exit on error
     }
     return renderer;
 }
 
-// Fonction pour charger l'image et la transformer en texture
+// Function to load the image and create a texture
 SDL_Texture* loadImage(const char* file, SDL_Renderer* renderer, int* width, int* height) {
-    SDL_Surface* surface = IMG_Load(file);  // Charger l'image
+    SDL_Surface* surface = IMG_Load(file);  // Load the image
     if (!surface) {
-        fprintf(stderr, "Erreur lors du chargement de l'image %s: %s\n", file, IMG_GetError());
+        fprintf(stderr, "Error loading image %s: %s\n", file, IMG_GetError());
         SDL_Quit();
-        exit(1); // Quitter en cas d'erreur
+        exit(1); // Exit on error
     }
 
-    // Créer une texture à partir de la surface
+    // Create a texture from the surface
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
     if (!texture) {
-        fprintf(stderr, "Erreur lors de la création de la texture: %s\n", SDL_GetError());
+        fprintf(stderr, "Error creating texture: %s\n", SDL_GetError());
         SDL_FreeSurface(surface);
         SDL_Quit();
-        exit(1); // Quitter en cas d'erreur
+        exit(1); // Exit on error
     }
 
-    // Obtenir la largeur et la hauteur de l'image
+    // Get image width and height
     *width = surface->w;
     *height = surface->h;
 
-    SDL_FreeSurface(surface);  // Libérer la surface après création de la texture
+    SDL_FreeSurface(surface);  // Free surface after texture creation
     return texture;
 }
 
-// Fonction pour afficher l'image avec rotation
+// Function to display the image with rotation
 void displayImage(SDL_Renderer* renderer, SDL_Texture* texture, int imgWidth, int imgHeight, double angle) {
-    // Effacer l'écran
+    // Clear the screen
     SDL_RenderClear(renderer);
 
-    // Définir le centre de rotation au centre de l'image
+    // Set rotation center to the image center
     SDL_Point center = { imgWidth / 2, imgHeight / 2 };
 
-    // Définir la zone de rendu dans la fenêtre
+    // Set render area in the window
     SDL_Rect destRect = { 0, 0, imgWidth, imgHeight };
 
-    // Appliquer la rotation et afficher l'image
+    // Apply rotation and display the image
     SDL_RenderCopyEx(renderer, texture, NULL, &destRect, angle, &center, SDL_FLIP_NONE);
 
-    // Mettre à jour l'affichage
+    // Update the display
     SDL_RenderPresent(renderer);
 }
 
-// Fonction pour gérer les événements (fermeture de la fenêtre)
+// Function to handle events (window close)
 int handleEvents() {
     SDL_Event event;
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
-            return 0;  // Quitter l'application
+            return 0;  // Exit the application
         }
     }
-    return 1;  // Continuer à exécuter
+    return 1;  // Continue running
 }
 
-// Fonction pour gérer la fermeture et nettoyer les ressources
+// Function to clean up and free resources
 void cleanup(SDL_Texture* texture, SDL_Renderer* renderer, SDL_Window* window) {
     if (texture) SDL_DestroyTexture(texture);
     if (renderer) SDL_DestroyRenderer(renderer);
@@ -93,45 +93,45 @@ void cleanup(SDL_Texture* texture, SDL_Renderer* renderer, SDL_Window* window) {
 
 int main(int argc, char* argv[]) {
     if (argc < 3) {
-        fprintf(stderr, "Usage: %s <image_file> <angle_de_rotation>\n", argv[0]);
+        fprintf(stderr, "Usage: %s <image_file> <rotation_angle>\n", argv[0]);
         return 1;
     }
 
-    const char* imageFile = argv[1];  // Chemin de l'image
-    double angle = atof(argv[2]);     // Angle de rotation
+    const char* imageFile = argv[1];  // Image file path
+    double angle = atof(argv[2]);     // Rotation angle
 
-    // Initialiser SDL et SDL_image
+    // Initialize SDL and SDL_image
     if (SDL_Init(SDL_INIT_VIDEO) != 0) {
-        fprintf(stderr, "Erreur SDL: %s\n", SDL_GetError());
+        fprintf(stderr, "SDL Error: %s\n", SDL_GetError());
         return 1;
     }
 
     if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) == 0) {
-        fprintf(stderr, "Erreur SDL_image: %s\n", IMG_GetError());
+        fprintf(stderr, "SDL_image Error: %s\n", IMG_GetError());
         SDL_Quit();
         return 1;
     }
 
     int imgWidth, imgHeight;
 
-    // Créer une fenêtre temporaire avant de charger l'image
+    // Create a temporary window before loading the image
     SDL_Window* window = createWindow("Image Rotation", 800, 600);
     SDL_Renderer* renderer = createRenderer(window);
 
-    // Charger l'image et récupérer ses dimensions
+    // Load the image and get its dimensions
     SDL_Texture* texture = loadImage(imageFile, renderer, &imgWidth, &imgHeight);
 
-    // Redimensionner la fenêtre à la taille de l'image
+    // Resize the window to the image size
     SDL_SetWindowSize(window, imgWidth, imgHeight);
 
-    // Boucle principale pour afficher l'image et gérer les événements
+    // Main loop to display the image and handle events
     int running = 1;
     while (running) {
-        running = handleEvents();  // Gérer les événements
-        displayImage(renderer, texture, imgWidth, imgHeight, angle);  // Afficher l'image
+        running = handleEvents();  // Handle events
+        displayImage(renderer, texture, imgWidth, imgHeight, angle);  // Display the image
     }
 
-    // Nettoyer les ressources et quitter
+    // Clean up resources and exit
     cleanup(texture, renderer, window);
 
     return 0;
