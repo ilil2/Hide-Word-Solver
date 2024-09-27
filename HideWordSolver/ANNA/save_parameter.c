@@ -21,7 +21,7 @@ void save_parameter(double **w_input, // hidden_neuron x input_neuron
 		{
         	for (int j = 0; j < input_neuron; j++)
 			{
-            	fprintf(file_w_input, "%f", w_input[i][j]);
+            	fprintf(file_w_input, "%.15f", w_input[i][j]);
 
             	if (j < input_neuron - 1)
 				{
@@ -45,7 +45,7 @@ void save_parameter(double **w_input, // hidden_neuron x input_neuron
 		{
         	for (int j = 0; j < hidden_neuron; j++)
 			{
-            	fprintf(file_w_output, "%f", w_output[i][j]);
+            	fprintf(file_w_output, "%.15f", w_output[i][j]);
 				
             	if (j < hidden_neuron - 1)
 				{
@@ -67,7 +67,7 @@ void save_parameter(double **w_input, // hidden_neuron x input_neuron
 	{
 		for (size_t i = 0; i < hidden_neuron; i++)
 		{
-        	fprintf(file_b_input, "%f\n", b_input[i]);
+        	fprintf(file_b_input, "%.15f\n", b_input[i]);
     	}
     }
 	else
@@ -81,7 +81,7 @@ void save_parameter(double **w_input, // hidden_neuron x input_neuron
 	{
 		for (size_t i = 0; i < output_neuron; i++)
 		{
-        	fprintf(file_b_output, "%f\n", b_output[i]);
+        	fprintf(file_b_output, "%.15f\n", b_output[i]);
     	}
     }
 	else

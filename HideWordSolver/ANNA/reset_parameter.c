@@ -9,7 +9,7 @@ void reset_parameter(double **w_input, // hidden_neuron x input_neuron
 {
     srand(time(0));
 
-    double limit_w_input = sqrt(6.0 / (hidden_neuron + input_neuron));
+    double limit_w_input = sqrt(2.0 / input_neuron);
     for (int i = 0; i < hidden_neuron; i++)
     {
         for (int j = 0; j < input_neuron; j++)
@@ -18,7 +18,7 @@ void reset_parameter(double **w_input, // hidden_neuron x input_neuron
         }
     }
 
-    double limit_w_output = sqrt(6.0 / (output_neuron + hidden_neuron));
+    double limit_w_output = sqrt(2.0 / hidden_neuron);
     for (int i = 0; i < output_neuron; i++)
     {
         for (int j = 0; j < hidden_neuron; j++)
@@ -29,12 +29,12 @@ void reset_parameter(double **w_input, // hidden_neuron x input_neuron
 
     for (int i = 0; i < hidden_neuron; i++)
     {
-        b_input[i] = ((double)rand() / RAND_MAX) * 2.0 - 0.01;
+        b_input[i] = ((double)rand() / RAND_MAX) * 0.01;
     }
 
     for (int i = 0; i < output_neuron; i++)
     {
-        b_output[i] = ((double)rand() / RAND_MAX) * 2.0 - 0.01;
+        b_output[i] = ((double)rand() / RAND_MAX) * 0.01;
     }
 
     save_parameter(w_input, w_output, b_input, b_output);

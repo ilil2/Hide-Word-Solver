@@ -8,13 +8,14 @@ void update(double **w_input, // hidden_neuron x input_neuron
 		double *db_output, // output_neuron
 		double **dw_input, // hidden_neuron x input_neuron
 		double *db_input, // hidden_neuron
-        double learning_rate)
+        double learning_rate,
+        double lambda)
 {
     for (size_t i = 0; i < hidden_neuron; i++)
     {
         for (size_t j = 0; j < input_neuron; j++)
         {
-            w_input[i][j] -= learning_rate * dw_input[i][j];
+            w_input[i][j] -= learning_rate * (dw_input[i][j] + lambda * w_input[i][j]);
         }
 
         b_input[i] -= learning_rate * db_input[i];
@@ -24,7 +25,7 @@ void update(double **w_input, // hidden_neuron x input_neuron
     {
         for (size_t j = 0; j < hidden_neuron; j++)
         {
-            w_output[i][j] -= learning_rate * dw_output[i][j];
+            w_output[i][j] -= learning_rate * (dw_output[i][j] + lambda * w_output[i][j]);
         }
 
         b_output[i] -= learning_rate * db_output[i];

@@ -1,4 +1,5 @@
 #include "neural_network.h"
+#include <time.h>
 
 void forward(int nb_letter,
 		double **input, // input_neuron x nb_letter
@@ -7,8 +8,9 @@ void forward(int nb_letter,
 		double **w_input, // hidden_neuron x input_neuron
 		double **w_output, // output_neuron x hidden_neuron
 		double *b_input, // hidden_neuron
-		double *b_output,
-		char threads) // output_neuron
+		double *b_output, // output_neuron
+		double dropout_rate,
+		char threads)
 {
 	matrix_product(hidden_neuron, input_neuron, w_input, input_neuron, nb_letter, input, hidden, threads);
 
@@ -18,6 +20,19 @@ void forward(int nb_letter,
 		{
 			hidden[i][j] += b_input[i];
 			hidden[i][j] = sigmoid(hidden[i][j]);
+
+			if (dropout_rate != -1)
+			{
+				if ((double)rand() / RAND_MAX < dropout_rate)
+				{
+					hidden[i][j] = 0;
+				}
+				else
+				{
+					hidden[i][j] /= (1 - dropout_rate);
+				}
+			}
+			
 		}
 	}
 

@@ -98,7 +98,9 @@ void train(int nb_letter, char *anna_result, double** w_input,
 
 	shuffle(dataset_order, nb_dataset);
 
-	double learning_rate = 1;
+	double learning_rate = 0.1;
+	double dropout_rate = 0.2;
+	double lambda = 0.0001;
 	load_parameter(w_input, w_output, b_input, b_output);
 
 	unsigned long long loop = 0;
@@ -121,8 +123,13 @@ void train(int nb_letter, char *anna_result, double** w_input,
 			matrix_shuffle(input, expected_output, input_neuron, output_neuron, nb_letter);
 
 			forward(nb_letter, input, hidden, output, w_input, w_output,
-				b_input, b_output, threads);
-
+				b_input, b_output, dropout_rate, threads);
+			backward(nb_letter, w_output, input, hidden, output,
+					expected_output, output_error, dw_output,
+					db_output, hidden_error, dw_input, db_input, threads);
+			update(w_input, w_output, b_input, b_output, dw_output,
+				db_output, dw_input, db_input, learning_rate, lambda);
+			
 			convert_output_to_char(nb_letter, output, anna_result);
 			convert_output_to_char(nb_letter, expected_output, anna_expected_result);
 			double success = 0;
@@ -139,12 +146,6 @@ void train(int nb_letter, char *anna_result, double** w_input,
 
 			printf("\t\tSuccess (%i) = %f\n", i, success / nb_letter);
 			printf("\t\tLog Loss (%i) = %f\n", i, _log_loss);
-
-			backward(nb_letter, w_output, input, hidden, output,
-					expected_output, output_error, dw_output,
-					db_output, hidden_error, dw_input, db_input, threads);
-			update(w_input, w_output, b_input, b_output, dw_output,
-				db_output, dw_input, db_input, learning_rate);
 		}
 		printf("\n");
 

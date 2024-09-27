@@ -19,7 +19,7 @@ double test(size_t test_size, double **test_input, double **hidden,
 {
 	load_image("Dataset/Train/t", -1, test_size, test_input, expected);
     forward(test_size, test_input, hidden, output, w_input, w_output,
-    			b_input, b_output, thread_nbr);
+    			b_input, b_output, -1, thread_nbr);
 
 	double test_sum = 0;
 
@@ -47,7 +47,7 @@ double test(size_t test_size, double **test_input, double **hidden,
 	}
 	
 	test_sum /= (double)test_size;
-	printf("\ttTotal test success : %f\n", test_sum);
+	printf("\tTotal test success : %f\n", test_sum);
     fflush(stdout);
 
 	return test_sum;
