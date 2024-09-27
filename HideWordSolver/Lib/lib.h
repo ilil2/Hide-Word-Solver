@@ -29,5 +29,6 @@ void matrix_addition(size_t row, size_t col, double **mat1,
 		double **mat2, double **res);
 void matrix_shuffle(double **array, double **array2, int rows1, int rows2, int cols);
 void shuffle(char array[], int n);
+double max(double d1, double d2);
 
 #endif

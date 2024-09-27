@@ -96,5 +96,11 @@ void convolution(int nb_letter,
         double **output,
         double *filter1,
         double *filter2);
+double relu(double d);
+double activ(double d);
+void pooling(size_t nb_letter, double **input, size_t output_size,
+		double **output);
+void layers(size_t nb_letter, double **input, size_t output_size,
+		double **output);
 
 #endif
