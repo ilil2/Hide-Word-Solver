@@ -14,4 +14,6 @@ SDL_Texture* load_image_as_texture(SDL_Renderer* renderer, const char* file);
 
 void display_image(const char* image_path, float angle);
 
+double detectRotationAngle(SDL_Surface* image);
+
 #endif
