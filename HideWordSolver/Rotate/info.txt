@@ -2,22 +2,22 @@ Rotate :
 
 	Etape 1 :
 		- Faire un "make"
-
+		
 	Etape 2 :
 
 		- Faire un "./rotation <image_path> <rotation_type> [angle]"
-			- Image_path représente l'image a utiliser pour nos 
-				exemples ont utilisera "assets/image_rotation.png"
-			- Rotation_type est le type de la rotation qui soit automatique avec "auto" 
-				sois manuel "manual"
-			- Angle représente si on a choisis une rotation manuel l'angle en degré pour tourné l'image
-		- Tout les commandes ont des erreurs qui explique si il manque un argument etc tenter ca ne risque rien
+			- Image_path représente l'image à utiliser pour nos
+				exemples on utilisera "assets/image_rotation.png"
+			- Rotation_type est le type de la rotation qui soit automatique avec "auto"
+				soit manuel "manual"
+			- Angle représente, si on a choisi une rotation manuelle,
+				l'angle en degrés pour tourner l'image
+		- Toutes les commandes ont des erreurs qui expliquent s'il manque un argument etc,
+			Tenter ça ne risque rien
 
 	Etape 3 :
-		- Si aucune erreur l'image s'affiche avec une rotation il suffit ensuite de juste fermer la fenetre
-		
+		- Si aucune erreur l'image s'affiche avec une rotation,
+			il suffit ensuite de juste fermer la fenêtre
+	
 	Etape 4 :
 		- faire un "make clean"
-			
-	
-
