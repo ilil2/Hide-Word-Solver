@@ -1,18 +1,25 @@
 CC = gcc
+
 CFLAGS = -lSDL2 -lSDL2_image -lm
 
-EXEC = rotation
-SRC_MAIN = main.c
-SRC_AUTO = auto_rotation.c
-SRC_MANUAL = manual_rotation.c
-SRC_DISPLAY = display.c 
+OBJ = main.o auto_rotation.o manual_rotation.o display.o
 
+all: rotation
 
-all: $(EXEC)
+rotation: $(OBJ)
+	$(CC) -o rotation $(OBJ) $(CFLAGS)
 
-$(EXEC): $(SRC_MAIN) $(SRC_AUTO) $(SRC_MANUAL) $(SRC_DISPLAY)
-	$(CC) -o $(EXEC) $(SRC_MAIN) $(SRC_AUTO) $(SRC_MANUAL) $(SRC_DISPLAY) $(CFLAGS)
+main.o: main.c rotation.h
+	$(CC) -c main.c $(CFLAGS)
 
+auto_rotation.o: auto_rotation.c rotation.h
+	$(CC) -c auto_rotation.c $(CFLAGS)
+
+manual_rotation.o: manual_rotation.c rotation.h
+	$(CC) -c manual_rotation.c $(CFLAGS)
+
+display.o: display.c rotation.h
+	$(CC) -c display.c $(CFLAGS)
 
 clean:
-	rm -f $(EXEC)
+	rm -f $(OBJ) rotation
