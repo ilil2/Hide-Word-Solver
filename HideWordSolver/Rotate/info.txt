@@ -4,7 +4,6 @@ Rotate :
 		- Faire un "make"
 		
 	Etape 2 :
-
 		- Faire un "./rotation <image_path> <rotation_type> [angle]"
 			- Image_path représente l'image à utiliser pour nos
 				exemples on utilisera "assets/image_rotation.png"
