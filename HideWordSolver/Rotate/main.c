@@ -1,8 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "manual_rotation.h"
-#include "auto_rotation.h"
+#include "rotation.h"
 
 int main(int argc, char *argv[]) 
 {

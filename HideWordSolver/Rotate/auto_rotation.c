@@ -4,8 +4,7 @@
 #include <SDL2/SDL_image.h>
 #include <err.h>
 #include <math.h>
-#include "display.h"
-#include "auto_rotation.h"
+#include "rotation.h"
 
 double detectRotationAngle(SDL_Surface* image)
 {

@@ -4,6 +4,8 @@
 #include <stdlib.h>
 #include <math.h>
 #include <err.h>
+#include "rotation.h"
+
 
 SDL_Window *create_window(char *title,
 		unsigned int width,
