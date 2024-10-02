@@ -19,25 +19,25 @@ void train(int nb_letter, char *anna_result, double** w_input,
 		input[i] = malloc(sizeof(double) * nb_letter);
 	}
 
-	double** hidden = malloc(sizeof(double) * hidden_neuron);
+	double** hidden = malloc(sizeof(double*) * hidden_neuron);
 	for (int i = 0; i < hidden_neuron; i++)
 	{
 		hidden[i] = malloc(sizeof(double) * nb_letter);
 	}
 
-	double** output = malloc(sizeof(double) * output_neuron);
+	double** output = malloc(sizeof(double*) * output_neuron);
 	for (int i = 0; i < output_neuron; i++)
 	{
 		output[i] = malloc(sizeof(double) * nb_letter);
 	}
 
-	double** expected_output = malloc(sizeof(double) * output_neuron);
+	double** expected_output = malloc(sizeof(double*) * output_neuron);
 	for (int i = 0; i < output_neuron; i++)
 	{
 		expected_output[i] = malloc(sizeof(double) * nb_letter);
 	}
 
-	double** output_error = malloc(sizeof(double) * output_neuron);
+	double** output_error = malloc(sizeof(double*) * output_neuron);
 	for (int i = 0; i < output_neuron; i++)
 	{
 		output_error[i] = malloc(sizeof(double) * nb_letter);
@@ -51,7 +51,7 @@ void train(int nb_letter, char *anna_result, double** w_input,
 
 	double* db_output = malloc(sizeof(double) * output_neuron);
 
-	double** hidden_error = malloc(sizeof(double) * hidden_neuron);
+	double** hidden_error = malloc(sizeof(double*) * hidden_neuron);
 	for (int i = 0; i < hidden_neuron; i++)
 	{
 		hidden_error[i] = malloc(sizeof(double) * nb_letter);
@@ -65,20 +65,20 @@ void train(int nb_letter, char *anna_result, double** w_input,
 
 	double* db_input = malloc(sizeof(double) * hidden_neuron);
 
-	double** test_input = malloc(sizeof(double) * input_neuron);
+	double** test_input = malloc(sizeof(double*) * input_neuron);
 	for (size_t i = 0; i < input_neuron; i++)
 	{
 		test_input[i] = malloc(sizeof(double) * test_size);
 	}
 
-	double** test_hidden = malloc(sizeof(double) * hidden_neuron);
+	double** test_hidden = malloc(sizeof(double*) * hidden_neuron);
 	for (size_t i = 0; i < hidden_neuron; i++)
 	{
 		test_hidden[i] = malloc(sizeof(double) * test_size);
 	}
 
 	double** test_output = malloc(sizeof(double) * output_neuron);
-	double** test_expected = malloc(sizeof(double) * output_neuron);
+	double** test_expected = malloc(sizeof(double*) * output_neuron);
 	for (size_t i = 0; i < output_neuron; i++)
 	{
 		test_output[i] = malloc(sizeof(double) * test_size);
