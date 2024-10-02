@@ -4,8 +4,8 @@ void layers(size_t nb_letter,
 		double **input,
 		double **output)
 {
-	double **temp_output = malloc(sizeof(double) * image_size * image_size);
-	for (size_t i = 0; i < image_size; i++)
+	double **temp_output = malloc(sizeof(double*) * image_size * image_size);
+	for (size_t i = 0; i < image_size * image_size; i++)
 	{
 		temp_output[i] = malloc(sizeof(double) * nb_letter);
 	}
@@ -30,4 +30,10 @@ void layers(size_t nb_letter,
 	}
 
 	pooling(nb_letter, temp_output, 8, output);
+
+	for (size_t i = 0; i < image_size * image_size; i++)
+	{
+		free(temp_output[i]);
+	}
+	free(temp_output);
 }
