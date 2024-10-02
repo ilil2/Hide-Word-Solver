@@ -39,7 +39,6 @@ double detectRotationAngle(SDL_Surface* image)
                     Uint8 r, g, b;
                     SDL_GetRGB(pixel, image->format, &r, &g, &b);
                     double intensity = 0.299 * r + 0.587 * g + 0.114 * b;
-
                     gx += sobel_x[ky + 1][kx + 1] * intensity;
                     gy += sobel_y[ky + 1][kx + 1] * intensity;
                 }
@@ -47,8 +46,7 @@ double detectRotationAngle(SDL_Surface* image)
 
             gradient_x[y * width + x] = gx;
             gradient_y[y * width + x] = gy;
-            angles[y * width + x] = atan2(gy, gx) * (180.0 / M_PI);
-        }
+            angles[y * width + x] = atan2(gy, gx) * (180.0 / M_PI);        }
     }
 
     double total_angle = 0;
@@ -58,8 +56,8 @@ double detectRotationAngle(SDL_Surface* image)
     {
         for (int x = 1; x < width - 1; ++x)
         {
-            if (gradient_x[y * width + x] != 0 || gradient_y[y * width + x] != 0)
-            {
+            if (gradient_x[y * width + x] != 0 || gradient_y[y * width + x] != 0)             
+			{
                 total_angle += angles[y * width + x];
                 count++;
             }
@@ -68,9 +66,12 @@ double detectRotationAngle(SDL_Surface* image)
 
     double average_angle = count > 0 ? total_angle / count : 0;
 
+    if (average_angle < 0)
+        average_angle += 360;
+
     free(gradient_x);
     free(gradient_y);
     free(angles);
 
-    return average_angle;
-}
+    return 360 - average_angle;
+} 

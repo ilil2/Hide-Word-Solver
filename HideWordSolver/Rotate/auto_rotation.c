@@ -1,40 +1,43 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <err.h>
-#include <math.h>
+#include <stdlib.h>
+#include <string.h>
+#include "preprocessing.h"
 #include "rotation.h"
 
+SDL_Surface* preprocess_image(SDL_Surface* surface)
+{
+    surface_to_grayscale(surface);
+
+    Uint32* pixels = surface->pixels;
+    int len = surface->w * surface->h;
+    Uint8 threshold = otsus(len, pixels, surface->format);
+    surface_to_black_and_white(surface, threshold);
+
+    Uint32* result = malloc(len * sizeof(Uint32));
+    if (result == NULL)
+        errx(EXIT_FAILURE, "Memory allocation failed");
+
+    sobel(surface, result);
+
+    memcpy(surface->pixels, result, len * sizeof(Uint32));
+
+    free(result);
+
+    return surface;
+}
 
 void auto_rotate(const char* image_path)
 {
-    if (SDL_Init(SDL_INIT_VIDEO) != 0)
-    {
-        printf("Error initializing SDL: %s\n", SDL_GetError());
-        return;
-    }
+    SDL_Surface* surface = IMG_Load(image_path);
+    if (!surface)
+        errx(EXIT_FAILURE, "Image loading failed: %s", IMG_GetError());
 
-    if (IMG_Init(IMG_INIT_PNG) == 0)
-    {
-        printf("Error initializing SDL_image: %s\n", SDL_GetError());
-        SDL_Quit();
-        return;
-    }
+    SDL_Surface* preprocessed_surface = preprocess_image(surface);
+    double angle = detectRotationAngle(preprocessed_surface);
+    
+    display_image(image_path, angle);
 
-    SDL_Surface* image = IMG_Load(image_path);
-    if (!image)
-    {
-        printf("Error loading image: %s\n", SDL_GetError());
-        IMG_Quit();
-        SDL_Quit();
-        return;
-    }
-
-    double angle = detectRotationAngle(image);
-    display_image(image_path, angle); 
-
-    SDL_FreeSurface(image);
-    IMG_Quit();
-    SDL_Quit();
+    SDL_FreeSurface(surface);
 }

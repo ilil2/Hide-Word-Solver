@@ -1,10 +1,9 @@
 CC = gcc
 CFLAGS = -lSDL2 -lSDL2_image -lm
 
-OBJ = main.o auto_rotation.o manual_rotation.o rotation_detection.o display.o
+OBJ = main.o auto_rotation.o manual_rotation.o rotation_detection.o display.o binarization.o grayscale.o sobel.o
 
 all: rotation
-
 
 rotation: $(OBJ)
 	$(CC) -o rotation $(OBJ) $(CFLAGS)
@@ -23,6 +22,15 @@ rotation_detection.o: rotation_detection.c rotation.h
 
 display.o: display.c rotation.h
 	$(CC) -c display.c
+
+binarization.o: binarization.c preprocessing.h
+	$(CC) -c binarization.c
+
+grayscale.o: grayscale.c preprocessing.h
+	$(CC) -c grayscale.c
+
+sobel.o: sobel.c preprocessing.h
+	$(CC) -c sobel.c
 
 clean:
 	rm -f *.o rotation
