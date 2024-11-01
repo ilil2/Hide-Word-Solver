@@ -1,39 +1,36 @@
 #include "neural_network.h"
 
-#define image_size 4
+//#define image_size 4
 
 void pooling(size_t nb_letter,
-		double input[][nb_letter], //(image_size - 2)² x nb_letter
+		double **input, //(image_size - 2)² x nb_letter
 		size_t output_size,
-		double output[][nb_letter]) //output_size x nb_letter
+		double **output) //output_size x nb_letter
 {
 	size_t mod_row = image_size / output_size;
 	for (size_t i = 0; i < nb_letter; i++)
 	{
 		for (size_t block = 0; block < output_size * output_size; block++)
 		{
-			int max = 0;
+			double avg = 0;
 			for (size_t j = mod_row * (block % output_size);
 					j < mod_row * (block % output_size) + mod_row; j++)
 			{
 				for (size_t k = (block / output_size) * mod_row;
 						k < (block / output_size) * mod_row + mod_row; k++)
 				{
-					printf("%f\n", input[k * image_size + j][i]);
-					if (input[k * image_size + j][i] > max)
-					{
-						max = input[k * image_size + j][i];
-						//printf("max : %f\n", max);
-					}
+					//printf("%f\n", input[k * image_size + j][i]);
+					avg += input[k * image_size + j][i];
+					//printf("max : %f\n", max);
 				}
 			}
-			output[block][i] = max;
-			printf("new\n\n\n");
+			output[block][i] = avg / (mod_row * mod_row);
+			//printf("new\n\n\n");
 		}
 	}
 }
 
-int main(int argc, char **argv)
+/*int main(int argc, char **argv)
 {
 	double i[16][1]  = {{125.0},	{3.0}, 		{1.0}, 		{2.0},
 						{124.0}, 	{122.0}, 	{255.0}, 	{0.0},
@@ -48,4 +45,4 @@ int main(int argc, char **argv)
 	{
 		printf("%f, ", o[i][0]);
 	}
-}
+}*/

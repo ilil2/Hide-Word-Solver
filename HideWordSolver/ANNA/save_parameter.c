@@ -1,23 +1,24 @@
 #include "neural_network.h"
 
-void save_parameter(double **w_input, // hidden_neuron x input_neuron
+void save_parameter(double **w_input, // hidden_neuron1 x input_neuron
+		double **w_hidden, // hidden_neuron2 x hidden_neuron1
 		double **w_output, // output_neuron x hidden_neuron
-		double *b_input, // hidden_neuron
+		double *b_input, // hidden_neuron1
+		double *b_hidden, // hidden_neuron2
 		double *b_output) // output_neuron
 {
 	FILE* file_w_input = NULL;
+	FILE* file_w_hidden = NULL;
 	FILE* file_w_output = NULL;
 	FILE* file_b_input = NULL;
+	FILE* file_b_hidden = NULL;
 	FILE* file_b_output = NULL;
 
 	file_w_input = fopen("ANNAParameter/w_input.csv", "w");
-	file_w_output = fopen("ANNAParameter/w_output.csv", "w");
-	file_b_input = fopen("ANNAParameter/b_input.csv", "w");
-	file_b_output = fopen("ANNAParameter/b_output.csv", "w");
 
 	if (file_w_input != NULL)
 	{
-		for (int i = 0; i < hidden_neuron; i++)
+		for (int i = 0; i < hidden_neuron1; i++)
 		{
         	for (int j = 0; j < input_neuron; j++)
 			{
@@ -39,15 +40,43 @@ void save_parameter(double **w_input, // hidden_neuron x input_neuron
 
 	fclose(file_w_input);
 
+	file_w_hidden = fopen("ANNAParameter/w_hidden.csv", "w");
+
+	if (file_w_hidden != NULL)
+	{
+		for (int i = 0; i < hidden_neuron2; i++)
+		{
+        	for (int j = 0; j < hidden_neuron1; j++)
+			{
+            	fprintf(file_w_hidden, "%.15f", w_hidden[i][j]);
+
+            	if (j < hidden_neuron1 - 1)
+				{
+                	fprintf(file_w_hidden, ",");
+            	}
+        	}
+
+        	fprintf(file_w_hidden, "\n");
+    	}
+    }
+	else
+	{
+		printf("Error opening w_hidden.csv files.\n");
+	}
+
+	fclose(file_w_hidden);
+
+	file_w_output = fopen("ANNAParameter/w_output.csv", "w");
+
 	if (file_w_output != NULL)
 	{
 		for (int i = 0; i < output_neuron; i++)
 		{
-        	for (int j = 0; j < hidden_neuron; j++)
+        	for (int j = 0; j < hidden_neuron2; j++)
 			{
             	fprintf(file_w_output, "%.15f", w_output[i][j]);
 				
-            	if (j < hidden_neuron - 1)
+            	if (j < hidden_neuron2 - 1)
 				{
                 	fprintf(file_w_output, ",");
             	}
@@ -63,9 +92,11 @@ void save_parameter(double **w_input, // hidden_neuron x input_neuron
 
 	fclose(file_w_output);
 
+	file_b_input = fopen("ANNAParameter/b_input.csv", "w");
+
 	if (file_b_input != NULL)
 	{
-		for (size_t i = 0; i < hidden_neuron; i++)
+		for (size_t i = 0; i < hidden_neuron1; i++)
 		{
         	fprintf(file_b_input, "%.15f\n", b_input[i]);
     	}
@@ -76,6 +107,24 @@ void save_parameter(double **w_input, // hidden_neuron x input_neuron
 	}
 
 	fclose(file_b_input);
+
+	file_b_hidden = fopen("ANNAParameter/b_hidden.csv", "w");
+
+	if (file_b_hidden != NULL)
+	{
+		for (size_t i = 0; i < hidden_neuron2; i++)
+		{
+        	fprintf(file_b_hidden, "%.15f\n", b_hidden[i]);
+    	}
+    }
+	else
+	{
+		printf("Error opening b_hidden.csv files.\n");
+	}
+
+	fclose(file_b_hidden);
+
+	file_b_output = fopen("ANNAParameter/b_output.csv", "w");
 
 	if (file_b_output != NULL)
 	{

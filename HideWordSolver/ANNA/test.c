@@ -13,13 +13,24 @@ typedef struct
 
 void *_test(void *arg);
 
-double test(size_t test_size, double **test_input, double **hidden,
-		double **expected, double **output, double **w_input,
-		double **w_output,double *b_input, double *b_output, char thread_nbr)
+double test(size_t test_size,
+		double **test_input,
+		double **test_hidden1,
+		double **test_hidden2,
+		double **test_expected,
+		double **test_output,
+		double **w_input,
+		double **w_hidden,
+		double **w_output,
+		double *b_input,
+		double *b_hidden,
+		double *b_output,
+		char thread_nbr)
 {
-	load_image("Dataset/Train/t", -1, test_size, test_input, expected);
-    forward(test_size, test_input, hidden, output, w_input, w_output,
-    			b_input, b_output, -1, thread_nbr);
+	load_image("Dataset/Train/t", -1, test_size, test_input, test_expected);
+    forward(test_size, test_input, test_hidden1, test_hidden2, test_output,
+		w_input, w_hidden, w_output, b_input, b_hidden, b_output, -1,
+		thread_nbr);
 
 	double test_sum = 0;
 
@@ -32,7 +43,7 @@ double test(size_t test_size, double **test_input, double **hidden,
     	size_t end = ((i + 1) * test_size) / thread_nbr;
 
 		data[i] = malloc(sizeof(ThreadTest));
-		*data[i] = (ThreadTest){start, end, output, expected};
+		*data[i] = (ThreadTest){start, end, test_output, test_expected};
 
 		pthread_create(&threads[i], NULL, _test, data[i]);
 	}

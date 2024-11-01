@@ -3,15 +3,21 @@
 
 int main(int argc, char** argv)
 {
-    double **w_input = malloc(hidden_neuron * sizeof(double *));
-    for (int i = 0; i < hidden_neuron; i++)
+    double **w_input = malloc(hidden_neuron1 * sizeof(double *));
+    for (int i = 0; i < hidden_neuron1; i++)
         w_input[i] = malloc(input_neuron * sizeof(double));
+
+    double **w_hidden = malloc(hidden_neuron2 * sizeof(double *));
+    for (int i = 0; i < hidden_neuron2; i++)
+        w_hidden[i] = malloc(hidden_neuron1 * sizeof(double));
 
     double **w_output = malloc(output_neuron * sizeof(double *));
     for (int i = 0; i < output_neuron; i++)
-        w_output[i] = malloc(hidden_neuron * sizeof(double));
+        w_output[i] = malloc(hidden_neuron2 * sizeof(double));
 
-    double *b_input = malloc(hidden_neuron * sizeof(double));
+    double *b_input = malloc(hidden_neuron1 * sizeof(double));
+
+    double *b_hidden = malloc(hidden_neuron2 * sizeof(double));
 
     double *b_output = malloc(output_neuron * sizeof(double));
 
@@ -21,7 +27,8 @@ int main(int argc, char** argv)
         {
             printf("Resetting ANNA parameters...\n");
 
-            reset_parameter(w_input, w_output, b_input, b_output);
+            reset_parameter(w_input, w_hidden, w_output, b_input,
+                b_hidden, b_output);
 
             printf("ANNA's parameters have been reset.\n");
         }
@@ -43,7 +50,8 @@ int main(int argc, char** argv)
                 char *anna_result = malloc(nb_letter * sizeof(char));
                 printf("ANNA's training start.\n");
 
-                train(nb_letter, anna_result, w_input, w_output, b_input, b_output, threads);
+                train(nb_letter, anna_result, w_input, w_hidden, w_output,
+                    b_input, b_hidden, b_output, threads);
             }
             else
             {
@@ -60,15 +68,20 @@ int main(int argc, char** argv)
         errx(400, "The number of arguments is invalid.");
     }
 
-    for (int i = 0; i < hidden_neuron; i++)
+    for (int i = 0; i < hidden_neuron1; i++)
         free(w_input[i]);
     free(w_input);
+
+    for (int i = 0; i < hidden_neuron2; i++)
+        free(w_hidden[i]);
+    free(w_hidden);
 
     for (int i = 0; i < output_neuron; i++)
         free(w_output[i]);
     free(w_output);
 
     free(b_input);
+    free(b_hidden);
     free(b_output);
 
     return 0;

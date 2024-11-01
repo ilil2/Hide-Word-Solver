@@ -9,14 +9,18 @@ int main(int argc, char **argv)
 
     if (argc >= 5)
     {
-		// {directory/text_to_add} {nb_file} {nb_per_csv} {char}
-		char buffer[100];
-		for (int i = 0; i < atoi(argv[2]); i++)
+		for (char j = 'A'; j <= 'Z'; j++)
 		{
-			sprintf(buffer, "%s%i.jpg", argv[1], i);
-			printf("Convert file: %i\n", i);
-			fflush(stdout);
-			add_to_dataset(buffer, i / atoi(argv[3]), argv[4][0]);
+			// {directory/text_to_add} {nb_file} {nb_per_csv} {char}
+			char buffer[100];
+			printf("File : %c\n", j);
+			for (int i = 0; i < atoi(argv[2]); i++)
+			{
+				sprintf(buffer, "../../../../16x16/%c/%i.jpg", j, i);
+				printf("\tConvert file: %i\n", i);
+				fflush(stdout);
+				add_to_dataset(buffer, i / atoi(argv[3]), j);
+			}
 		}
     }
 	else

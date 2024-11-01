@@ -25,7 +25,7 @@ void layers(size_t nb_letter,
 	{
 		for (size_t j = 0; j < nb_letter; j++)
 		{
-			temp_output[i][j] = relu(temp_output[i][j]);
+			temp_output[i][j] = activ(temp_output[i][j]);
 		}
 	}
 

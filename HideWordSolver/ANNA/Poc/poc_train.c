@@ -110,13 +110,32 @@ int main()
 
 	double* db_input = malloc(sizeof(double) * hidden_neuron);
 
-	double learning_rate = 1;
+	double learning_rate = 3;
 
 	unsigned long long loop = 0;
-	size_t nb_while = 10000;
+	size_t nb_while = 500;
 
 	while (nb_while)
 	{
+		//Shuffle
+		srand(time(NULL));
+
+		for (int i = nb_letters - 1; i > 0; i--)
+		{
+			int j = rand() % (i + 1);
+
+			for (int k = 0; k < input_neuron; k++)
+			{
+				double temp1 = input[k][i];
+				input[k][i] = input[k][j];
+				input[k][j] = temp1;
+			}
+
+			double temp2 = expected_output[0][i];
+			expected_output[0][i] = expected_output[0][j];
+			expected_output[0][j] = temp2;
+		}
+
 		nb_while -= 1;
 		loop++;
 		printf("Boucle numero : %llu\n", loop);
@@ -147,5 +166,22 @@ int main()
 		}
 		printf("\n");
 		
+	}
+
+	size_t nb_train = 10;
+	loop = 0;
+	while (nb_train)
+	{
+		double** input_test = malloc(sizeof(double*) * 2);
+		input_test[0] = malloc(sizeof(double) * 1);
+		input_test[1] = malloc(sizeof(double) * 1);
+		printf("Boucle numero : %llu\n", loop);
+		scanf("%lf %lf", &(input_test[0][0]), &(input_test[1][0]));
+		loop += 1;
+		nb_train -= 1;
+
+    	forward(1, input_test, hidden, output, w_input, w_output, b_input, b_output);
+
+		printf("%f\n", output[0][0]);
 	}
 }

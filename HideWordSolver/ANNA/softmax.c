@@ -3,16 +3,27 @@
 
 void softmax(int nb_letter, double **output)
 {
-	for (size_t i = 0; i < output_neuron; i++)
-	{
-		double sum = 0;
-		for (size_t j = 0; j < (size_t)nb_letter; j++)
-		{
-			sum += exp(output[i][j]);
-		}
-		for (size_t j = 0; j < (size_t)nb_letter; j++)
-		{
-			output[i][j] = exp(output[i][j]) / sum;
-		}
-	}
+	for (int n = 0; n < nb_letter; n++)
+    {
+        double max = output[0][n];
+        for (int i = 1; i < output_neuron; i++)
+        {
+            if (output[i][n] > max)
+            {
+                max = output[i][n];
+            }
+        }
+
+        double sum = 0.0;
+        for (int i = 0; i < output_neuron; i++)
+        {
+            output[i][n] = exp(output[i][n] - max);
+            sum += output[i][n];
+        }
+
+        for (int i = 0; i < output_neuron; i++)
+        {
+            output[i][n] /= sum;
+        }
+    }
 }

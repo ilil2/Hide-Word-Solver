@@ -4,8 +4,8 @@ void bmp_to_csv(const SDL_Surface *tmp, int i, char output)
 {
     char ibuffer[100];
     char obuffer[100];
-    sprintf(ibuffer, "Train/x%i.csv", i);
-    sprintf(obuffer, "Train/y%i.csv", i);
+    sprintf(ibuffer, "Train3/x%i.csv", i);
+    sprintf(obuffer, "Train3/y%i.csv", i);
     FILE *input_file = fopen(ibuffer, "a");
     FILE *output_file = fopen(obuffer, "a");
 

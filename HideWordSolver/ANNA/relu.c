@@ -2,5 +2,5 @@
 
 double relu(double d)
 {
-    return max(0, d);
+    return d > 0 ? d : 0.0;
 }

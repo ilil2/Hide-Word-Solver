@@ -2,15 +2,18 @@
 #include <math.h>
 #include <time.h>
 
-void reset_parameter(double **w_input, // hidden_neuron x input_neuron
-		    double **w_output, // output_neuron x hidden_neuron
-		    double *b_input, // hidden_neuron
-		    double *b_output) // output_neuron
+void reset_parameter(double **w_input, // hidden_neuron1 x input_neuron
+		double **w_hidden, // hidden_neuron2 x hidden_neuron1
+		double **w_output, // output_neuron x hidden_neuron
+		double *b_input, // hidden_neuron1
+		double *b_hidden, // hidden_neuron2
+		double *b_output) // output_neuron
 {
     srand(time(0));
 
-    double limit_w_input = sqrt(2.0 / input_neuron);
-    for (int i = 0; i < hidden_neuron; i++)
+    double limit_w_input = sqrt(6.0 / input_neuron);
+    //double limit_w_input = sqrt(6.0 / (input_neuron + hidden_neuron1));
+    for (int i = 0; i < hidden_neuron1; i++)
     {
         for (int j = 0; j < input_neuron; j++)
         {
@@ -18,26 +21,45 @@ void reset_parameter(double **w_input, // hidden_neuron x input_neuron
         }
     }
 
-    double limit_w_output = sqrt(2.0 / hidden_neuron);
+    double limit_w_hidden = sqrt(6.0 / hidden_neuron1);
+    //double limit_w_hidden = sqrt(6.0 / (hidden_neuron1 + hidden_neuron2));
+    for (int i = 0; i < hidden_neuron2; i++)
+    {
+        for (int j = 0; j < hidden_neuron1; j++)
+        {
+            w_hidden[i][j] = ((double)rand() / RAND_MAX) * 2.0 * limit_w_hidden - limit_w_hidden;
+        }
+    }
+
+    double limit_w_output = sqrt(6.0 / hidden_neuron2);
+    //double limit_w_output = sqrt(6.0 / (hidden_neuron2 + output_neuron));
     for (int i = 0; i < output_neuron; i++)
     {
-        for (int j = 0; j < hidden_neuron; j++)
+        for (int j = 0; j < hidden_neuron2; j++)
         {
             w_output[i][j] = ((double)rand() / RAND_MAX) * 2.0 * limit_w_output - limit_w_output;
         }
     }
 
-    for (int i = 0; i < hidden_neuron; i++)
+    for (int i = 0; i < hidden_neuron1; i++)
     {
-        b_input[i] = ((double)rand() / RAND_MAX) * 0.01;
+        b_input[i] = 0.01;
+        //b_input[i] = ((double)rand() / RAND_MAX) * 2.0 - 0.01;
+    }
+
+    for (int i = 0; i < hidden_neuron2; i++)
+    {
+        b_hidden[i] = 0.01;
+        //b_hidden[i] = ((double)rand() / RAND_MAX) * 2.0 - 0.01;
     }
 
     for (int i = 0; i < output_neuron; i++)
     {
-        b_output[i] = ((double)rand() / RAND_MAX) * 0.01;
+        b_output[i] = 0.01;
+        //b_output[i] = ((double)rand() / RAND_MAX) * 2.0 - 0.01;
     }
 
-    save_parameter(w_input, w_output, b_input, b_output);
+    save_parameter(w_input, w_hidden, w_output, b_input, b_hidden, b_output);
 
     FILE* save_file = NULL;
 

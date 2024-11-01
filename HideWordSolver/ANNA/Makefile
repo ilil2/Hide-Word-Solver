@@ -2,7 +2,7 @@
 
 CC = gcc
 CFLAGS = -Wall -Wextra -g -lm -pthread -O3
-SRC = neural_network.c reset_parameter.c save_parameter.c load_parameter.c load_image.c sigmoid.c sigmoid_prime.c train.c forward.c backward.c update.c log_loss.c convert_char_to_output.c convert_output_to_char.c test.c save_stats.c relu.c activ.c pooling.c convolution.c layers.c
+SRC = neural_network.c reset_parameter.c save_parameter.c load_parameter.c load_image.c sigmoid.c sigmoid_prime.c train.c forward.c backward.c update.c log_loss.c convert_char_to_output.c convert_output_to_char.c test.c save_stats.c relu.c relu_prime.c activ.c activ_prime.c pooling.c convolution.c layers.c softmax.c
 LIB_SRC = ../Lib/matrix_product.c ../Lib/matrix_product_t.c ../Lib/matrix_addition.c ../Lib/matrix_transpose.c ../Lib/strcomp.c ../Lib/shuffle.c ../Lib/matrix_shuffle.c ../Lib/atoi.c ../Lib/max.c
 OBJ = $(SRC:.c=.o) $(LIB_SRC:.c=.o)
 EXE = ANNA
