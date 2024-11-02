@@ -32,8 +32,8 @@ void matrix_product(size_t row1, size_t col1, double **mat1,
 			size_t end_row = ((i + 1) * row1) / thread_nbr;
 
 			thread_data[i] = malloc(sizeof(MatrixProductThreadData));
-			*thread_data[i] = (MatrixProductThreadData){mat1, mat2, res, start_row,
-				end_row, row1, col2, col1};
+			*thread_data[i] = (MatrixProductThreadData){mat1, mat2, res,
+				start_row, end_row, row1, col2, col1};
 			pthread_create(&threads[i], NULL, _matrix_product, thread_data[i]);
 		}
 
