@@ -112,10 +112,10 @@ int main()
 
 	double* db_input = malloc(sizeof(double) * hidden_neuron);
 
-	double learning_rate = 5;
+	double learning_rate = 3;
 
 	unsigned long long loop = 0;
-	size_t nb_while = 1000;
+	size_t nb_while = 5000;
 
 	// Train loop
 	while (nb_while)
@@ -141,7 +141,7 @@ int main()
 
 		nb_while -= 1;
 		loop++;
-		printf("Boucle numero : %llu\n", loop);
+		printf("Train loop number : %llu\n", loop);
 
 		// Applying forward propagation
 		forward(nb_letters, input, hidden, output, w_input, w_output,
@@ -176,6 +176,7 @@ int main()
 		printf("\n");
 		
 	}
+	printf("\n");
 
 	// Test loop
 	size_t nb_train = 4;
@@ -185,7 +186,8 @@ int main()
 		double** input_test = malloc(sizeof(double*) * 2);
 		input_test[0] = malloc(sizeof(double) * 1);
 		input_test[1] = malloc(sizeof(double) * 1);
-		printf("Boucle numero : %llu\n", loop);
+		printf("Test loop number : %llu\n", loop);
+		printf("Choose the value of A and B : ");
 		scanf("%lf %lf", &(input_test[0][0]), &(input_test[1][0]));
 		loop += 1;
 		nb_train -= 1;
@@ -193,6 +195,8 @@ int main()
     	forward(1, input_test, hidden, output, w_input, w_output,
 			b_input, b_output);
 
-		printf("%f\n", output[0][0]);
+		printf("Probability : %f\n", output[0][0]);
+		printf("Result : %i\n\n", output[0][0] >= 0.5 ? 1 : 0);
+
 	}
 }

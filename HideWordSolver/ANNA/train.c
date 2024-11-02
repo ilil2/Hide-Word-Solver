@@ -144,7 +144,7 @@ void train(int nb_letter,
 	{
 		//nb_while -= 1;
 		loop++;
-		printf("Boucle numero : %llu\n", loop);
+		printf("Loop number : %llu\n", loop);
 
 		// Mixing the dataset
 		shuffle(dataset_order, nb_dataset);
@@ -211,7 +211,6 @@ void train(int nb_letter,
 		// Save parameter and stats
 		if (loop % 1 == 0)
 		{
-			//printf("Boucle numero : %llu\n", loop);
 			printf("\tTotal log loss = %f\n", log_loss_t / nb_dataset);
 			printf("\tTotal train success = %f\n", train_success_t / nb_dataset);
 			double test_succes_t = test(test_size, test_input, test_hidden1,
