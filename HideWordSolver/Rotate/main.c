@@ -6,7 +6,8 @@
 int main(int argc, char *argv[]) 
 {
     if (argc < 3) {
-        printf("Usage: %s <image_path> <rotation_type> [angle]\n", argv[0]);
+        printf("Usage: %s <image_path> <rotation_type> [angle]\n",
+				argv[0]);
         return 1;
     }
 
@@ -31,7 +32,8 @@ int main(int argc, char *argv[])
 
 	//Erreur
     else {
-        printf("Unknown rotation type: %s. Use 'manual' or 'auto'.\n", rotation_type);
+        printf("Unknown rotation type: %s. Use 'manual' or 'auto'.\n",
+				rotation_type);
         return 1;
     }
 

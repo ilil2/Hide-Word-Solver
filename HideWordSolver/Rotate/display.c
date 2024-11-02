@@ -21,7 +21,9 @@ void display_image(const char* image_file, float angle) {
     if (SDL_Init(SDL_INIT_VIDEO) != 0)
         errx(EXIT_FAILURE, "Failed to initialize SDL: %s", SDL_GetError());
 
-    window = SDL_CreateWindow("example", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 500, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
+    window = SDL_CreateWindow("example",
+			SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+			800, 500, SDL_WINDOW_SHOWN | SDL_WINDOW_RESIZABLE);
     if (!window)
         errx(EXIT_FAILURE, "Failed to create SDL window: %s", SDL_GetError());
 
@@ -60,7 +62,8 @@ void display_image(const char* image_file, float angle) {
         SDL_RenderClear(renderer);
         SDL_Point center = { imgWidth / 2, imgHeight / 2 };
         SDL_Rect destRect = { 0, 0, imgWidth, imgHeight };
-        SDL_RenderCopyEx(renderer, texture, NULL, &destRect, angle, &center, SDL_FLIP_NONE);
+        SDL_RenderCopyEx(renderer, texture, NULL,
+				&destRect, angle, &center, SDL_FLIP_NONE);
         SDL_RenderPresent(renderer);
     }
 
