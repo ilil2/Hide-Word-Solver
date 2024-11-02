@@ -33,6 +33,7 @@ void update(double **w_input,     // hidden_neuron1 x input_neuron
     double beta1_t = pow(beta1, t);
     double beta2_t = pow(beta2, t);
 
+    // Update the first hidden layer weight and bias
     for (int i = 0; i < hidden_neuron1; i++)
     {
         for (int j = 0; j < input_neuron; j++)
@@ -58,6 +59,7 @@ void update(double **w_input,     // hidden_neuron1 x input_neuron
         b_input[i] -= learning_rate * m_hat / (sqrt(v_hat) + epsilon);
     }
 
+    // Update the second hidden layer weight and bias
     for (int i = 0; i < hidden_neuron2; i++)
     {
         for (int j = 0; j < hidden_neuron1; j++)
@@ -83,6 +85,7 @@ void update(double **w_input,     // hidden_neuron1 x input_neuron
         b_hidden[i] -= learning_rate * m_hat / (sqrt(v_hat) + epsilon);
     }
 
+    // Update the output weight and bias
     for (int i = 0; i < output_neuron; i++)
     {
         for (int j = 0; j < hidden_neuron2; j++)

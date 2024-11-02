@@ -134,6 +134,7 @@ void train(int nb_letter,
 
 	int t = 0;
 
+	// Loading neural network biases and weights
 	load_parameter(w_input, w_hidden, w_output, b_input, b_hidden, b_output);
 
 	unsigned long long loop = 0;
@@ -145,6 +146,7 @@ void train(int nb_letter,
 		loop++;
 		printf("Boucle numero : %llu\n", loop);
 
+		// Mixing the dataset
 		shuffle(dataset_order, nb_dataset);
 
 		double train_success_t = 0;
@@ -154,19 +156,27 @@ void train(int nb_letter,
 		{
 			t++;
 			printf("\t%i, Data Set %i :\n", i, dataset_order[i]);
+
+			// Loading images
 			load_image("Dataset/Train/", dataset_order[i], nb_letter, input,
 				expected_output);
 
+			// Mixing dataset images
 			matrix_shuffle(input, expected_output, input_neuron,
 				output_neuron, nb_letter);
 
+			// Applying forward propagation
 			forward(nb_letter, input, hidden1, hidden2, output, w_input,
 				w_hidden, w_output, b_input, b_hidden, b_output, dropout_rate,
 				threads);
+
+			// Applying back propagation
 			backward(nb_letter, w_output, w_hidden, input, hidden1, hidden2,
 				output, expected_output, output_error, dw_output,
 				db_output, hidden2_error, dw_hidden, db_hidden, hidden1_error,
 				dw_input, db_input, threads);
+
+			// Applying Adam optimizer
 			update(w_input, w_hidden, w_output, b_input, b_hidden, b_output,
             	dw_output, db_output, dw_hidden, db_hidden, dw_input, db_input,
             	m_w_input, v_w_input, m_w_hidden, v_w_hidden, m_w_output,
@@ -174,8 +184,10 @@ void train(int nb_letter,
             	m_b_output, v_b_output, learning_rate, beta1, beta2, epsilon,
             	t);
 
+			// Applying softmax function
 			softmax(nb_letter, output);
-			
+
+			// Check result
 			convert_output_to_char(nb_letter, output, anna_result);
 			convert_output_to_char(nb_letter, expected_output,
 				anna_expected_result);
@@ -196,6 +208,7 @@ void train(int nb_letter,
 		}
 		printf("\n");
 
+		// Save parameter and stats
 		if (loop % 1 == 0)
 		{
 			//printf("Boucle numero : %llu\n", loop);

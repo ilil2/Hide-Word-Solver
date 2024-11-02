@@ -19,6 +19,7 @@ void layers(size_t nb_letter,
 						-1, 5, -1,
 						0, -1, 0};
 
+	// Apply convolution layers
 	convolution(nb_letter, input, temp_output, filter1, filter2);
 
 	for (size_t i = 0; i < image_size * image_size; i++)
@@ -29,6 +30,7 @@ void layers(size_t nb_letter,
 		}
 	}
 
+	// Apply pooling layers
 	pooling(nb_letter, temp_output, 8, output);
 
 	for (size_t i = 0; i < image_size * image_size; i++)

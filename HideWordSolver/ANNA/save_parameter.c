@@ -14,6 +14,7 @@ void save_parameter(double **w_input, // hidden_neuron1 x input_neuron
 	FILE* file_b_hidden = NULL;
 	FILE* file_b_output = NULL;
 
+    // Save the weights of the first hidden layer
 	file_w_input = fopen("ANNAParameter/w_input.csv", "w");
 
 	if (file_w_input != NULL)
@@ -40,6 +41,7 @@ void save_parameter(double **w_input, // hidden_neuron1 x input_neuron
 
 	fclose(file_w_input);
 
+    // Save the weights of the second hidden layer
 	file_w_hidden = fopen("ANNAParameter/w_hidden.csv", "w");
 
 	if (file_w_hidden != NULL)
@@ -66,6 +68,7 @@ void save_parameter(double **w_input, // hidden_neuron1 x input_neuron
 
 	fclose(file_w_hidden);
 
+    // Save the weights of the output
 	file_w_output = fopen("ANNAParameter/w_output.csv", "w");
 
 	if (file_w_output != NULL)
@@ -92,6 +95,7 @@ void save_parameter(double **w_input, // hidden_neuron1 x input_neuron
 
 	fclose(file_w_output);
 
+    // Save the bias of the first hidden layer
 	file_b_input = fopen("ANNAParameter/b_input.csv", "w");
 
 	if (file_b_input != NULL)
@@ -108,6 +112,7 @@ void save_parameter(double **w_input, // hidden_neuron1 x input_neuron
 
 	fclose(file_b_input);
 
+    // Save the bias of the second hidden layer
 	file_b_hidden = fopen("ANNAParameter/b_hidden.csv", "w");
 
 	if (file_b_hidden != NULL)
@@ -124,6 +129,7 @@ void save_parameter(double **w_input, // hidden_neuron1 x input_neuron
 
 	fclose(file_b_hidden);
 
+    // Save the bias of the output
 	file_b_output = fopen("ANNAParameter/b_output.csv", "w");
 
 	if (file_b_output != NULL)

@@ -33,7 +33,7 @@ int main(int argc, char** argv)
         }
         else if (strcomp(argv[1], "start"))
         {
-            //char *anna_result = malloc(1 * sizeof(char));
+            char *anna_result = malloc(1 * sizeof(char));
             printf("ANNA's character recognition activated !\n");
         }
         else if (strcomp(argv[1], "train"))

@@ -4,7 +4,7 @@ void convert_output_to_char(int nb_letter,
 		double **output, // output_neuron x nb_letter
 		char *anna_result) // nb_letter
 {
-
+	// Converts a matrix of 1's and 0's into char
 	for (int i = 1; i < nb_letter; i++)
 	{
 		double max = output[0][i];

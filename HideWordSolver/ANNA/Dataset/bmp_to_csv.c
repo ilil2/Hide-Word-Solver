@@ -24,6 +24,7 @@ void bmp_to_csv(const SDL_Surface *tmp, int i, char output)
     int height = tmp->h;
     int pitch = tmp->pitch;
 
+    // Save image pixels
     for (int y = 0; y < height; y++)
 	{
         for (int x = 0; x < width; x++)
@@ -32,6 +33,7 @@ void bmp_to_csv(const SDL_Surface *tmp, int i, char output)
             unsigned char g = pixels[y * pitch + x + 1];
             unsigned char b = pixels[y * pitch + x + 2];
 
+            // Apply grayscale
             unsigned char grayscale = (unsigned char)((r + g + b) / 3);
 
             fprintf(input_file, "%d", grayscale);
@@ -44,6 +46,7 @@ void bmp_to_csv(const SDL_Surface *tmp, int i, char output)
     }
 	fprintf(input_file, "\n");
 
+    // Save output
     fprintf(output_file, "%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,
         %c,%c,%c,%c,%c,%c,%c,%c,%c\n",
         (output == 'A') + '0', (output == 'B') + '0', (output == 'C') + '0',

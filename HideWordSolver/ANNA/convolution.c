@@ -6,6 +6,7 @@ void convolution(int nb_letter,
                 double *filter1, // filter_size x filter_size
                 double *filter2) // filter_size x filter_size
 {
+    // Applying the first filter
     for (int i = 0; i < nb_letter; i++)
     {
         for (size_t j = 0; j < image_size - filter_size + 1; j++)
@@ -24,6 +25,7 @@ void convolution(int nb_letter,
         }
     }
 
+    // Applying the second filter
     for (int i = 0; i < nb_letter; i++)
     {
         for (size_t j = 0; j < image_size - filter_size + 1; j++)
@@ -42,6 +44,7 @@ void convolution(int nb_letter,
         }
     }
 
+    // Applying the first filter for the second time
     for (int i = 0; i < nb_letter; i++)
     {
         for (size_t j = 0; j < image_size - filter_size + 1; j++)

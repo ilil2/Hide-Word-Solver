@@ -2,6 +2,7 @@
 
 void save_stats(size_t i, double log_loss, double train_set, double test_set)
 {
+    // Save new ANNA stats
     FILE* save_file = NULL;
 
     save_file = fopen("ANNAStats/anna_stats.csv", "a");

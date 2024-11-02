@@ -50,6 +50,7 @@ int main()
 		input[i] = malloc(sizeof(double) * nb_letters);
 	}
 
+	// Set input
 	input[0][0] = 0;
 	input[1][0] = 0;
 	input[0][1] = 0;
@@ -77,6 +78,7 @@ int main()
 		expected_output[i] = malloc(sizeof(double) * nb_letters);
 	}
 
+	// Set output
 	expected_output[0][0] = 1;
 	expected_output[0][1] = 0;
 	expected_output[0][2] = 0;
@@ -115,6 +117,7 @@ int main()
 	unsigned long long loop = 0;
 	size_t nb_while = 500;
 
+	// Train loop
 	while (nb_while)
 	{
 		//Shuffle
@@ -140,18 +143,23 @@ int main()
 		loop++;
 		printf("Boucle numero : %llu\n", loop);
 
+		// Applying forward propagation
 		forward(nb_letters, input, hidden, output, w_input, w_output,
 				b_input, b_output);
-			
+
 		printf("\t\tLog Loss = %f\n", log_loss(nb_letters,
 			expected_output, output));
 
+		// Applying back propagation
 		backward(nb_letters, w_output, input, hidden, output, expected_output,
 			output_error, dw_output, db_output, hidden_error,
 			dw_input, db_input);
+
+		// Applying gradient descent
 		update(w_input, w_output, b_input, b_output, dw_output,
 			db_output, dw_input, db_input, learning_rate);
-		
+
+		// Check result
 		for (size_t i = 0; i < 4; i++)
 		{
 			if (output[0][i] > 0.5)
@@ -169,6 +177,7 @@ int main()
 		
 	}
 
+	// Test loop
 	size_t nb_train = 4;
 	loop = 0;
 	while (nb_train)

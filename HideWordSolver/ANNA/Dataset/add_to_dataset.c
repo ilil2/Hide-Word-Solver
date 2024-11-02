@@ -8,6 +8,7 @@ void add_to_dataset(const char *img, int i, char output)
 	{
 		fclose(file);
 
+		// Convert image into .bmp file
 		char command[256];
 		snprintf(command, sizeof(command), "magick %s image.bmp", img);
 
@@ -28,6 +29,7 @@ void add_to_dataset(const char *img, int i, char output)
 			}
 			else
 			{
+				// Save image on csv file
 				bmp_to_csv(tmp, i, output);
 			}
 

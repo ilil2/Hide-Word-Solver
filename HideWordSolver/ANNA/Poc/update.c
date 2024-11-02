@@ -10,6 +10,7 @@ void update(double **w_input, // hidden_neuron x input_neuron
 		double *db_input, // hidden_neuron
         double learning_rate)
 {
+    // Update the hidden layer weight and bias
     for (size_t i = 0; i < hidden_neuron; i++)
     {
         for (size_t j = 0; j < input_neuron; j++)
@@ -20,6 +21,7 @@ void update(double **w_input, // hidden_neuron x input_neuron
         b_input[i] -= learning_rate * db_input[i];
     }
 
+    // Update the output weight and bias
     for (size_t i = 0; i < output_neuron; i++)
     {
         for (size_t j = 0; j < hidden_neuron; j++)

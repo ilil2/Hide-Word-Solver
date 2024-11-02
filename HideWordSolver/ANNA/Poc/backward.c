@@ -13,6 +13,7 @@ void backward(int nb_letter,
 		double **dw_input, // hidden_neuron x input_neuron
 		double *db_input) // hidden_neuron
 {
+    // Apply back propagation on weights and biases between output and hidden layer
 	for (size_t i = 0; i < output_neuron; i++)
 	{
 		for (int j = 0; j < nb_letter; j++)
@@ -46,6 +47,7 @@ void backward(int nb_letter,
 	matrix_product_t(output_neuron, hidden_neuron, w_output, output_neuron,
 		nb_letter, output_error, hidden_error, 0, 1);
 
+    // Apply back propagation on weights and biases between hidden layer and output
 	for (size_t i = 0; i < hidden_neuron; i++)
 	{
 		for (int j = 0; j < nb_letter; j++)

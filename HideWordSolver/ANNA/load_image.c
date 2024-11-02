@@ -25,6 +25,7 @@ void load_image(char *file_path,
 	input_file = fopen(xbuffer, "r");
 	output_file = fopen(ybuffer, "r");
 
+    // Load input and output data from csv file
     if(input_file != NULL && output_file != NULL)
     {
         for (size_t i = 0; i < file_size; i++)
@@ -32,6 +33,7 @@ void load_image(char *file_path,
             for (size_t j = 0; j < input_neuron; j++)
             {
                 fscanf(input_file, "%lf,", &input[j][i]);
+                // Set the data between 0 and 1
                 input[j][i] /= 255.0;
             }
 

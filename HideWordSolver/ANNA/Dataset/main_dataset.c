@@ -12,6 +12,7 @@ int main(int argc, char **argv)
 		// {directory/text_to_add} {nb_file} {nb_per_csv} {char}
 		char buffer[100];
 		printf("File : %c\n", j);
+		// Convert image into csv file
 		for (int i = 0; i < atoi(argv[2]); i++)
 		{
 			sprintf(buffer, "../../../../16x16/%c/%i.jpg", j, i);

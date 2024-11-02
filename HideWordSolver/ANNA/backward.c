@@ -19,11 +19,13 @@ void backward(int nb_letter,
               double *db_input,         // hidden_neuron1
               char threads)
 {
+    // Apply back propagation on weights and biases between output and second hidden layer
     for (int i = 0; i < output_neuron; i++)
     {
         for (int j = 0; j < nb_letter; j++)
         {
-            output_error[i][j] = (output[i][j] - expected_output[i][j]); //* activ_prime(output[i][j]);
+            output_error[i][j] = (output[i][j] - expected_output[i][j])
+                * activ_prime(output[i][j]);
         }
     }
 
@@ -51,6 +53,7 @@ void backward(int nb_letter,
     matrix_product_t(output_neuron, hidden_neuron2, w_output, output_neuron,
         nb_letter, output_error, hidden2_error, 0, threads);
 
+    // Apply back propagation on weights and biases between second hidden layer and first hidden layer
     for (int i = 0; i < hidden_neuron2; i++)
     {
         for (int j = 0; j < nb_letter; j++)
@@ -83,6 +86,7 @@ void backward(int nb_letter,
     matrix_product_t(hidden_neuron2, hidden_neuron1, w_hidden, hidden_neuron2,
         nb_letter, hidden2_error, hidden1_error, 0, threads);
 
+    // Apply back propagation on weights and biases between first hidden layer and input
     for (int i = 0; i < hidden_neuron1; i++)
     {
         for (int j = 0; j < nb_letter; j++)
