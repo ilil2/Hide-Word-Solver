@@ -1,5 +1,4 @@
 #include "neural_network.h"
-#include <math.h>
 
 void update(double **w_input,     // hidden_neuron1 x input_neuron
             double **w_hidden,    // hidden_neuron2 x hidden_neuron1
@@ -38,8 +37,10 @@ void update(double **w_input,     // hidden_neuron1 x input_neuron
     {
         for (int j = 0; j < input_neuron; j++)
         {
-            m_w_input[i][j] = beta1 * m_w_input[i][j] + (1 - beta1) * dw_input[i][j];
-            v_w_input[i][j] = beta2 * v_w_input[i][j] + (1 - beta2) * dw_input[i][j] * dw_input[i][j];
+            m_w_input[i][j] = beta1 * m_w_input[i][j] + (1 - beta1)
+                * dw_input[i][j];
+            v_w_input[i][j] = beta2 * v_w_input[i][j] + (1 - beta2)
+                * dw_input[i][j] * dw_input[i][j];
 
             double m_hat = m_w_input[i][j] / (1 - beta1_t);
             double v_hat = v_w_input[i][j] / (1 - beta2_t);
@@ -48,7 +49,8 @@ void update(double **w_input,     // hidden_neuron1 x input_neuron
         }
 
         m_b_input[i] = beta1 * m_b_input[i] + (1 - beta1) * db_input[i];
-        v_b_input[i] = beta2 * v_b_input[i] + (1 - beta2) * db_input[i] * db_input[i];
+        v_b_input[i] = beta2 * v_b_input[i] + (1 - beta2) * db_input[i]
+            * db_input[i];
 
         double m_hat = m_b_input[i] / (1 - beta1_t);
         double v_hat = v_b_input[i] / (1 - beta2_t);
@@ -60,8 +62,10 @@ void update(double **w_input,     // hidden_neuron1 x input_neuron
     {
         for (int j = 0; j < hidden_neuron1; j++)
         {
-            m_w_hidden[i][j] = beta1 * m_w_hidden[i][j] + (1 - beta1) * dw_hidden[i][j];
-            v_w_hidden[i][j] = beta2 * v_w_hidden[i][j] + (1 - beta2) * dw_hidden[i][j] * dw_hidden[i][j];
+            m_w_hidden[i][j] = beta1 * m_w_hidden[i][j] + (1 - beta1)
+                * dw_hidden[i][j];
+            v_w_hidden[i][j] = beta2 * v_w_hidden[i][j] + (1 - beta2)
+                * dw_hidden[i][j] * dw_hidden[i][j];
 
             double m_hat = m_w_hidden[i][j] / (1 - beta1_t);
             double v_hat = v_w_hidden[i][j] / (1 - beta2_t);
@@ -70,7 +74,8 @@ void update(double **w_input,     // hidden_neuron1 x input_neuron
         }
 
         m_b_hidden[i] = beta1 * m_b_hidden[i] + (1 - beta1) * db_hidden[i];
-        v_b_hidden[i] = beta2 * v_b_hidden[i] + (1 - beta2) * db_hidden[i] * db_hidden[i];
+        v_b_hidden[i] = beta2 * v_b_hidden[i] + (1 - beta2) * db_hidden[i]
+            * db_hidden[i];
 
         double m_hat = m_b_hidden[i] / (1 - beta1_t);
         double v_hat = v_b_hidden[i] / (1 - beta2_t);
@@ -82,8 +87,10 @@ void update(double **w_input,     // hidden_neuron1 x input_neuron
     {
         for (int j = 0; j < hidden_neuron2; j++)
         {
-            m_w_output[i][j] = beta1 * m_w_output[i][j] + (1 - beta1) * dw_output[i][j];
-            v_w_output[i][j] = beta2 * v_w_output[i][j] + (1 - beta2) * dw_output[i][j] * dw_output[i][j];
+            m_w_output[i][j] = beta1 * m_w_output[i][j] + (1 - beta1)
+                * dw_output[i][j];
+            v_w_output[i][j] = beta2 * v_w_output[i][j] + (1 - beta2)
+                * dw_output[i][j] * dw_output[i][j];
 
             double m_hat = m_w_output[i][j] / (1 - beta1_t);
             double v_hat = v_w_output[i][j] / (1 - beta2_t);
@@ -92,7 +99,8 @@ void update(double **w_input,     // hidden_neuron1 x input_neuron
         }
 
         m_b_output[i] = beta1 * m_b_output[i] + (1 - beta1) * db_output[i];
-        v_b_output[i] = beta2 * v_b_output[i] + (1 - beta2) * db_output[i] * db_output[i];
+        v_b_output[i] = beta2 * v_b_output[i] + (1 - beta2) * db_output[i]
+            * db_output[i];
 
         double m_hat = m_b_output[i] / (1 - beta1_t);
         double v_hat = v_b_output[i] / (1 - beta2_t);

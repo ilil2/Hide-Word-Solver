@@ -1,5 +1,4 @@
 #include "neural_network.h"
-#include <time.h>
 
 void forward(int nb_letter,
              double **input,        // input_neuron x nb_letter
@@ -15,7 +14,8 @@ void forward(int nb_letter,
              double dropout_rate,
              char threads)
 {
-    matrix_product(hidden_neuron1, input_neuron, w_input, input_neuron, nb_letter, input, hidden1, threads);
+    matrix_product(hidden_neuron1, input_neuron, w_input, input_neuron,
+        nb_letter, input, hidden1, threads);
 
     for (int i = 0; i < hidden_neuron1; i++)
     {
@@ -38,7 +38,8 @@ void forward(int nb_letter,
         }
     }
 
-    matrix_product(hidden_neuron2, hidden_neuron1, w_hidden, hidden_neuron1, nb_letter, hidden1, hidden2, threads);
+    matrix_product(hidden_neuron2, hidden_neuron1, w_hidden, hidden_neuron1,
+        nb_letter, hidden1, hidden2, threads);
 
     for (int i = 0; i < hidden_neuron2; i++)
     {
@@ -61,7 +62,8 @@ void forward(int nb_letter,
         }
     }
 
-    matrix_product(output_neuron, hidden_neuron2, w_output, hidden_neuron2, nb_letter, hidden2, output, threads);
+    matrix_product(output_neuron, hidden_neuron2, w_output, hidden_neuron2,
+        nb_letter, hidden2, output, threads);
 
     for (int i = 0; i < output_neuron; i++)
     {

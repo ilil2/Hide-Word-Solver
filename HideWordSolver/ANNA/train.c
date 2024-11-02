@@ -1,13 +1,13 @@
 #include "neural_network.h"
 
 void train(int nb_letter,
-		char *anna_result,
-		double** w_input,      // hidden_neuron1 x input_neuron
-        double** w_hidden,     // hidden_neuron2 x hidden_neuron1
-		double** w_output,     // output_neuron x hidden_neuron2
-		double* b_input,       // hidden_neuron1
-		double* b_hidden,      // hidden_neuron2
-		double* b_output,      // output_neuron
+		char *anna_result,	// nb_letter
+		double** w_input,   // hidden_neuron1 x input_neuron
+        double** w_hidden,  // hidden_neuron2 x hidden_neuron1
+		double** w_output,  // output_neuron x hidden_neuron2
+		double* b_input,    // hidden_neuron1
+		double* b_hidden,   // hidden_neuron2
+		double* b_output,   // output_neuron
 		char threads)
 {
 	if(nb_letter > 13000)
@@ -154,9 +154,11 @@ void train(int nb_letter,
 		{
 			t++;
 			printf("\t%i, Data Set %i :\n", i, dataset_order[i]);
-			load_image("Dataset/Train/", dataset_order[i], nb_letter, input, expected_output);
+			load_image("Dataset/Train/", dataset_order[i], nb_letter, input,
+				expected_output);
 
-			matrix_shuffle(input, expected_output, input_neuron, output_neuron, nb_letter);
+			matrix_shuffle(input, expected_output, input_neuron,
+				output_neuron, nb_letter);
 
 			forward(nb_letter, input, hidden1, hidden2, output, w_input,
 				w_hidden, w_output, b_input, b_hidden, b_output, dropout_rate,
@@ -175,7 +177,8 @@ void train(int nb_letter,
 			softmax(nb_letter, output);
 			
 			convert_output_to_char(nb_letter, output, anna_result);
-			convert_output_to_char(nb_letter, expected_output, anna_expected_result);
+			convert_output_to_char(nb_letter, expected_output,
+				anna_expected_result);
 			double success = 0;
 			for (int i = 0; i < nb_letter; i++)
 			{
@@ -201,7 +204,8 @@ void train(int nb_letter,
 			double test_succes_t = test(test_size, test_input, test_hidden1,
 				test_hidden2, test_expected, test_output, w_input, w_hidden,
 				w_output, b_input, b_hidden, b_output, threads);
-			save_stats(loop, log_loss_t / nb_dataset, train_success_t / nb_dataset, test_succes_t);
+			save_stats(loop, log_loss_t / nb_dataset, train_success_t / nb_dataset,
+				test_succes_t);
 			save_parameter(w_input, w_hidden, w_output, b_input, b_hidden, b_output);
 			printf("\tSave ! \n\n");
 		}

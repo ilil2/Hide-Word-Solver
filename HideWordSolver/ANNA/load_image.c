@@ -32,14 +32,6 @@ void load_image(char *file_path,
             for (size_t j = 0; j < input_neuron; j++)
             {
                 fscanf(input_file, "%lf,", &input[j][i]);
-                /*if (input[j][i] > 127)
-                {
-                    input[j][i] = 1;
-                }
-                else
-                {
-                    input[j][i] = 0;
-                }*/
                 input[j][i] /= 255.0;
             }
 

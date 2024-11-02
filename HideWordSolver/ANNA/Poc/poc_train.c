@@ -1,6 +1,4 @@
 #include "poc.h"
-#include <math.h>
-#include <time.h>
 
 int main()
 {
@@ -21,7 +19,8 @@ int main()
     {
         for (int j = 0; j < input_neuron; j++)
         {
-            w_input[i][j] = ((double)rand() / RAND_MAX) * 2.0 * limit_w_input - limit_w_input;
+            w_input[i][j] = ((double)rand() / RAND_MAX) * 2.0
+				* limit_w_input - limit_w_input;
         }
     }
 
@@ -30,7 +29,8 @@ int main()
     {
         for (int j = 0; j < hidden_neuron; j++)
         {
-            w_output[i][j] = ((double)rand() / RAND_MAX) * 2.0 * limit_w_output - limit_w_output;
+            w_output[i][j] = ((double)rand() / RAND_MAX) * 2.0
+				* limit_w_output - limit_w_output;
         }
     }
 
@@ -143,7 +143,8 @@ int main()
 		forward(nb_letters, input, hidden, output, w_input, w_output,
 				b_input, b_output);
 			
-		printf("\t\tLog Loss = %f\n", log_loss(nb_letters, expected_output, output));
+		printf("\t\tLog Loss = %f\n", log_loss(nb_letters,
+			expected_output, output));
 
 		backward(nb_letters, w_output, input, hidden, output, expected_output,
 			output_error, dw_output, db_output, hidden_error,
@@ -168,7 +169,7 @@ int main()
 		
 	}
 
-	size_t nb_train = 10;
+	size_t nb_train = 4;
 	loop = 0;
 	while (nb_train)
 	{
@@ -180,7 +181,8 @@ int main()
 		loop += 1;
 		nb_train -= 1;
 
-    	forward(1, input_test, hidden, output, w_input, w_output, b_input, b_output);
+    	forward(1, input_test, hidden, output, w_input, w_output,
+			b_input, b_output);
 
 		printf("%f\n", output[0][0]);
 	}

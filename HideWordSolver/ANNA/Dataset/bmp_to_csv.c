@@ -44,7 +44,8 @@ void bmp_to_csv(const SDL_Surface *tmp, int i, char output)
     }
 	fprintf(input_file, "\n");
 
-    fprintf(output_file, "%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c\n",
+    fprintf(output_file, "%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,%c,
+        %c,%c,%c,%c,%c,%c,%c,%c,%c\n",
         (output == 'A') + '0', (output == 'B') + '0', (output == 'C') + '0',
         (output == 'D') + '0', (output == 'E') + '0', (output == 'F') + '0',
         (output == 'G') + '0', (output == 'H') + '0', (output == 'I') + '0',

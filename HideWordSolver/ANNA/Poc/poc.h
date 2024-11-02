@@ -5,6 +5,8 @@
 #include <stddef.h>
 #include <stdlib.h>
 #include <err.h>
+#include <math.h>
+#include <time.h>
 #include "../../Lib/lib.h"
 
 #define input_neuron 2

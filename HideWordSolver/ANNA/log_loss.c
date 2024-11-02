@@ -1,5 +1,4 @@
 #include "neural_network.h"
-#include <math.h>
 
 double log_loss(int nb_letter,
                 double **expected_output, // output_neuron x nb_letter
@@ -12,7 +11,8 @@ double log_loss(int nb_letter,
         sum = 0;
         for (int j = 0; j < nb_letter; j++)
         {
-            sum += expected_output[i][j] * log(output[i][j] + epsilon) + (1 - expected_output[i][j]) * log(1 - output[i][j] + epsilon);
+            sum += expected_output[i][j] * log(output[i][j] + epsilon) +
+            (1 - expected_output[i][j]) * log(1 - output[i][j] + epsilon);
         }
     }
     

@@ -1,5 +1,4 @@
 #include "neural_network.h"
-#include <math.h>
 
 void softmax(int nb_letter, double **output)
 {
