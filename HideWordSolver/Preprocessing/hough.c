@@ -34,7 +34,8 @@ SDL_Surface* load_image(const char* path)
     return r;
 }
 
-void algo_hough_transform(SDL_Surface* surface, Uint32* A,int width,int height,double rho,double theta, int ntheta, int nrho)
+void algo_hough_transform(SDL_Surface* surface, Uint32* A,int width,int height
+	double rho,double theta, int ntheta, int nrho)
 {
 	Uint32* pixels = surface->pixels;
     int x,y;
@@ -100,7 +101,8 @@ void avgthreshold(Uint32 * A, Uint32 average, int len)
 	}
 }
 
-void getlines(Uint32* A,struct line *linee,int width, int height, int ntheta,int nrho)
+void getlines(Uint32* A,struct line *linee,int width, int height, int ntheta,
+	int nrho)
 {
 	int itheta;
     int irho;
@@ -168,9 +170,11 @@ void mergerline(struct line* lines,int rhothreshold,double thetathreshold)
 		{
 			if (a!=b)
 			{
-				if (a->rho +rhothreshold > b->rho && a->rho -rhothreshold < b->rho)
+				if (a->rho +rhothreshold > b->rho && 
+					a->rho - rhothreshold < b->rho)
 				{
-					if (a->theta +thetathreshold > b->theta && a->theta -thetathreshold < b->theta)
+					if (a->theta +thetathreshold > b->theta &&
+						a->theta - thetathreshold < b->theta)
 					{
 						struct line * tempo = b;
 						prevb->next = b->next;
@@ -209,7 +213,8 @@ Uint32 Aaverage(Uint32 *A,int len)
 
 
 
-void createsubmatrix(Uint32* pixels,int x1,int y1,int x2,int y2,int width, int numcase)
+void createsubmatrix(Uint32* pixels,int x1,int y1,int x2,int y2,
+	int width, int numcase)
 {
 	
 	int wsb = x2-x1+1;
@@ -228,7 +233,8 @@ void createsubmatrix(Uint32* pixels,int x1,int y1,int x2,int y2,int width, int n
 	SDL_Surface* result;
 	result = SDL_CreateRGBSurfaceFrom(submatrix, wsb,hsb,32,4*(wsb),0,0,0, 0);
 	Uint32 * submatrixe = malloc(wsb*hsb*4);
-	SDL_Surface* rresult = SDL_CreateRGBSurfaceFrom(submatrixe,28,28,32,4*(28),0,0,0, 0);
+	SDL_Surface* rresult = SDL_CreateRGBSurfaceFrom(submatrixe, 28, 28, 32,
+		4*(28), 0, 0, 0, 0);
 	
 	
 	if (SDL_BlitScaled(result, NULL, rresult,NULL)==-1)
@@ -239,7 +245,8 @@ void createsubmatrix(Uint32* pixels,int x1,int y1,int x2,int y2,int width, int n
 	free(rresult);
 }
 
-void loadcase(Uint32*pixels,struct cartline* vline,struct cartline* hline, int width)
+void loadcase(Uint32*pixels,struct cartline* vline,struct cartline* hline,
+	int width)
 {
 	struct cartline* vl = vline->next;
 	struct cartline* hl;
@@ -253,7 +260,8 @@ void loadcase(Uint32*pixels,struct cartline* vline,struct cartline* hline, int w
 		while ((hl->next)!=NULL)
 		{	
 			
-			createsubmatrix(pixels, vl->x1,hl->y1,(vl->next)->x1,(hl->next)->y1,width, casenum);
+			createsubmatrix(pixels, vl->x1,hl->y1,(vl->next)->x1,
+				(hl->next)->y1,width, casenum);
 			casenum+=1;
 			hl = hl->next;
 		}
@@ -262,7 +270,8 @@ void loadcase(Uint32*pixels,struct cartline* vline,struct cartline* hline, int w
 	}
 }
 
-void classhv(struct cartline* cline, struct cartline* vline, struct cartline* hline)
+void classhv(struct cartline* cline, struct cartline* vline,
+	struct cartline* hline)
 {
 	struct cartline* cl = cline->next;
 	struct cartline* vl = vline;

@@ -36,7 +36,8 @@ int main(int argc, char** argv)
 	SDL_PixelFormat* format = surface->format;
     	if (format == 0)
         	errx(EXIT_FAILURE, "%s", SDL_GetError());
-    	int threshold = otsus(surface->w * surface->h, surface->pixels,format) - 4;
+    	int threshold =
+			otsus(surface->w * surface->h, surface->pixels,format) - 4;
     	surface_to_black_and_white(surface,threshold);
     	if (IMG_SavePNG(surface,"blackandwhiteIMG.png")!=0)
         	errx(EXIT_FAILURE,"%s", SDL_GetError());
