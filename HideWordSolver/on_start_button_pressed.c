@@ -1,10 +1,13 @@
 #include "ANNA_graphics.h"
 
+//extern char* file;
+
 void on_start_button_pressed(GtkWidget *button, gpointer user_data)
 {
 	GtkBuilder* builder = GTK_BUILDER(user_data);
 	GtkFileChooser* file_chooser = GTK_FILE_CHOOSER(
 			gtk_builder_get_object(builder, "ImageChooser"));
+	//file = gtk_file_chooser_get_preview_filename(file_chooser);
 
 	GtkStack* stack = GTK_STACK(gtk_builder_get_object(builder, "Stack"));
 	GtkSwitch* switch_ = GTK_SWITCH(gtk_builder_get_object(builder, "Switch"));
@@ -17,6 +20,7 @@ void on_start_button_pressed(GtkWidget *button, gpointer user_data)
 	{
 		gchar* path = g_file_get_path(image_file);
 		SDL_Surface *sdl_surface = IMG_Load(path);
+		IMG_SavePNG(sdl_surface, "image.png");
 		GdkPixbuf *pixbuf = sdl_surface_to_pixbuf(sdl_surface);
 
 		if (active)

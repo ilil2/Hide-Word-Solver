@@ -1,6 +1,6 @@
 #include "ANNA_graphics.h"
 
-extern int state;
+extern char state;
 
 void next_solver(GtkWidget *button, gpointer user_data)
 {
@@ -18,28 +18,19 @@ void next_solver(GtkWidget *button, gpointer user_data)
         image = GTK_IMAGE(gtk_builder_get_object(builder, "SolverImage"));
     }
 
-	if (!image) {
-        g_printerr("Erreur : Impossible de récupérer l'image.\n");
-        return;
-    }
-
+	SDL_Surface* surface = IMG_Load("image.png");
 
 	if (state == 0)
 	{
-		GdkPixbuf *pixbuf = gtk_image_get_pixbuf(image);
-		if (!pixbuf) {
-            g_printerr("Erreur : GdkPixbuf est NULL. L'image n'a peut-être pas été définie avec un GdkPixbuf.\n");
-            return;
-        }
-		gdk_pixbuf_save(pixbuf, "image.png", "png", NULL, NULL);
-		SDL_Surface* surface = IMG_Load("image.png");
 		surface = preprocess_image(surface);
-		GdkPixbuf *pixbuf2 = sdl_surface_to_pixbuf(surface);
-		gtk_image_set_from_pixbuf(image, pixbuf2);
+		IMG_SavePNG(surface, "image.png");
+		gtk_image_set_from_file(image, "image.png");
 	}
 	else if (state == 1)
 	{
-		//call Rotate
+		double angle = detectRotationAngle(surface);
+		save_image("image.png", angle);
+		gtk_image_set_from_file(image, "image.png");
 	}
 	else if (state == 2)
 	{
@@ -49,5 +40,6 @@ void next_solver(GtkWidget *button, gpointer user_data)
 	{
 		//call ANNA + Solver
 	}
+	SDL_FreeSurface(surface);
 	state++;
 }

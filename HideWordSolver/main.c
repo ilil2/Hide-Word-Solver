@@ -1,6 +1,7 @@
 #include "ANNA_graphics.h"
 
 char state;
+char* file;
 
 int main(int argc, char **argv)
 {
