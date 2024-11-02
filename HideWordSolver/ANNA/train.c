@@ -10,12 +10,12 @@ void train(int nb_letter,
 		double* b_output,   // output_neuron
 		char threads)
 {
-	if(nb_letter > 13000)
+	if(nb_letter > 521)
 	{
-		nb_letter = 13000;
+		nb_letter = 521;
 	}
 
-	size_t test_size = 20748;
+	size_t test_size = 521;
 
 	// Memory allocations //
 

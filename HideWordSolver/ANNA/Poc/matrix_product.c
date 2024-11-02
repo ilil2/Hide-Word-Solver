@@ -9,12 +9,11 @@ void poc_matrix_product(size_t row1, size_t col1, double **mat1,
         {
             for (size_t j = 0; j < col2; j++)
             {
-                double add = 0;
+                res[i][j] = 0;
                 for (size_t k = 0; k < col1; k++)
                 {
-                    add += mat1[i][k] * mat2[k][j];
+                    res[i][j] += mat1[i][k] * mat2[k][j];
                 }
-                res[i][j] = add;
             }
         }
 	}

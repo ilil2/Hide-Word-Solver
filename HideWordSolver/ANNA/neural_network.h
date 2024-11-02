@@ -16,7 +16,7 @@
 #define hidden_neuron1 512
 #define hidden_neuron2 256
 #define output_neuron 26
-#define nb_dataset 23
+#define nb_dataset 1
 
 int main(int argc, char** argv);
 void reset_parameter(double **w_input,
