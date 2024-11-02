@@ -30,11 +30,13 @@ void save_image(const char* image_file, const char* save_path, float angle)
 
     renderer = SDL_CreateRenderer(window, -1, 0);
     if (!renderer)
-        errx(EXIT_FAILURE, "Failed to create SDL renderer: %s", SDL_GetError());
+        errx(EXIT_FAILURE, "Failed to create SDL renderer: %s",
+            SDL_GetError());
 
     SDL_Surface* surface = IMG_Load(image_file);
     if (!surface) {
-        fprintf(stderr, "Error loading image %s: %s\n", image_file, IMG_GetError());
+        fprintf(stderr, "Error loading image %s: %s\n", image_file,
+            IMG_GetError());
         SDL_Quit();
         exit(1);
     }

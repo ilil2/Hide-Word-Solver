@@ -1,5 +1,5 @@
-#ifndef __NEURAL_NETWORK_H__
-#define __NEURAL_NETWORK_H__
+#ifndef __POC_H__
+#define __POC_H__
 
 #include <stdio.h>
 #include <stddef.h>

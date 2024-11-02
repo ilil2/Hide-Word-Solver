@@ -30,12 +30,17 @@ double detectRotationAngle(SDL_Surface* image)
                             int nx = x + dx;
                             int ny = y + dy;
 
-                            if (nx >= 0 && nx < width && ny >= 0 && ny < height)
+                            if (nx >= 0 && nx < width && ny >= 0
+                                && ny < height)
                             {
-                                Uint32 neighbor_pixel = *((Uint32*)image->pixels + ny * width + nx);
-                                if (neighbor_pixel == SDL_MapRGB(image->format, 255, 255, 255))
+                                Uint32 neighbor_pixel = 
+                                    *((Uint32*)image->pixels + ny
+                                    * width + nx);
+                                if (neighbor_pixel ==
+                                    SDL_MapRGB(image->format, 255, 255, 255))
                                 {
-                                    double angle = atan2(dy, dx) * (180.0 / M_PI);
+                                    double angle = atan2(dy, dx)
+                                        * (180.0 / M_PI);
                                     total_angle += angle;
                                     count++;
                                 }

@@ -36,7 +36,8 @@ int otsus(int len,Uint32 * pixels, SDL_PixelFormat* format)
                 if (wB>0 && wF>0)
                 {
                         mF = (sum1-sumB)/wF;
-                        val = wB * wF * ((sumB / wB) - mF) * ((sumB / wB) - mF);
+                        val = wB * wF * ((sumB / wB) - mF)
+                                * ((sumB / wB) - mF);
                         if ( val >= maximum )
                         {
                                 level = k;
@@ -55,7 +56,8 @@ int otsus(int len,Uint32 * pixels, SDL_PixelFormat* format)
 // pixel_color: Color of the pixel to convert in the RGB format.
 // format: Format of the pixel used by the surface.
 
-Uint32 pixel_to_black_or_white(Uint32 pixel_color, SDL_PixelFormat* format,Uint8 threshold)
+Uint32 pixel_to_black_or_white(Uint32 pixel_color, SDL_PixelFormat* format,
+        Uint8 threshold)
 {
     Uint8 r, g, b;
     SDL_GetRGB(pixel_color, format, &r, &g, &b);

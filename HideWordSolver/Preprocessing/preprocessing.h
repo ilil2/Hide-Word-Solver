@@ -15,7 +15,8 @@ Uint32 pixel_to_grayscale(Uint32 pixel_color, SDL_PixelFormat* format);
 void surface_to_grayscale(SDL_Surface* surface);
 
 // binarization.c
-Uint32 pixel_to_black_or_white(Uint32 pixel_color, SDL_PixelFormat* format, Uint8 threshold);
+Uint32 pixel_to_black_or_white(Uint32 pixel_color, SDL_PixelFormat* format,
+    Uint8 threshold);
 void surface_to_black_and_white(SDL_Surface* surface, Uint8 threshold);
 int otsus(int len, Uint32* pixels, SDL_PixelFormat* format);
 

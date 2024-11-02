@@ -36,7 +36,8 @@ double detectRotationAngle(SDL_Surface* image)
             {
                 for (int kx = -1; kx <= 1; ++kx)
                 {
-                    Uint32 pixel = *((Uint32*)image->pixels + (y + ky) * width + (x + kx));
+                    Uint32 pixel = *((Uint32*)image->pixels + (y + ky)
+                        * width + (x + kx));
                     Uint8 r, g, b;
                     SDL_GetRGB(pixel, image->format, &r, &g, &b);
                     double intensity = r;
@@ -71,7 +72,8 @@ double detectRotationAngle(SDL_Surface* image)
     {
         for (int x = 1; x < width - 1; ++x)
         {
-            if (gradient_x[y * width + x] != 0 || gradient_y[y * width + x] != 0)
+            if (gradient_x[y * width + x] != 0 ||
+                gradient_y[y * width + x] != 0)
 			{
                 total_angle += angles[y * width + x];
 				count++;
