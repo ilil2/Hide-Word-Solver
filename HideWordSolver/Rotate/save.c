@@ -6,7 +6,8 @@
 #include <err.h>
 #include "rotation.h"
 
-void save_image(const char* image_file, float angle) {
+void save_image(const char* image_file, const char* save_path, float angle)
+{
     if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) == 0) {
         fprintf(stderr, "SDL_image Error: %s\n", IMG_GetError());
         SDL_Quit();
@@ -63,7 +64,7 @@ void save_image(const char* image_file, float angle) {
 	SDL_RenderReadPixels(renderer, NULL, SDL_PIXELFORMAT_RGBA8888,
 			 resultSurface->pixels, resultSurface->pitch);
 
-	IMG_SavePNG(resultSurface, image_file);
+	IMG_SavePNG(resultSurface, save_path);
 
     if (texture) SDL_DestroyTexture(texture);
     if (renderer) SDL_DestroyRenderer(renderer);

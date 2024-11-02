@@ -1,4 +1,4 @@
-#include "ANNA_graphics.h"
+ #include "ANNA_graphics.h"
 
 extern char state;
 
@@ -24,13 +24,26 @@ void next_solver(GtkWidget *button, gpointer user_data)
 	{
 		surface = preprocess_image(surface);
 		IMG_SavePNG(surface, "image.png");
+		IMG_SavePNG(surface, "image2.png");
 		gtk_image_set_from_file(image, "image.png");
+
+		GtkWidget *spin_button =
+            GTK_WIDGET(gtk_builder_get_object(builder,
+                "SBSRotationAngle"));
+        gtk_widget_show(spin_button);
 	}
 	else if (state == 1)
 	{
-		double angle = detectRotationAngle(surface);
-		save_image("image.png", angle);
-		gtk_image_set_from_file(image, "image.png");
+		//double angle = detectRotationAngle(surface);
+		//save_image("image.png", angle);
+		//gtk_image_set_from_file(image, "image.png");
+		GtkWidget *spin_button =
+            GTK_WIDGET(gtk_builder_get_object(builder,
+                "SBSRotationAngle"));
+        gtk_widget_hide(spin_button);
+		
+		surface = IMG_Load("image2.png");
+		IMG_SavePNG(surface, "image.png");
 	}
 	else if (state == 2)
 	{

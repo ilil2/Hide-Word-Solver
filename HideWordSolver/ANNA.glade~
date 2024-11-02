@@ -169,26 +169,12 @@
           </packing>
         </child>
         <child>
-          <!-- n-columns=1 n-rows=2 -->
+          <!-- n-columns=1 n-rows=3 -->
           <object class="GtkGrid" id="StepByStep">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="halign">center</property>
             <property name="valign">center</property>
-            <child>
-              <object class="GtkButton" id="SBSNext">
-                <property name="label" translatable="yes">Next</property>
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <property name="halign">center</property>
-                <property name="valign">center</property>
-              </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">1</property>
-              </packing>
-            </child>
             <child>
               <object class="GtkBox">
                 <property name="width-request">500</property>
@@ -199,6 +185,8 @@
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkImage" id="SBSImage">
+                    <property name="width-request">500</property>
+                    <property name="height-request">500</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <property name="pixbuf">ANNA/Dataset/testimg.jpeg</property>
@@ -213,6 +201,33 @@
               <packing>
                 <property name="left-attach">0</property>
                 <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="SBSNext">
+                <property name="label" translatable="yes">Next</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="halign">center</property>
+                <property name="valign">center</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkSpinButton" id="SBSRotationAngle">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="input-purpose">number</property>
+                <property name="climb-rate">1</property>
+                <property name="digits">2</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">1</property>
               </packing>
             </child>
           </object>

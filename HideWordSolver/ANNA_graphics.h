@@ -16,5 +16,7 @@ void make_signals(GtkBuilder *builder);
 void next_solver(GtkWidget *button, gpointer user_data);
 GdkPixbuf *sdl_surface_to_pixbuf(SDL_Surface *surface);
 SDL_Surface* preprocess_image(SDL_Surface* surface);
+void on_spinbutton_value_changed(GtkSpinButton *spin_button,
+                gpointer user_data);
 
 #endif
