@@ -144,7 +144,6 @@ void train(int nb_letter,
 	{
 		//nb_while -= 1;
 		loop++;
-		printf("Loop number : %llu\n", loop);
 
 		// Mixing the dataset
 		shuffle(dataset_order, nb_dataset);
@@ -155,8 +154,6 @@ void train(int nb_letter,
 		for (int i = 0; i < nb_dataset; i++)
 		{
 			t++;
-			printf("\t%i, Data Set %i :\n", i, dataset_order[i]);
-
 			// Loading images
 			load_image("Dataset/Train/", dataset_order[i], nb_letter, input,
 				expected_output);
@@ -202,15 +199,12 @@ void train(int nb_letter,
 			double _log_loss = log_loss(nb_letter, expected_output, output);
 			train_success_t += success / nb_letter;
 			log_loss_t += _log_loss;
-
-			printf("\t\tSuccess (%i) = %f\n", i, success / nb_letter);
-			printf("\t\tLog Loss (%i) = %f\n", i, _log_loss);
 		}
-		printf("\n");
 
 		// Save parameter and stats
-		if (loop % 1 == 0)
+		if (loop % 10 == 0)
 		{
+			printf("Loop number : %llu\n", loop);
 			printf("\tTotal log loss = %f\n", log_loss_t / nb_dataset);
 			printf("\tTotal train success = %f\n", train_success_t / nb_dataset);
 			double test_succes_t = test(test_size, test_input, test_hidden1,
