@@ -7,6 +7,7 @@
 #include <err.h>
 #include <time.h>
 #include <math.h>
+#include <pthread.h>
 #include "../Lib/lib.h"
 
 #define image_size 32

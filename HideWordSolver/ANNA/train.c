@@ -125,7 +125,7 @@ void train(int nb_letter,
 		dataset_order[i] = i;
 	}
 
-	double learning_rate = 0.005;
+	double learning_rate = 0.001;
 	double beta1 = 0.9;
 	double beta2 = 0.999;
 	double epsilon = 1e-8;
