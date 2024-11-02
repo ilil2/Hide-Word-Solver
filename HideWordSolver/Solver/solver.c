@@ -2,6 +2,8 @@
 #include "solver.h"
 #include "../Lib/lib.h"
 
+// Search for a word in a letter grid
+// The first argument is the file containing the grid, and the second is the word to search for.
 int main(int argc, char** argv)
 {
 	if(argc != 3)
@@ -24,6 +26,7 @@ int main(int argc, char** argv)
 
 		size_t i = 1;
 
+		// Get the grid in the file
 		while (file_content[i - 1][0] != 0)
 		{
 			fgets(file_content[i], MAX_SIZE, file);
@@ -33,9 +36,12 @@ int main(int argc, char** argv)
 		fclose(file);
 
 		to_upper(argv[2]);
+
+		// Research the word in the grid
 		is_word_find = research_word(file_content, strlen(file_content[0]),
 				i, argv[2], strlen(argv[2]), word_position);
 
+		// Print word position
 		if(is_word_find)
 		{
 			printf("(%i,%i)(%i,%i)", word_position[1], word_position[0],

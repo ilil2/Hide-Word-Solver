@@ -1,5 +1,10 @@
 #include "neural_network.h"
 
+// Recognizes a letter of the alphabet using a neural network
+// The first argument is the part of the program to be executed (reset, start or train)
+// reset to reset model parameters
+// start to begin character recognition
+// train to train the AI with the number of images in the dataset as the second parameter and the number of threads to be used as the third parameter
 int main(int argc, char** argv)
 {
     double **w_input = malloc(hidden_neuron1 * sizeof(double *));

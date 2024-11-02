@@ -10,6 +10,7 @@ char research_word_with_direction(
 	size_t i = 0;
 	int position[2] = {start_position[0], start_position[1]};
 
+	// Checks the word letter by letter, moving in the direction of the parameter.
 	while (word[i] && word[i] == grid[position[0]][position[1]])
 	{
 		position[0] += direction[0];
@@ -19,6 +20,7 @@ char research_word_with_direction(
 
 	if(!word[i])
 	{
+		// Set the return position
 		word_position[0] = start_position[0];
 		word_position[1] = start_position[1];
 		word_position[2] = position[0] - direction[0];
