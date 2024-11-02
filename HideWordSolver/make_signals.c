@@ -1,5 +1,7 @@
 #include "ANNA_graphics.h"
 
+
+// Connect all signals of ANNA
 void make_signals(GtkBuilder *builder)
 {
 	// Window

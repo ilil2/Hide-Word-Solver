@@ -1,5 +1,6 @@
 #include "lib.h"
 
+// adition of matrix
 void matrix_addition(size_t row, size_t col, double **mat1,
 		double **mat2, double **res)
 {

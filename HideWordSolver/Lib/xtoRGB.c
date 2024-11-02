@@ -1,6 +1,7 @@
 #include "lib.h"
 #include "err.h"
 
+// Convert hexa to rgb
 void xtoRGB(const char hexa[6], int rgb[3])
 {
 	rgb[0] = 0; rgb[1] = 0; rgb[2] = 0;

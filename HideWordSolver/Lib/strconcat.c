@@ -1,5 +1,6 @@
 #include "lib.h"
 
+// Concatenate two strings
 void strconcat(char *str1, const char *str2)
 {
 	size_t i = 0;

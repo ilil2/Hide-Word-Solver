@@ -1,5 +1,6 @@
 #include "lib.h"
 
+// Transpose a matrix
 void matrix_transpose(size_t x, size_t y, double **mat1,
 		double **res)
 {

@@ -1,6 +1,7 @@
 #include "lib.h"
 #include <stddef.h>
 
+// Capitalize a string
 void to_upper(char *str)
 {
 	size_t i = 0;

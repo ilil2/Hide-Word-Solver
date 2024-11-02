@@ -2,6 +2,7 @@
 
 extern char state;
 
+// Do the next step on StepByStep mode
 void next_solver(GtkWidget *button, gpointer user_data)
 {
 	GtkBuilder* builder = GTK_BUILDER(user_data);

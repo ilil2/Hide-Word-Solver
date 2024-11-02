@@ -3,6 +3,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 
+// Mutultipy two matrix (multithreading)
 typedef struct 
 {
 	double **mat1;

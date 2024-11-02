@@ -1,5 +1,6 @@
 #include "ANNA_graphics.h"
 
+// Call when rotation degree change
 void on_spinbutton_value_changed(GtkSpinButton *spin_button,
 		gpointer user_data)
 {

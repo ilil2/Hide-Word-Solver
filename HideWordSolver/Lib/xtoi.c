@@ -1,6 +1,7 @@
 #include "lib.h"
 #include <err.h>
 
+// Convert string (hexa) to int
 int xtoi(const char *hexa)
 {
 	int res = 0;

@@ -1,5 +1,6 @@
 #include "lib.h"
 
+// Convert string to int
 int atoi(const char *str)
 {
 	int res = 0;

@@ -1,13 +1,11 @@
 #include "ANNA_graphics.h"
 
-//extern char* file;
-
+// Call when start button is pressed
 void on_start_button_pressed(GtkWidget *button, gpointer user_data)
 {
 	GtkBuilder* builder = GTK_BUILDER(user_data);
 	GtkFileChooser* file_chooser = GTK_FILE_CHOOSER(
 			gtk_builder_get_object(builder, "ImageChooser"));
-	//file = gtk_file_chooser_get_preview_filename(file_chooser);
 
 	GtkStack* stack = GTK_STACK(gtk_builder_get_object(builder, "Stack"));
 	GtkSwitch* switch_ = GTK_SWITCH(gtk_builder_get_object(builder, "Switch"));

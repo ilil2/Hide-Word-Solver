@@ -1,6 +1,7 @@
 #include "lib.h"
 #include <stddef.h>
 
+// Compare two strings
 char strcomp(const char *str1, const char *str2)
 {
 	size_t i = 0;

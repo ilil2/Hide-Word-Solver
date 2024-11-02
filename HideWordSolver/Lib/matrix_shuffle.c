@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+// Shuffle a matrix
 void matrix_shuffle(double **array, double **array2, int rows1, int rows2,
     int cols)
 {

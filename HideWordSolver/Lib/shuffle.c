@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+// Shuffle an array
 void shuffle(char array[], int n)
 {
     srand(time(NULL));

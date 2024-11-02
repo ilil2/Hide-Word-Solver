@@ -1,5 +1,6 @@
 #include "lib.h"
 
+// Convert int to string (hexa)
 void itox(int i, char *hexa)
 {
 	size_t l = 5;

@@ -1,6 +1,7 @@
 #include "lib.h"
 #include <stddef.h>
 
+// Convert int to string
 void itoa(int i, char *str)
 {
 	size_t len = intlen(i);

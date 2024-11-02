@@ -3,6 +3,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 
+// Multiply two matrix but one is transpose (multithreading)
 typedef struct
 {
 	double **mat1;

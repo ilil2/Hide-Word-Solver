@@ -1,5 +1,6 @@
 #include "ANNA_graphics.h"
 
+// Convert SDL_Surface to pixbuf
 GdkPixbuf *sdl_surface_to_pixbuf(SDL_Surface *surface)
 {
     int width = surface->w;
