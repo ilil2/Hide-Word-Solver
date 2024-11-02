@@ -3,7 +3,7 @@
 #include <err.h>
 #include <stdlib.h>
 #include <string.h>
-#include "preprocessing.h"
+#include "../Preprocessing/preprocessing.h"
 #include "rotation.h"
 
 SDL_Surface* preprocess_image(SDL_Surface* surface)
