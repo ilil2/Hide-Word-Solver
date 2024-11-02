@@ -20,7 +20,9 @@ void on_start_button_pressed(GtkWidget *button, gpointer user_data)
 	{
 		gchar* path = g_file_get_path(image_file);
 		SDL_Surface *sdl_surface = IMG_Load(path);
-		IMG_SavePNG(sdl_surface, "image.png");
+		SDL_Surface* optimized_surface =
+			SDL_ConvertSurfaceFormat(sdl_surface, SDL_PIXELFORMAT_ARGB8888, 0);
+		IMG_SavePNG(optimized_surface, "image.png");
 		GdkPixbuf *pixbuf = sdl_surface_to_pixbuf(sdl_surface);
 
 		if (active)

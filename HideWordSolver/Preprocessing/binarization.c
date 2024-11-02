@@ -30,7 +30,7 @@ int otsus(int len,Uint32 * pixels, SDL_PixelFormat* format)
                 sum1+= histogram[j] *j;
         }
 
-        for (int k =1;k<=top;k++)
+        for (int k =1;k<top;k++)
         {
                 wF =len -wB;
                 if (wB>0 && wF>0)
