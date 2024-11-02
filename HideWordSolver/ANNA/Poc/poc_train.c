@@ -112,10 +112,10 @@ int main()
 
 	double* db_input = malloc(sizeof(double) * hidden_neuron);
 
-	double learning_rate = 3;
+	double learning_rate = 5;
 
 	unsigned long long loop = 0;
-	size_t nb_while = 500;
+	size_t nb_while = 1000;
 
 	// Train loop
 	while (nb_while)

@@ -1,6 +1,6 @@
 #include "poc.h"
 
-void matrix_product(size_t row1, size_t col1, double **mat1,
+void poc_matrix_product(size_t row1, size_t col1, double **mat1,
 		size_t row2, size_t col2, double **mat2, double **res)
 {
 	if(col1 == row2)
