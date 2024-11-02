@@ -43,6 +43,7 @@ void next_solver(GtkWidget *button, gpointer user_data)
                 "SBSRotationAngle"));
         gtk_widget_hide(spin_button);
 		
+		SDL_FreeSurface(surface);
 		surface = IMG_Load("image2.png");
 		IMG_SavePNG(surface, "image.png");
 	}

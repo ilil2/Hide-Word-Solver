@@ -68,6 +68,7 @@ void save_image(const char* image_file, const char* save_path, float angle)
 
 	IMG_SavePNG(resultSurface, save_path);
 
+	SDL_FreeSurface(resultSurface);
     if (texture) SDL_DestroyTexture(texture);
     if (renderer) SDL_DestroyRenderer(renderer);
     if (window) SDL_DestroyWindow(window);
