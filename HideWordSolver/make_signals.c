@@ -9,9 +9,7 @@ void make_signals(GtkBuilder *builder)
 	window = GTK_WIDGET(gtk_builder_get_object(builder, "ANNA"));
 
 	g_signal_connect(window, "destroy", G_CALLBACK(gtk_main_quit), NULL);
-	g_signal_connect(window, "configure-event", G_CALLBACK(on_size_allocate),
-			builder);
-
+	
 	// Start button
 	GtkButton* start_button;
 	start_button = GTK_BUTTON(gtk_builder_get_object(builder, "Start"));

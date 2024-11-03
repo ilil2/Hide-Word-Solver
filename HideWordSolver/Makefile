@@ -10,8 +10,7 @@ SRC = main.c \
 	  next_solver.c \
 	  sdl_surface_to_pixbuf.c \
 	  on_spinbutton_value_changed.c \
-	  preprocess_image.c \
-	  on_size_allocate.c
+	  preprocess_image.c
 
 PREPROSS_SRC = Preprocessing/grayscale.c \
 			   Preprocessing/binarization.c \
