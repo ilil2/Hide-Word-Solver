@@ -34,7 +34,7 @@ SDL_Surface* load_image(const char* path)
     return r;
 }
 
-void algo_hough_transform(SDL_Surface* surface, Uint32* A,int width,int height
+void algo_hough_transform(SDL_Surface* surface, Uint32* A,int width,int height,
 	double rho,double theta, int ntheta, int nrho)
 {
 	Uint32* pixels = surface->pixels;
@@ -207,10 +207,6 @@ Uint32 Aaverage(Uint32 *A,int len)
 	}
 	return (Uint32)(average/count);
 }
-
-
-
-
 
 
 void createsubmatrix(Uint32* pixels,int x1,int y1,int x2,int y2,
