@@ -42,6 +42,7 @@ void next_solver(GtkWidget *button, gpointer user_data)
 		
 		SDL_FreeSurface(surface);
 		surface = IMG_Load("image2.png");
+		median_filter(surface);
 		IMG_SavePNG(surface, "image.png");
 	}
 	else if (state == 2)
