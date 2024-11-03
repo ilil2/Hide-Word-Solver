@@ -34,4 +34,5 @@ void median_filter(SDL_Surface* surface)
 			pixels[j * w + i] = res;
 		}
 	}
+	free(cp_pixels);
 }

@@ -114,7 +114,9 @@ void horizontal_sobel_filter(SDL_Surface* surface,Uint32* result)
 					pixels[(j+1)*width + (i)],
 					pixels[(j+1)*width + (i+1)] 
 				};
-				result[j*width+i] = horizontal_sobel_product(submatrix,format);
+				result[j*width+i] = 
+					horizontal_sobel_product(
+							submatrix,format);
 	}
     }
     SDL_UnlockSurface(surface);

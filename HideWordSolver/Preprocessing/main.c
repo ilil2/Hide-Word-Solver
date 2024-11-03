@@ -6,6 +6,7 @@
 #include "binarization.h"
 #include "medianfilter.h"
 #include "sobel.h"
+#include "extraction.h"
 
 SDL_Surface* load_image(const char* path)
 {
@@ -36,7 +37,9 @@ int main(int argc, char** argv)
 	SDL_PixelFormat* format = surface->format;
     	if (format == 0)
         	errx(EXIT_FAILURE, "%s", SDL_GetError());
-    	int threshold = otsus(surface->w * surface->h, surface->pixels,format) - 4;
+    	int threshold =
+			otsus(surface->w * surface->h, surface->pixels,format) 
+			- 4;
     	surface_to_black_and_white(surface,threshold);
     	if (IMG_SavePNG(surface,"blackandwhiteIMG.png")!=0)
         	errx(EXIT_FAILURE,"%s", SDL_GetError());
@@ -46,6 +49,12 @@ int main(int argc, char** argv)
 	if (IMG_SavePNG(surface,"medianfilterIMG.png") != 0)
 		errx(EXIT_FAILURE,"%s", SDL_GetError());
 
+	//Extraction
+	process_components(surface);
+
+        if (IMG_SavePNG(surface,"extractionIMG.png") != 0)
+                errx(EXIT_FAILURE,"%s", SDL_GetError());
+	SDL_FreeSurface(surface);
 	SDL_Quit();
 	return 0;
 }

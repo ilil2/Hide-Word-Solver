@@ -20,19 +20,6 @@ typedef struct
     float aspect_ratio;
 } BoundingBox;
 
-SDL_Surface* load_image(const char* path)
-{
-    SDL_Surface * temp = IMG_Load(path);
-    if (temp == NULL)
-    {
-        fprintf(stderr, "Error loading image: %s\n", SDL_GetError());
-        exit(EXIT_FAILURE);
-    }
-    SDL_Surface * r = SDL_ConvertSurfaceFormat(temp, SDL_PIXELFORMAT_RGB888, 0);
-    SDL_FreeSurface(temp);
-    return r;
-}
-
 SDL_Surface* resize_surface(SDL_Surface* surface, int new_width, int new_height)
 {
     SDL_Surface* resized = SDL_CreateRGBSurfaceWithFormat(0,
@@ -83,7 +70,7 @@ void flood_fill(Uint32* pixels, int width, int height,
 
     // Initialize a queue for the flood-fill algorithm
     typedef struct { int x, y; } Point;
-    Point queue[width * height];
+    Point *queue = malloc(sizeof(Point) * width * height);
     int front = 0, back = 0;
     queue[back++] = (Point){x, y};
 
@@ -123,6 +110,7 @@ void flood_fill(Uint32* pixels, int width, int height,
             }
         }
     }
+    free(queue);
 }
 
 // Extract bounding boxes from labeled components
@@ -179,14 +167,14 @@ void process_letters_in_word(SDL_Surface* surface, BoundingBox word_box,
 
     int letter_index = 0;
     for (int i = 1; i < label; i++) {
-        BoundingBox letter_box = extract_bounding_box(labels, width, height, i);
+        BoundingBox letter_box = extract_bounding_box(labels, width,
+				height, i);
 
         float aspect_ratio = letter_box.aspect_ratio;
         const float max_single_letter_aspect_ratio = 1.5;
 
         if (aspect_ratio > max_single_letter_aspect_ratio) {
             int estimated_letters = (int)round(aspect_ratio);
-	printf("%i\n",estimated_letters);
             int sub_letter_width = letter_box.width / estimated_letters;
 
             for (int j = 0; j < estimated_letters; j++) {
@@ -303,23 +291,4 @@ int word_index = 0;
     }
 
     free(labels);
-}
-
-int main(int argc, char** argv)
-{
-	if(argc != 2)
-                errx(1,"Usage : main [path_to_img]");
-        if(SDL_Init(SDL_INIT_VIDEO) != 0)
-                errx(1,"%s",SDL_GetError());
-
-	SDL_Surface* surface = load_image(argv[1]);
-
-	process_components(surface);	
-
-	if (IMG_SavePNG(surface,"extractionIMG.png") != 0)
-                errx(EXIT_FAILURE,"%s", SDL_GetError());
-
-	SDL_FreeSurface(surface);
-	SDL_Quit();
-	return EXIT_SUCCESS;
 }
