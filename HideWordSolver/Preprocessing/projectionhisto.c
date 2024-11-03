@@ -186,7 +186,6 @@ void process_letters_in_word(SDL_Surface* surface, BoundingBox word_box,
 
         if (aspect_ratio > max_single_letter_aspect_ratio) {
             int estimated_letters = (int)round(aspect_ratio);
-	printf("%i\n",estimated_letters);
             int sub_letter_width = letter_box.width / estimated_letters;
 
             for (int j = 0; j < estimated_letters; j++) {
