@@ -7,15 +7,14 @@ TEST_SRC = LibTest/strlen_test.c LibTest/test.c LibTest/strcomp_test.c LibTest/i
 OBJ = $(SRC:.c=.o) $(TEST_SRC:.c=.o)
 EXE = test
 
-# Règle pour générer l'exécutable
+all: $(EXE)
+
 $(EXE): $(OBJ)
 	$(CC) -o $(EXE) $(OBJ) $(CFLAGS)
 
-# Règle générique pour compiler les fichiers .o à partir des .c
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# Règle clean pour nettoyer les fichiers objets et l'exécutable
 clean:
 	rm -rf $(OBJ) $(EXE)
 

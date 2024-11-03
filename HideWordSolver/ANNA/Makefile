@@ -7,6 +7,8 @@ LIB_SRC = ../Lib/matrix_product.c ../Lib/matrix_product_t.c ../Lib/matrix_additi
 OBJ = $(SRC:.c=.o) $(LIB_SRC:.c=.o)
 EXE = ANNA
 
+all: $(EXE)
+
 $(EXE): $(OBJ)
 	$(CC) -o $(EXE) $(OBJ) $(CFLAGS)
 

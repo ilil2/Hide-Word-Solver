@@ -7,6 +7,8 @@ SRC = main_dataset.c add_to_dataset.c bmp_to_csv.c ../../Lib/atoi.c
 OBJ = $(SRC:.c=.o)
 EXE = add_data
 
+all: $(EXE)
+
 $(EXE): $(OBJ)
 	$(CC) $(OBJ) -o $(EXE) $(LDFLAGS)
 

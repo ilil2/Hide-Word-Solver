@@ -7,6 +7,8 @@ LIB_SRC = ../../Lib/strcomp.c ../../Lib/shuffle.c
 OBJ = $(SRC:.c=.o) $(LIB_SRC:.c=.o)
 EXE = poc
 
+all: $(EXE)
+
 $(EXE): $(OBJ)
 	$(CC) -o $(EXE) $(OBJ) $(CFLAGS)
 

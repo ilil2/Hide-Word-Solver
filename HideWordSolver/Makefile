@@ -9,6 +9,8 @@ LIB_SRC =
 OBJ = $(SRC:.c=.o) $(LIB_SRC:.c=.o) $(PREPROSS_SRC:.c=.o) $(ROTATE_SRC:.c=.o)
 EXE = ANNA-Solver-IA
 
+all: $(EXE)
+
 $(EXE): $(OBJ)
 	$(CC) -o $(EXE) $(OBJ) $(CFLAGS)
 
