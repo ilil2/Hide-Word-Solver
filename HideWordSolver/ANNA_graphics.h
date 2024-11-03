@@ -9,8 +9,10 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 #include "Rotate/rotation.h"
-#include "Preprocessing/preprocessing.h"
+#include "Preprocessing/binarization.h"
 #include "Preprocessing/medianfilter.h"
+#include "Preprocessing/grayscale.h"
+#include "Preprocessing/sobel.h"
 
 void on_start_button_pressed(GtkWidget *button, gpointer user_data);
 void make_signals(GtkBuilder *builder);

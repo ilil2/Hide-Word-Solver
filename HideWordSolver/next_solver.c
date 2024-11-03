@@ -48,11 +48,14 @@ void next_solver(GtkWidget *button, gpointer user_data)
 	{
 		SDL_FreeSurface(surface);
 		SDL_Init(SDL_INIT_VIDEO);
-		surface = load_image("image.png");
-		process_components(surface);
-		IMG_SavePNG(surface, "image.png");
+		surface = IMG_Load("image.png");
+		SDL_Surface * surface2 = SDL_ConvertSurfaceFormat(surface,
+				SDL_PIXELFORMAT_RGB888, 0);
+		process_components(surface2);
+		IMG_SavePNG(surface2, "image.png");
 		gtk_image_set_from_file(image, "image.png");
 		SDL_Quit();
+		SDL_FreeSurface(surface2);
 	}
 	else if (state == 3)
 	{

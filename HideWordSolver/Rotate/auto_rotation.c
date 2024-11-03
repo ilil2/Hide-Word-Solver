@@ -3,7 +3,7 @@
 #include <err.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../Preprocessing/preprocessing.h"
+#include "../ANNA_graphics.h"
 #include "rotation.h"
 #include "../Preprocessing/medianfilter.h"
 
@@ -21,11 +21,11 @@ SDL_Surface* preprocess_image(SDL_Surface* surface)
     if (result == NULL)
         errx(EXIT_FAILURE, "Memory allocation failed");
 
-    sobel(surface, result);
+    //sobel(surface, result);
 
-    memcpy(surface->pixels, result, len * sizeof(Uint32));
+    //memcpy(surface->pixels, result, len * sizeof(Uint32));
 
-    free(result);
+    //free(result);
 
     return surface;
 }
