@@ -5,6 +5,7 @@
 #include <string.h>
 #include "../Preprocessing/preprocessing.h"
 #include "rotation.h"
+#include "../Preprocessing/medianfilter.h"
 
 SDL_Surface* preprocess_image(SDL_Surface* surface)
 {
@@ -13,7 +14,8 @@ SDL_Surface* preprocess_image(SDL_Surface* surface)
     Uint32* pixels = surface->pixels;
     int len = surface->w * surface->h;
     Uint8 threshold = otsus(len, pixels, surface->format);
-    surface_to_black_and_white(surface, threshold);
+	surface_to_black_and_white(surface, threshold);
+    median_filter(surface);
 
     Uint32* result = malloc(len * sizeof(Uint32));
     if (result == NULL)

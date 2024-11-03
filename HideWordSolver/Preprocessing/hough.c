@@ -378,8 +378,7 @@ int main(int argc, char**argv)
 	
 	classhv(cartlinee,vartlinee,hartlinee);
     
-    /*
-     * loadcase(img->pixels,vartlinee,hartlinee,width	);*/
+    //loadcase(surface->pixels,vartlinee,hartlinee,width);
 	
 	
 	freelist(cartlinee,'c');

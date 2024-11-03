@@ -35,9 +35,6 @@ void next_solver(GtkWidget *button, gpointer user_data)
 	}
 	else if (state == 1)
 	{
-		//double angle = detectRotationAngle(surface);
-		//save_image("image.png", angle);
-		//gtk_image_set_from_file(image, "image.png");
 		GtkWidget *spin_button =
             GTK_WIDGET(gtk_builder_get_object(builder,
                 "SBSRotationAngle"));
@@ -49,11 +46,17 @@ void next_solver(GtkWidget *button, gpointer user_data)
 	}
 	else if (state == 2)
 	{
-		//call Cropping
+		SDL_FreeSurface(surface);
+		SDL_Init(SDL_INIT_VIDEO);
+		surface = load_image("image.png");
+		process_components(surface);
+		IMG_SavePNG(surface, "image.png");
+		gtk_image_set_from_file(image, "image.png");
+		SDL_Quit();
 	}
 	else if (state == 3)
 	{
-		//call ANNA + Solver
+		// Call ANNA + Solver
 	}
 	SDL_FreeSurface(surface);
 	state++;

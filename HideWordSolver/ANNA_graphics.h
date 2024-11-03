@@ -10,6 +10,7 @@
 
 #include "Rotate/rotation.h"
 #include "Preprocessing/preprocessing.h"
+#include "Preprocessing/medianfilter.h"
 
 void on_start_button_pressed(GtkWidget *button, gpointer user_data);
 void make_signals(GtkBuilder *builder);
@@ -18,5 +19,7 @@ GdkPixbuf *sdl_surface_to_pixbuf(SDL_Surface *surface);
 SDL_Surface* preprocess_image(SDL_Surface* surface);
 void on_spinbutton_value_changed(GtkSpinButton *spin_button,
                 gpointer user_data);
+void process_components(SDL_Surface* surface);
+SDL_Surface* load_image(const char* path);
 
 #endif
