@@ -23,5 +23,7 @@ void on_spinbutton_value_changed(GtkSpinButton *spin_button,
                 gpointer user_data);
 void process_components(SDL_Surface* surface);
 SDL_Surface* load_image(const char* path);
+void on_size_allocate(GtkWidget *widget, GdkRectangle *allocation,
+		gpointer user_data);
 
 #endif

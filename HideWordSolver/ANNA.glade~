@@ -10,6 +10,12 @@
       <mime-type>image/bmp</mime-type>
     </mime-types>
   </object>
+  <object class="GtkAdjustment" id="adjustment1">
+    <property name="lower">-180</property>
+    <property name="upper">180</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
   <object class="GtkWindow" id="ANNA">
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">ANNA</property>
@@ -189,7 +195,6 @@
                     <property name="height-request">500</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
-                    <property name="pixbuf">ANNA/Dataset/testimg.jpeg</property>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -222,6 +227,7 @@
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
                 <property name="input-purpose">number</property>
+                <property name="adjustment">adjustment1</property>
                 <property name="climb-rate">1</property>
                 <property name="digits">2</property>
               </object>
