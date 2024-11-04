@@ -8,8 +8,8 @@
 
 int main(int argc, char** argv);
 
-char research_word(const char grid[MAX_SIZE][MAX_SIZE], size_t grid_size_x,
-	size_t grid_size_y, const char *word, size_t word_size,
+char research_word(const char grid[MAX_SIZE][MAX_SIZE], int grid_size_x,
+	int grid_size_y, const char *word, int word_size,
 	int word_position[4]);
 
 char research_word_with_direction(const char grid[MAX_SIZE][MAX_SIZE],
