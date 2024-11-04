@@ -6,14 +6,14 @@ char research_word(const char grid[MAX_SIZE][MAX_SIZE], int grid_size_x,
 	int grid_size_y, const char *word, int word_size,
 	int word_position[4])
 {
-	size_t i = 0;
+	int i = 0;
 
 	char is_find = 0;
 
 	// Go through the grid letter by letter
 	while (grid[i][0] && !is_find)
 	{
-		size_t j = 0;
+		int j = 0;
 		while (grid[i][j] && !is_find)
 		{
 			// Check the first letter
@@ -23,7 +23,7 @@ char research_word(const char grid[MAX_SIZE][MAX_SIZE], int grid_size_x,
 				int start_position[2] = {i, j};
 				
 				// Check the left side
-				if (j - word_size >= 0)
+				if (j - word_size + 1 >= 0)
 				{
 					direction[1] = -1;
 					if (grid[i][j-1] == word[1])
@@ -76,7 +76,7 @@ char research_word(const char grid[MAX_SIZE][MAX_SIZE], int grid_size_x,
 				}
 
 				// Check the up side
-				if (i - word_size >= 0)
+				if (i - word_size + 1 >= 0)
 				{
 					if (grid[i-1][j] == word[1])
 					{
