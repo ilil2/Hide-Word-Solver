@@ -25,7 +25,7 @@ float test(size_t test_size,
 		int thread_nbr)
 {
 	load_image("Dataset/Train/t", -1, test_size, test_input, test_expected);
-	matrix_shuffle(test_output, test_expected, output_neuron, output_neuron, test_size);
+	matrix_shuffle(test_input, test_expected, input_neuron, output_neuron, test_size);
     forward(test_size, test_input, test_hidden1, test_hidden2, test_output,
 		w_input, w_hidden, w_output, b_input, b_hidden, b_output, -1,
 		thread_nbr);
