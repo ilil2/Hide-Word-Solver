@@ -28,6 +28,7 @@ void update(float **w_input,     // hidden_neuron1 x input_neuron
             float beta1,
             float beta2,
             float epsilon,
+            float lambda,
             int t)
 {
     float beta1_t = pow(beta1, t);
@@ -46,7 +47,7 @@ void update(float **w_input,     // hidden_neuron1 x input_neuron
             float m_hat = m_w_input[i][j] / (1 - beta1_t);
             float v_hat = v_w_input[i][j] / (1 - beta2_t);
 
-            w_input[i][j] -= learning_rate * m_hat / (sqrt(v_hat) + epsilon);
+            w_input[i][j] -= learning_rate * (m_hat / (sqrt(v_hat) + epsilon) + lambda * w_input[i][j]);
         }
 
         m_b_input[i] = beta1 * m_b_input[i] + (1 - beta1) * db_input[i];
@@ -72,7 +73,7 @@ void update(float **w_input,     // hidden_neuron1 x input_neuron
             float m_hat = m_w_hidden[i][j] / (1 - beta1_t);
             float v_hat = v_w_hidden[i][j] / (1 - beta2_t);
 
-            w_hidden[i][j] -= learning_rate * m_hat / (sqrt(v_hat) + epsilon);
+            w_hidden[i][j] -= learning_rate * m_hat / (sqrt(v_hat) + epsilon + lambda * w_input[i][j]);
         }
 
         m_b_hidden[i] = beta1 * m_b_hidden[i] + (1 - beta1) * db_hidden[i];
@@ -98,7 +99,7 @@ void update(float **w_input,     // hidden_neuron1 x input_neuron
             float m_hat = m_w_output[i][j] / (1 - beta1_t);
             float v_hat = v_w_output[i][j] / (1 - beta2_t);
 
-            w_output[i][j] -= learning_rate * m_hat / (sqrt(v_hat) + epsilon);
+            w_output[i][j] -= learning_rate * m_hat / (sqrt(v_hat) + epsilon + lambda * w_input[i][j]);
         }
 
         m_b_output[i] = beta1 * m_b_output[i] + (1 - beta1) * db_output[i];

@@ -101,6 +101,7 @@ void update(float **w_input,
         float beta1,
         float beta2,
         float epsilon,
+        float lambda,
         int t);
 void train(int nb_letter,
 	char *anna_result,

@@ -129,6 +129,7 @@ void train(int nb_letter,
 	float beta1 = 0.9;
 	float beta2 = 0.999;
 	float epsilon = 1e-8;
+	float lambda = 0.0001;
 
 	float dropout_rate = 0.3;
 
@@ -181,7 +182,7 @@ void train(int nb_letter,
             	m_w_input, v_w_input, m_w_hidden, v_w_hidden, m_w_output,
 				v_w_output, m_b_input, v_b_input, m_b_hidden, v_b_hidden,
             	m_b_output, v_b_output, learning_rate, beta1, beta2, epsilon,
-            	t);
+				lambda, t);
 
 			// Applying softmax function
 			softmax(nb_letter, output);
