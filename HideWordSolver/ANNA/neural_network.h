@@ -19,7 +19,7 @@
 #define nb_dataset 23
 
 // Define Structs
-struct typedef HyperParam
+typedef struct
 {
 	float learning_rate;
 	float lambda;
@@ -27,7 +27,7 @@ struct typedef HyperParam
 	float dropout_rate;
 } HyperParam;
 
-struct typedef Param
+typedef struct
 {
 	float*** weight;
 	float** bias;
@@ -39,7 +39,7 @@ struct typedef Param
 	float** result;
 } Param;
 
-struct typedef Adam
+typedef struct
 {
 	float beta1;
 	float beta2;
@@ -50,19 +50,19 @@ struct typedef Adam
 	float** v_bias;
 } Adam;
 
-struct typedef Test
+typedef struct
 {
 	float*** neuron;
 	float** result;
 } Test;
 
-struct typedef Info
+typedef struct
 {
 	size_t nb_layer;
 	size_t* nb_neuron;
 } Info;
 
-struct typedef Var
+typedef struct
 {
 	size_t train_data;
 	size_t test_data;
@@ -71,7 +71,7 @@ struct typedef Var
 	size_t epoch;
 } Var;
 
-struct typedef ANNA
+typedef struct
 {
 	HyperParam* hp;
 	Param* p;
