@@ -18,6 +18,70 @@
 #define output_neuron 26
 #define nb_dataset 23
 
+// Define Structs
+struct typedef HyperParam
+{
+	float learning_rate;
+	float lambda;
+	float espilon;
+	float dropout_rate;
+} HyperParam;
+
+struct typedef Param
+{
+	float*** weight;
+	float** bias;
+	float*** neuron;
+	float*** d_weight;
+	float** d_bias;
+	float*** neuron_error;
+	float** expected_output;
+	float** result;
+} Param;
+
+struct typedef Adam
+{
+	float beta1;
+	float beta2;
+	int t;
+	float*** m_weight;
+	float** m_bias;
+	float*** v_weight;
+	float** v_bias;
+} Adam;
+
+struct typedef Test
+{
+	float*** neuron;
+	float** result;
+} Test;
+
+struct typedef Info
+{
+	size_t nb_layer;
+	size_t* nb_neuron;
+} Info;
+
+struct typedef Var
+{
+	size_t train_data;
+	size_t test_data;
+	size_t batch_size;
+	unsigned int threads;
+	size_t epoch;
+} Var;
+
+struct typedef ANNA
+{
+	HyperParam* hp;
+	Param* p;
+	Adam* a;
+	Test* t;
+	Info* i;
+	Var* v;
+} ANNA;
+
+// Define Functions
 int main(int argc, char** argv);
 void reset_parameter(float **w_input,
 	float **w_hidden,
