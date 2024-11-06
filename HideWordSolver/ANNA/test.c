@@ -25,6 +25,7 @@ float test(size_t test_size,
 		char thread_nbr)
 {
 	load_image("Dataset/Train/t", -1, test_size, test_input, test_expected);
+	matrix_shuffle(test_output, test_expected, output_neuron, output_neuron, test_size);
     forward(test_size, test_input, test_hidden1, test_hidden2, test_output,
 		w_input, w_hidden, w_output, b_input, b_hidden, b_output, -1,
 		thread_nbr);
@@ -56,7 +57,6 @@ float test(size_t test_size,
 	
 	test_sum /= (float)test_size;
 	printf("\tTotal test success : %f\n", test_sum);
-    fflush(stdout);
 
 	return test_sum;
 }
@@ -70,7 +70,7 @@ void *_test(void *arg)
     {
 		float max = 0;
 		size_t imax = 0;
-		size_t imax_expected;
+		size_t imax_expected = 0;
         for (size_t j = 0; j < output_neuron; j++)
         {
         	if (data->output[j][i] > max)
@@ -83,7 +83,7 @@ void *_test(void *arg)
 				imax_expected = j;
 			}
 		}
-    	 *sum += imax == imax_expected;
+    	*sum += imax == imax_expected;
     }
     pthread_exit((void*)sum);
 }

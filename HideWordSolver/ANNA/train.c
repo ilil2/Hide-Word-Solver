@@ -15,7 +15,7 @@ void train(int nb_letter,
 		nb_letter = 13001;
 	}
 
-	size_t test_size = 521;
+	size_t test_size = 20748;
 
 	// Memory allocations //
 
