@@ -3,9 +3,10 @@
 #include <err.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../ANNA_graphics.h"
+// #include "../ANNA_graphics.h"
 #include "rotation.h"
 #include "../Preprocessing/medianfilter.h"
+
 
 SDL_Surface* preprocess_image(SDL_Surface* surface)
 {
