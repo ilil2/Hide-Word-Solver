@@ -1,16 +1,16 @@
 #include "neural_network.h"
 
 void pooling(size_t nb_letter,
-		double **input, //(image_size - 2)² x nb_letter
+		float **input, //(image_size - 2)² x nb_letter
 		size_t output_size,
-		double **output) //output_size x nb_letter
+		float **output) //output_size x nb_letter
 {
 	size_t mod_row = image_size / output_size;
 	for (size_t i = 0; i < nb_letter; i++)
 	{
 		for (size_t block = 0; block < output_size * output_size; block++)
 		{
-			double avg = 0;
+			float avg = 0;
 			for (size_t j = mod_row * (block % output_size);
 					j < mod_row * (block % output_size) + mod_row; j++)
 			{

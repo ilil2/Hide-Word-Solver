@@ -1,14 +1,14 @@
 #include "poc.h"
 
-void update(double **w_input, // hidden_neuron x input_neuron
-		double **w_output, // output_neuron x hidden_neuron
-		double *b_input, // hidden_neuron
-		double *b_output, // output_neuron
-		double **dw_output, // output_neuron x hidden_neuron
-		double *db_output, // output_neuron
-		double **dw_input, // hidden_neuron x input_neuron
-		double *db_input, // hidden_neuron
-        double learning_rate)
+void update(float **w_input, // hidden_neuron x input_neuron
+		float **w_output, // output_neuron x hidden_neuron
+		float *b_input, // hidden_neuron
+		float *b_output, // output_neuron
+		float **dw_output, // output_neuron x hidden_neuron
+		float *db_output, // output_neuron
+		float **dw_input, // hidden_neuron x input_neuron
+		float *db_input, // hidden_neuron
+        float learning_rate)
 {
     // Update the hidden layer weight and bias
     for (size_t i = 0; i < hidden_neuron; i++)

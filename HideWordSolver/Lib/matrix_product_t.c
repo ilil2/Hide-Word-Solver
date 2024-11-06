@@ -6,9 +6,9 @@
 // Multiply two matrix but one is transpose (multithreading)
 typedef struct
 {
-	double **mat1;
-	double **mat2;
-	double **mat3;
+	float **mat1;
+	float **mat2;
+	float **mat3;
 	size_t start_row;
 	size_t end_row;
 	size_t row;
@@ -19,8 +19,8 @@ typedef struct
 
 void *_matrix_product_t(void *arg);
 
-void matrix_product_t(size_t row1, size_t col1, double **mat1,
-        size_t row2, size_t col2, double **mat2, double **res,
+void matrix_product_t(size_t row1, size_t col1, float **mat1,
+        size_t row2, size_t col2, float **mat2, float **res,
 		char trans_nbr, size_t thread_nbr)
 {
     if(((col1 == col2) && trans_nbr) ||

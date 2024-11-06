@@ -3,8 +3,8 @@
 void load_image(char *file_path,
         int file_nb,
         size_t file_size,
-        double **input, // input_neuron x file_size
-        double **output) // output_neuron x file_size
+        float **input, // input_neuron x file_size
+        float **output) // output_neuron x file_size
 {
     FILE* input_file = NULL;
     FILE* output_file = NULL;
@@ -32,14 +32,14 @@ void load_image(char *file_path,
         {
             for (size_t j = 0; j < input_neuron; j++)
             {
-                fscanf(input_file, "%lf,", &input[j][i]);
+                fscanf(input_file, "%f,", &input[j][i]);
                 // Set the data between 0 and 1
                 input[j][i] /= 255.0;
             }
 
             for (size_t j = 0; j < output_neuron; j++)
             {
-                fscanf(output_file, "%lf,", &output[j][i]);
+                fscanf(output_file, "%f,", &output[j][i]);
             }
             
         }

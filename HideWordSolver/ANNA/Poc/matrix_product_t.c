@@ -1,7 +1,7 @@
 #include "poc.h"
 
-void poc_matrix_product_t(size_t row1, size_t col1, double **mat1,
-        size_t row2, size_t col2, double **mat2, double **res,
+void poc_matrix_product_t(size_t row1, size_t col1, float **mat1,
+        size_t row2, size_t col2, float **mat2, float **res,
 		char trans_nbr)
 {
     if (((col1 == col2) && trans_nbr) ||

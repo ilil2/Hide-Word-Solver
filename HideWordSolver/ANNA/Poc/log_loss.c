@@ -1,11 +1,11 @@
 #include "poc.h"
 
-double log_loss(int nb_letter,
-                double **expected_output, // output_neuron x nb_letter
-                double **output) // output_neuron x nb_letter
+float log_loss(int nb_letter,
+                float **expected_output, // output_neuron x nb_letter
+                float **output) // output_neuron x nb_letter
 {
-    double sum;
-    double epsilon = 1e-15;
+    float sum;
+    float epsilon = 1e-15;
     for (size_t i = 0; i < output_neuron; i++)
     {
         sum = 0;
@@ -16,5 +16,5 @@ double log_loss(int nb_letter,
         }
     }
     
-    return -((double)1 / nb_letter) * sum;
+    return -((float)1 / nb_letter) * sum;
 }

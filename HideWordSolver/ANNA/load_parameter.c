@@ -1,11 +1,11 @@
 #include "neural_network.h"
 
-void load_parameter(double **w_input, // hidden_neuron1 x input_neuron
-		double **w_hidden, // hidden_neuron2 x hidden_neuron1
-		double **w_output, // output_neuron x hidden_neuron
-		double *b_input, // hidden_neuron1
-		double *b_hidden, // hidden_neuron2
-		double *b_output) // output_neuron
+void load_parameter(float **w_input, // hidden_neuron1 x input_neuron
+		float **w_hidden, // hidden_neuron2 x hidden_neuron1
+		float **w_output, // output_neuron x hidden_neuron
+		float *b_input, // hidden_neuron1
+		float *b_hidden, // hidden_neuron2
+		float *b_output) // output_neuron
 {
     FILE* file_w_input = NULL;
     FILE* file_w_hidden = NULL;
@@ -23,7 +23,7 @@ void load_parameter(double **w_input, // hidden_neuron1 x input_neuron
         {
             for (int j = 0; j < input_neuron; j++)
             {
-                fscanf(file_w_input, "%lf,", &w_input[i][j]);
+                fscanf(file_w_input, "%f,", &w_input[i][j]);
             }
         }
     }
@@ -43,7 +43,7 @@ void load_parameter(double **w_input, // hidden_neuron1 x input_neuron
         {
             for (int j = 0; j < hidden_neuron1; j++)
             {
-                fscanf(file_w_hidden, "%lf,", &w_hidden[i][j]);
+                fscanf(file_w_hidden, "%f,", &w_hidden[i][j]);
             }
         }
     }
@@ -63,7 +63,7 @@ void load_parameter(double **w_input, // hidden_neuron1 x input_neuron
         {
             for (int j = 0; j < hidden_neuron2; j++)
             {
-                fscanf(file_w_output, "%lf,", &w_output[i][j]);
+                fscanf(file_w_output, "%f,", &w_output[i][j]);
             }
         }
     }
@@ -81,7 +81,7 @@ void load_parameter(double **w_input, // hidden_neuron1 x input_neuron
     {
         for (size_t i = 0; i < hidden_neuron1; i++)
         {
-            fscanf(file_b_input, "%lf", &b_input[i]);
+            fscanf(file_b_input, "%f", &b_input[i]);
         }
     }
     else
@@ -98,7 +98,7 @@ void load_parameter(double **w_input, // hidden_neuron1 x input_neuron
     {
         for (size_t i = 0; i < hidden_neuron2; i++)
         {
-            fscanf(file_b_hidden, "%lf", &b_hidden[i]);
+            fscanf(file_b_hidden, "%f", &b_hidden[i]);
         }
     }
     else
@@ -115,7 +115,7 @@ void load_parameter(double **w_input, // hidden_neuron1 x input_neuron
     {
         for (int i = 0; i < output_neuron; i++)
         {
-            fscanf(file_b_output, "%lf", &b_output[i]);
+            fscanf(file_b_output, "%f", &b_output[i]);
         }
     }
     else

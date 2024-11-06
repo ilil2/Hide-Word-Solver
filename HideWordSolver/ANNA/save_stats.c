@@ -1,6 +1,6 @@
 #include "neural_network.h"
 
-void save_stats(size_t i, double log_loss, double train_set, double test_set)
+void save_stats(size_t i, float log_loss, float train_set, float test_set)
 {
     // Save new ANNA stats
     FILE* save_file = NULL;

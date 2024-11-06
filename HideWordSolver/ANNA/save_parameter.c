@@ -1,11 +1,11 @@
 #include "neural_network.h"
 
-void save_parameter(double **w_input, // hidden_neuron1 x input_neuron
-		double **w_hidden, // hidden_neuron2 x hidden_neuron1
-		double **w_output, // output_neuron x hidden_neuron
-		double *b_input, // hidden_neuron1
-		double *b_hidden, // hidden_neuron2
-		double *b_output) // output_neuron
+void save_parameter(float **w_input, // hidden_neuron1 x input_neuron
+		float **w_hidden, // hidden_neuron2 x hidden_neuron1
+		float **w_output, // output_neuron x hidden_neuron
+		float *b_input, // hidden_neuron1
+		float *b_hidden, // hidden_neuron2
+		float *b_output) // output_neuron
 {
 	FILE* file_w_input = NULL;
 	FILE* file_w_hidden = NULL;

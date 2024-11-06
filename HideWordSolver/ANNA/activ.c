@@ -1,6 +1,6 @@
 #include "neural_network.h"
 
-double activ(double d)
+float activ(float d)
 {
     return relu(d);
 }

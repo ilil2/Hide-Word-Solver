@@ -7,23 +7,23 @@
 // train to train the AI with the number of images in the dataset as the second parameter and the number of threads to be used as the third parameter
 int main(int argc, char** argv)
 {
-    double **w_input = malloc(hidden_neuron1 * sizeof(double *));
+    float **w_input = malloc(hidden_neuron1 * sizeof(float *));
     for (int i = 0; i < hidden_neuron1; i++)
-        w_input[i] = malloc(input_neuron * sizeof(double));
+        w_input[i] = malloc(input_neuron * sizeof(float));
 
-    double **w_hidden = malloc(hidden_neuron2 * sizeof(double *));
+    float **w_hidden = malloc(hidden_neuron2 * sizeof(float *));
     for (int i = 0; i < hidden_neuron2; i++)
-        w_hidden[i] = malloc(hidden_neuron1 * sizeof(double));
+        w_hidden[i] = malloc(hidden_neuron1 * sizeof(float));
 
-    double **w_output = malloc(output_neuron * sizeof(double *));
+    float **w_output = malloc(output_neuron * sizeof(float *));
     for (int i = 0; i < output_neuron; i++)
-        w_output[i] = malloc(hidden_neuron2 * sizeof(double));
+        w_output[i] = malloc(hidden_neuron2 * sizeof(float));
 
-    double *b_input = malloc(hidden_neuron1 * sizeof(double));
+    float *b_input = malloc(hidden_neuron1 * sizeof(float));
 
-    double *b_hidden = malloc(hidden_neuron2 * sizeof(double));
+    float *b_hidden = malloc(hidden_neuron2 * sizeof(float));
 
-    double *b_output = malloc(output_neuron * sizeof(double));
+    float *b_output = malloc(output_neuron * sizeof(float));
 
     if(argc > 1)
     {

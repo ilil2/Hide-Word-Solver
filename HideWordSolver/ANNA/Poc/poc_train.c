@@ -2,52 +2,52 @@
 
 int main()
 {
-	double **w_input = malloc(hidden_neuron * sizeof(double *));
+	float **w_input = malloc(hidden_neuron * sizeof(float *));
     for (int i = 0; i < hidden_neuron; i++)
-        w_input[i] = malloc(input_neuron * sizeof(double));
+        w_input[i] = malloc(input_neuron * sizeof(float));
 
-    double **w_output = malloc(output_neuron * sizeof(double *));
+    float **w_output = malloc(output_neuron * sizeof(float *));
     for (int i = 0; i < output_neuron; i++)
-        w_output[i] = malloc(hidden_neuron * sizeof(double));
+        w_output[i] = malloc(hidden_neuron * sizeof(float));
 
-    double *b_input = malloc(hidden_neuron * sizeof(double));
+    float *b_input = malloc(hidden_neuron * sizeof(float));
 
-    double *b_output = malloc(output_neuron * sizeof(double));
+    float *b_output = malloc(output_neuron * sizeof(float));
 
-	double limit_w_input = sqrt(6.0 / (hidden_neuron + input_neuron));
+	float limit_w_input = sqrt(6.0 / (hidden_neuron + input_neuron));
     for (int i = 0; i < hidden_neuron; i++)
     {
         for (int j = 0; j < input_neuron; j++)
         {
-            w_input[i][j] = ((double)rand() / RAND_MAX) * 2.0
+            w_input[i][j] = ((float)rand() / RAND_MAX) * 2.0
 				* limit_w_input - limit_w_input;
         }
     }
 
-    double limit_w_output = sqrt(6.0 / (output_neuron + hidden_neuron));
+    float limit_w_output = sqrt(6.0 / (output_neuron + hidden_neuron));
     for (int i = 0; i < output_neuron; i++)
     {
         for (int j = 0; j < hidden_neuron; j++)
         {
-            w_output[i][j] = ((double)rand() / RAND_MAX) * 2.0
+            w_output[i][j] = ((float)rand() / RAND_MAX) * 2.0
 				* limit_w_output - limit_w_output;
         }
     }
 
     for (int i = 0; i < hidden_neuron; i++)
     {
-        b_input[i] = ((double)rand() / RAND_MAX) * 2.0 - 0.01;
+        b_input[i] = ((float)rand() / RAND_MAX) * 2.0 - 0.01;
     }
 
     for (int i = 0; i < output_neuron; i++)
     {
-        b_output[i] = ((double)rand() / RAND_MAX) * 2.0 - 0.01;
+        b_output[i] = ((float)rand() / RAND_MAX) * 2.0 - 0.01;
     }
 
-	double** input = malloc(sizeof(double*) * input_neuron);
+	float** input = malloc(sizeof(float*) * input_neuron);
 	for (int i = 0; i < input_neuron; i++)
 	{
-		input[i] = malloc(sizeof(double) * nb_letters);
+		input[i] = malloc(sizeof(float) * nb_letters);
 	}
 
 	// Set input
@@ -60,22 +60,22 @@ int main()
 	input[0][3] = 1;
 	input[1][3] = 1;
 
-	double** hidden = malloc(sizeof(double) * hidden_neuron);
+	float** hidden = malloc(sizeof(float) * hidden_neuron);
 	for (int i = 0; i < hidden_neuron; i++)
 	{
-		hidden[i] = malloc(sizeof(double) * nb_letters);
+		hidden[i] = malloc(sizeof(float) * nb_letters);
 	}
 
-	double** output = malloc(sizeof(double) * output_neuron);
+	float** output = malloc(sizeof(float) * output_neuron);
 	for (int i = 0; i < output_neuron; i++)
 	{
-		output[i] = malloc(sizeof(double) * nb_letters);
+		output[i] = malloc(sizeof(float) * nb_letters);
 	}
 
-	double** expected_output = malloc(sizeof(double) * output_neuron);
+	float** expected_output = malloc(sizeof(float) * output_neuron);
 	for (int i = 0; i < output_neuron; i++)
 	{
-		expected_output[i] = malloc(sizeof(double) * nb_letters);
+		expected_output[i] = malloc(sizeof(float) * nb_letters);
 	}
 
 	// Set output
@@ -84,35 +84,35 @@ int main()
 	expected_output[0][2] = 0;
 	expected_output[0][3] = 1;
 
-	double** output_error = malloc(sizeof(double) * output_neuron);
+	float** output_error = malloc(sizeof(float) * output_neuron);
 	for (int i = 0; i < output_neuron; i++)
 	{
-		output_error[i] = malloc(sizeof(double) * nb_letters);
+		output_error[i] = malloc(sizeof(float) * nb_letters);
 	}
 
-	double** dw_output = malloc(sizeof(double*) * output_neuron);
+	float** dw_output = malloc(sizeof(float*) * output_neuron);
 	for (int i = 0; i < output_neuron; i++)
 	{
-		dw_output[i] = malloc(sizeof(double) * hidden_neuron);
+		dw_output[i] = malloc(sizeof(float) * hidden_neuron);
 	}
 
-	double* db_output = malloc(sizeof(double) * output_neuron);
+	float* db_output = malloc(sizeof(float) * output_neuron);
 
-	double** hidden_error = malloc(sizeof(double) * hidden_neuron);
+	float** hidden_error = malloc(sizeof(float) * hidden_neuron);
 	for (int i = 0; i < hidden_neuron; i++)
 	{
-		hidden_error[i] = malloc(sizeof(double) * nb_letters);
+		hidden_error[i] = malloc(sizeof(float) * nb_letters);
 	}
 
-	double** dw_input = malloc(sizeof(double*) * hidden_neuron);
+	float** dw_input = malloc(sizeof(float*) * hidden_neuron);
 	for (size_t i = 0; i < hidden_neuron; i++)
 	{
-		dw_input[i] = malloc(sizeof(double) * input_neuron);
+		dw_input[i] = malloc(sizeof(float) * input_neuron);
 	}
 
-	double* db_input = malloc(sizeof(double) * hidden_neuron);
+	float* db_input = malloc(sizeof(float) * hidden_neuron);
 
-	double learning_rate = 3;
+	float learning_rate = 3;
 
 	unsigned long long loop = 0;
 	size_t nb_while = 5000;
@@ -129,12 +129,12 @@ int main()
 
 			for (int k = 0; k < input_neuron; k++)
 			{
-				double temp1 = input[k][i];
+				float temp1 = input[k][i];
 				input[k][i] = input[k][j];
 				input[k][j] = temp1;
 			}
 
-			double temp2 = expected_output[0][i];
+			float temp2 = expected_output[0][i];
 			expected_output[0][i] = expected_output[0][j];
 			expected_output[0][j] = temp2;
 		}
@@ -183,12 +183,12 @@ int main()
 	loop = 0;
 	while (nb_train)
 	{
-		double** input_test = malloc(sizeof(double*) * 2);
-		input_test[0] = malloc(sizeof(double) * 1);
-		input_test[1] = malloc(sizeof(double) * 1);
+		float** input_test = malloc(sizeof(float*) * 2);
+		input_test[0] = malloc(sizeof(float) * 1);
+		input_test[1] = malloc(sizeof(float) * 1);
 		printf("Test loop number : %llu\n", loop);
 		printf("Choose the value of A and B : ");
-		scanf("%lf %lf", &(input_test[0][0]), &(input_test[1][0]));
+		scanf("%f %f", &(input_test[0][0]), &(input_test[1][0]));
 		loop += 1;
 		nb_train -= 1;
 

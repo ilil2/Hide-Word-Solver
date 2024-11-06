@@ -1,8 +1,8 @@
 #include "lib.h"
 
 // Transpose a matrix
-void matrix_transpose(size_t x, size_t y, double **mat1,
-		double **res)
+void matrix_transpose(size_t x, size_t y, float **mat1,
+		float **res)
 {
 	for (size_t i = 0; i < x; i++)
 	{

@@ -2,12 +2,12 @@
 
 void train(int nb_letter,
 		char *anna_result,	// nb_letter
-		double** w_input,   // hidden_neuron1 x input_neuron
-        double** w_hidden,  // hidden_neuron2 x hidden_neuron1
-		double** w_output,  // output_neuron x hidden_neuron2
-		double* b_input,    // hidden_neuron1
-		double* b_hidden,   // hidden_neuron2
-		double* b_output,   // output_neuron
+		float** w_input,   // hidden_neuron1 x input_neuron
+        float** w_hidden,  // hidden_neuron2 x hidden_neuron1
+		float** w_output,  // output_neuron x hidden_neuron2
+		float* b_input,    // hidden_neuron1
+		float* b_hidden,   // hidden_neuron2
+		float* b_output,   // output_neuron
 		char threads)
 {
 	if(nb_letter > 13001)
@@ -20,98 +20,98 @@ void train(int nb_letter,
 	// Memory allocations //
 
 	// Train allocations
-	double** input = malloc(sizeof(double*) * input_neuron);
+	float** input = malloc(sizeof(float*) * input_neuron);
 	for (int i = 0; i < input_neuron; i++)
 	{
-		input[i] = malloc(sizeof(double) * nb_letter);
+		input[i] = malloc(sizeof(float) * nb_letter);
 	}
 
-	double** hidden1 = malloc(sizeof(double*) * hidden_neuron1);
+	float** hidden1 = malloc(sizeof(float*) * hidden_neuron1);
 	for (int i = 0; i < hidden_neuron1; i++)
 	{
-		hidden1[i] = malloc(sizeof(double) * nb_letter);
+		hidden1[i] = malloc(sizeof(float) * nb_letter);
 	}
 
-	double** hidden2 = malloc(sizeof(double*) * hidden_neuron2);
+	float** hidden2 = malloc(sizeof(float*) * hidden_neuron2);
 	for (int i = 0; i < hidden_neuron2; i++)
 	{
-		hidden2[i] = malloc(sizeof(double) * nb_letter);
+		hidden2[i] = malloc(sizeof(float) * nb_letter);
 	}
 
-	double** output = malloc(sizeof(double*) * output_neuron);
-	double** expected_output = malloc(sizeof(double*) * output_neuron);
-	double** output_error = malloc(sizeof(double*) * output_neuron);
-	double** dw_output = malloc(sizeof(double*) * output_neuron);
-	double** m_w_output = malloc(sizeof(double*) * output_neuron);
-	double** v_w_output = malloc(sizeof(double*) * output_neuron);
-	double* db_output = malloc(sizeof(double) * output_neuron);
-	double* m_b_output = malloc(sizeof(double) * output_neuron);
-	double* v_b_output = malloc(sizeof(double) * output_neuron);
+	float** output = malloc(sizeof(float*) * output_neuron);
+	float** expected_output = malloc(sizeof(float*) * output_neuron);
+	float** output_error = malloc(sizeof(float*) * output_neuron);
+	float** dw_output = malloc(sizeof(float*) * output_neuron);
+	float** m_w_output = malloc(sizeof(float*) * output_neuron);
+	float** v_w_output = malloc(sizeof(float*) * output_neuron);
+	float* db_output = malloc(sizeof(float) * output_neuron);
+	float* m_b_output = malloc(sizeof(float) * output_neuron);
+	float* v_b_output = malloc(sizeof(float) * output_neuron);
 	for (int i = 0; i < output_neuron; i++)
 	{
-		output[i] = malloc(sizeof(double) * nb_letter);
-		expected_output[i] = malloc(sizeof(double) * nb_letter);
-		output_error[i] = malloc(sizeof(double) * nb_letter);
-		dw_output[i] = malloc(sizeof(double) * hidden_neuron2);
-		m_w_output[i] = malloc(sizeof(double) * hidden_neuron2);
-		v_w_output[i] = malloc(sizeof(double) * hidden_neuron2);
+		output[i] = malloc(sizeof(float) * nb_letter);
+		expected_output[i] = malloc(sizeof(float) * nb_letter);
+		output_error[i] = malloc(sizeof(float) * nb_letter);
+		dw_output[i] = malloc(sizeof(float) * hidden_neuron2);
+		m_w_output[i] = malloc(sizeof(float) * hidden_neuron2);
+		v_w_output[i] = malloc(sizeof(float) * hidden_neuron2);
 	}
 
-	double** hidden2_error = malloc(sizeof(double*) * hidden_neuron2);
-	double** dw_hidden = malloc(sizeof(double*) * hidden_neuron2);
-	double** m_w_hidden = malloc(sizeof(double*) * hidden_neuron2);
-	double** v_w_hidden = malloc(sizeof(double*) * hidden_neuron2);
-	double* db_hidden = malloc(sizeof(double) * hidden_neuron2);
-	double* m_b_hidden = malloc(sizeof(double) * hidden_neuron2);
-	double* v_b_hidden = malloc(sizeof(double) * hidden_neuron2);
+	float** hidden2_error = malloc(sizeof(float*) * hidden_neuron2);
+	float** dw_hidden = malloc(sizeof(float*) * hidden_neuron2);
+	float** m_w_hidden = malloc(sizeof(float*) * hidden_neuron2);
+	float** v_w_hidden = malloc(sizeof(float*) * hidden_neuron2);
+	float* db_hidden = malloc(sizeof(float) * hidden_neuron2);
+	float* m_b_hidden = malloc(sizeof(float) * hidden_neuron2);
+	float* v_b_hidden = malloc(sizeof(float) * hidden_neuron2);
 	for (int i = 0; i < hidden_neuron2; i++)
 	{
-		hidden2_error[i] = malloc(sizeof(double) * nb_letter);
-		dw_hidden[i] = malloc(sizeof(double) * hidden_neuron1);
-		m_w_hidden[i] = malloc(sizeof(double) * hidden_neuron1);
-		v_w_hidden[i] = malloc(sizeof(double) * hidden_neuron1);
+		hidden2_error[i] = malloc(sizeof(float) * nb_letter);
+		dw_hidden[i] = malloc(sizeof(float) * hidden_neuron1);
+		m_w_hidden[i] = malloc(sizeof(float) * hidden_neuron1);
+		v_w_hidden[i] = malloc(sizeof(float) * hidden_neuron1);
 	}
 
-	double** hidden1_error = malloc(sizeof(double*) * hidden_neuron1);
-	double** dw_input = malloc(sizeof(double*) * hidden_neuron1);
-	double** m_w_input = malloc(sizeof(double*) * hidden_neuron1);
-	double** v_w_input = malloc(sizeof(double*) * hidden_neuron1);
-	double* db_input = malloc(sizeof(double) * hidden_neuron1);
-	double* m_b_input = malloc(sizeof(double) * hidden_neuron1);
-	double* v_b_input = malloc(sizeof(double) * hidden_neuron1);
+	float** hidden1_error = malloc(sizeof(float*) * hidden_neuron1);
+	float** dw_input = malloc(sizeof(float*) * hidden_neuron1);
+	float** m_w_input = malloc(sizeof(float*) * hidden_neuron1);
+	float** v_w_input = malloc(sizeof(float*) * hidden_neuron1);
+	float* db_input = malloc(sizeof(float) * hidden_neuron1);
+	float* m_b_input = malloc(sizeof(float) * hidden_neuron1);
+	float* v_b_input = malloc(sizeof(float) * hidden_neuron1);
 	for (int i = 0; i < hidden_neuron1; i++)
 	{
-		hidden1_error[i] = malloc(sizeof(double) * nb_letter);
-		dw_input[i] = malloc(sizeof(double) * input_neuron);
-		m_w_input[i] = malloc(sizeof(double) * input_neuron);
-		v_w_input[i] = malloc(sizeof(double) * input_neuron);
+		hidden1_error[i] = malloc(sizeof(float) * nb_letter);
+		dw_input[i] = malloc(sizeof(float) * input_neuron);
+		m_w_input[i] = malloc(sizeof(float) * input_neuron);
+		v_w_input[i] = malloc(sizeof(float) * input_neuron);
 	}
 
 	// Test allocations
-	double** test_input = malloc(sizeof(double*) * input_neuron);
+	float** test_input = malloc(sizeof(float*) * input_neuron);
 	for (size_t i = 0; i < input_neuron; i++)
 	{
-		test_input[i] = malloc(sizeof(double) * test_size);
+		test_input[i] = malloc(sizeof(float) * test_size);
 	}
 
-	double** test_hidden1 = malloc(sizeof(double*) * hidden_neuron1);
+	float** test_hidden1 = malloc(sizeof(float*) * hidden_neuron1);
 	for (size_t i = 0; i < hidden_neuron1; i++)
 	{
-		test_hidden1[i] = malloc(sizeof(double) * test_size);
+		test_hidden1[i] = malloc(sizeof(float) * test_size);
 	}
 
-	double** test_hidden2 = malloc(sizeof(double*) * hidden_neuron2);
+	float** test_hidden2 = malloc(sizeof(float*) * hidden_neuron2);
 	for (size_t i = 0; i < hidden_neuron2; i++)
 	{
-		test_hidden2[i] = malloc(sizeof(double) * test_size);
+		test_hidden2[i] = malloc(sizeof(float) * test_size);
 	}
 
-	double** test_output = malloc(sizeof(double) * output_neuron);
-	double** test_expected = malloc(sizeof(double*) * output_neuron);
+	float** test_output = malloc(sizeof(float) * output_neuron);
+	float** test_expected = malloc(sizeof(float*) * output_neuron);
 	for (size_t i = 0; i < output_neuron; i++)
 	{
-		test_output[i] = malloc(sizeof(double) * test_size);
-		test_expected[i] = malloc(sizeof(double) * test_size);
+		test_output[i] = malloc(sizeof(float) * test_size);
+		test_expected[i] = malloc(sizeof(float) * test_size);
 	}
 
 	char* anna_expected_result = malloc(nb_letter * sizeof(char));
@@ -125,12 +125,12 @@ void train(int nb_letter,
 		dataset_order[i] = i;
 	}
 
-	double learning_rate = 0.001;
-	double beta1 = 0.9;
-	double beta2 = 0.999;
-	double epsilon = 1e-8;
+	float learning_rate = 0.001;
+	float beta1 = 0.9;
+	float beta2 = 0.999;
+	float epsilon = 1e-8;
 
-	double dropout_rate = 0.3;
+	float dropout_rate = 0.3;
 
 	int t = 0;
 
@@ -149,8 +149,8 @@ void train(int nb_letter,
 		// Mixing the dataset
 		shuffle(dataset_order, nb_dataset);
 
-		double train_success_t = 0;
-		double log_loss_t = 0;
+		float train_success_t = 0;
+		float log_loss_t = 0;
 
 		for (int i = 0; i < nb_dataset; i++)
 		{
@@ -190,7 +190,7 @@ void train(int nb_letter,
 			convert_output_to_char(nb_letter, output, anna_result);
 			convert_output_to_char(nb_letter, expected_output,
 				anna_expected_result);
-			double success = 0;
+			float success = 0;
 			for (int i = 0; i < nb_letter; i++)
 			{
 				if (anna_result[i] == anna_expected_result[i])
@@ -198,7 +198,7 @@ void train(int nb_letter,
 					success += 1;
 				}
 			}
-			double _log_loss = log_loss(nb_letter, expected_output, output);
+			float _log_loss = log_loss(nb_letter, expected_output, output);
 			train_success_t += success / nb_letter;
 			log_loss_t += _log_loss;
 
@@ -211,7 +211,7 @@ void train(int nb_letter,
 		{
 			printf("\tTotal log loss = %f\n", log_loss_t / nb_dataset);
 			printf("\tTotal train success = %f\n", train_success_t / nb_dataset);
-			double test_succes_t = test(test_size, test_input, test_hidden1,
+			float test_succes_t = test(test_size, test_input, test_hidden1,
 				test_hidden2, test_expected, test_output, w_input, w_hidden,
 				w_output, b_input, b_hidden, b_output, threads);
 			save_stats(loop, log_loss_t / nb_dataset, train_success_t / nb_dataset,

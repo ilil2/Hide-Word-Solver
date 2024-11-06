@@ -1,22 +1,22 @@
 #include "neural_network.h"
 
 void backward(int nb_letter,
-              double **w_output,        // output_neuron x hidden_neuron2
-              double **w_hidden,        // hidden_neuron2 x hidden_neuron1
-              double **input,           // input_neuron x nb_letter
-              double **hidden1,         // hidden_neuron1 x nb_letter
-              double **hidden2,         // hidden_neuron2 x nb_letter
-              double **output,          // output_neuron x nb_letter
-              double **expected_output, // output_neuron x nb_letter
-              double **output_error,    // output_neuron x nb_letter
-              double **dw_output,       // output_neuron x hidden_neuron2
-              double *db_output,        // output_neuron
-              double **hidden2_error,   // hidden_neuron2 x nb_letter
-              double **dw_hidden,       // hidden_neuron2 x hidden_neuron1
-              double *db_hidden,        // hidden_neuron2
-              double **hidden1_error,   // hidden_neuron1 x nb_letter
-              double **dw_input,        // hidden_neuron1 x input_neuron
-              double *db_input,         // hidden_neuron1
+              float **w_output,        // output_neuron x hidden_neuron2
+              float **w_hidden,        // hidden_neuron2 x hidden_neuron1
+              float **input,           // input_neuron x nb_letter
+              float **hidden1,         // hidden_neuron1 x nb_letter
+              float **hidden2,         // hidden_neuron2 x nb_letter
+              float **output,          // output_neuron x nb_letter
+              float **expected_output, // output_neuron x nb_letter
+              float **output_error,    // output_neuron x nb_letter
+              float **dw_output,       // output_neuron x hidden_neuron2
+              float *db_output,        // output_neuron
+              float **hidden2_error,   // hidden_neuron2 x nb_letter
+              float **dw_hidden,       // hidden_neuron2 x hidden_neuron1
+              float *db_hidden,        // hidden_neuron2
+              float **hidden1_error,   // hidden_neuron1 x nb_letter
+              float **dw_input,        // hidden_neuron1 x input_neuron
+              float *db_input,         // hidden_neuron1
               char threads)
 {
     // Apply back propagation on weights and biases between output and second hidden layer
@@ -42,7 +42,7 @@ void backward(int nb_letter,
 
     for (int i = 0; i < output_neuron; i++)
     {
-        double sum = 0;
+        float sum = 0;
         for (int j = 0; j < nb_letter; j++)
         {
             sum += output_error[i][j];
@@ -75,7 +75,7 @@ void backward(int nb_letter,
 
     for (int i = 0; i < hidden_neuron2; i++)
     {
-        double sum = 0;
+        float sum = 0;
         for (int j = 0; j < nb_letter; j++)
         {
             sum += hidden2_error[i][j];
@@ -108,7 +108,7 @@ void backward(int nb_letter,
 
     for (int i = 0; i < hidden_neuron1; i++)
     {
-        double sum = 0;
+        float sum = 0;
         for (int j = 0; j < nb_letter; j++)
         {
             sum += hidden1_error[i][j];

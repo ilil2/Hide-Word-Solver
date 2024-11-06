@@ -1,6 +1,6 @@
 #include "neural_network.h"
 
-double activ_prime(double d)
+float activ_prime(float d)
 {
     return relu_prime(d);
 }

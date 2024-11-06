@@ -1,6 +1,6 @@
 #include <math.h>
 
-double sigmoid_prime(double d)
+float sigmoid_prime(float d)
 {
 	return d * (1-d);
 }

@@ -4,24 +4,24 @@ typedef struct
 {
 	size_t start;
 	size_t end;
-	double **output;
-	double **expected;
+	float **output;
+	float **expected;
 } ThreadTest;
 
 void *_test(void *arg);
 
-double test(size_t test_size,
-		double **test_input,
-		double **test_hidden1,
-		double **test_hidden2,
-		double **test_expected,
-		double **test_output,
-		double **w_input,
-		double **w_hidden,
-		double **w_output,
-		double *b_input,
-		double *b_hidden,
-		double *b_output,
+float test(size_t test_size,
+		float **test_input,
+		float **test_hidden1,
+		float **test_hidden2,
+		float **test_expected,
+		float **test_output,
+		float **w_input,
+		float **w_hidden,
+		float **w_output,
+		float *b_input,
+		float *b_hidden,
+		float *b_output,
 		char thread_nbr)
 {
 	load_image("Dataset/Train/t", -1, test_size, test_input, test_expected);
@@ -29,7 +29,7 @@ double test(size_t test_size,
 		w_input, w_hidden, w_output, b_input, b_hidden, b_output, -1,
 		thread_nbr);
 
-	double test_sum = 0;
+	float test_sum = 0;
 
 	pthread_t threads[thread_nbr];
 	ThreadTest* data[thread_nbr];
@@ -54,7 +54,7 @@ double test(size_t test_size,
 		free(res);
 	}
 	
-	test_sum /= (double)test_size;
+	test_sum /= (float)test_size;
 	printf("\tTotal test success : %f\n", test_sum);
     fflush(stdout);
 
@@ -68,7 +68,7 @@ void *_test(void *arg)
 	*sum = 0;
 	for (size_t i = data->start; i < data->end; i++)
     {
-		double max = 0;
+		float max = 0;
 		size_t imax = 0;
 		size_t imax_expected;
         for (size_t j = 0; j < output_neuron; j++)

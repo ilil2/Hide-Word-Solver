@@ -3,7 +3,7 @@
 #include <time.h>
 
 // Shuffle a matrix
-void matrix_shuffle(double **array, double **array2, int rows1, int rows2,
+void matrix_shuffle(float **array, float **array2, int rows1, int rows2,
     int cols)
 {
     srand(time(NULL));
@@ -14,14 +14,14 @@ void matrix_shuffle(double **array, double **array2, int rows1, int rows2,
 
         for (int k = 0; k < rows1; k++)
         {
-            double temp1 = array[k][i];
+            float temp1 = array[k][i];
             array[k][i] = array[k][j];
             array[k][j] = temp1;
         }
 
         for (int k = 0; k < rows2; k++)
         {
-            double temp2 = array2[k][i];
+            float temp2 = array2[k][i];
             array2[k][i] = array2[k][j];
             array2[k][j] = temp2;
         }

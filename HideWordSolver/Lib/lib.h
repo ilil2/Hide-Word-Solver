@@ -17,19 +17,19 @@ void itox(int i, char *hexa);
 void xtoRGB(const char hexa[6], int* rgb[3]);
 int xtoi(const char *hexa);
 int atoi(const char *str);
-void matrix_product(size_t row1, size_t col1, double **mat1,
-    size_t row2, size_t col2, double **mat2, double **res,
+void matrix_product(size_t row1, size_t col1, float **mat1,
+    size_t row2, size_t col2, float **mat2, float **res,
 	size_t threads_nbr);
-void matrix_product_t(size_t row1, size_t col1, double **mat1,
-        size_t row2, size_t col2, double **mat2, double **res,
+void matrix_product_t(size_t row1, size_t col1, float **mat1,
+        size_t row2, size_t col2, float **mat2, float **res,
 		char trans_nbr, size_t threads_nbr);
-void matrix_transpose(size_t x, size_t y, double **mat,
-		double **res);
-void matrix_addition(size_t row, size_t col, double **mat1,
-		double **mat2, double **res);
-void matrix_shuffle(double **array, double **array2, int rows1,
+void matrix_transpose(size_t x, size_t y, float **mat,
+		float **res);
+void matrix_addition(size_t row, size_t col, float **mat1,
+		float **mat2, float **res);
+void matrix_shuffle(float **array, float **array2, int rows1,
 	int rows2, int cols);
 void shuffle(char array[], int n);
-double max(double d1, double d2);
+float max(float d1, float d2);
 
 #endif

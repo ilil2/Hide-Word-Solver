@@ -1,17 +1,17 @@
 #include "neural_network.h"
 
 void forward(int nb_letter,
-             double **input,        // input_neuron x nb_letter
-             double **hidden1,      // hidden_neuron1 x nb_letter
-             double **hidden2,      // hidden_neuron2 x nb_letter
-             double **output,       // output_neuron x nb_letter
-             double **w_input,      // hidden_neuron1 x input_neuron
-             double **w_hidden,     // hidden_neuron2 x hidden_neuron1
-             double **w_output,     // output_neuron x hidden_neuron2
-             double *b_input,       // hidden_neuron1
-             double *b_hidden,      // hidden_neuron2
-             double *b_output,      // output_neuron
-             double dropout_rate,
+             float **input,        // input_neuron x nb_letter
+             float **hidden1,      // hidden_neuron1 x nb_letter
+             float **hidden2,      // hidden_neuron2 x nb_letter
+             float **output,       // output_neuron x nb_letter
+             float **w_input,      // hidden_neuron1 x input_neuron
+             float **w_hidden,     // hidden_neuron2 x hidden_neuron1
+             float **w_output,     // output_neuron x hidden_neuron2
+             float *b_input,       // hidden_neuron1
+             float *b_hidden,      // hidden_neuron2
+             float *b_output,      // output_neuron
+             float dropout_rate,
              char threads)
 {
     // Apply forward propagation to neurons in the first hidden layer
@@ -27,7 +27,7 @@ void forward(int nb_letter,
 
             if (dropout_rate > 0)
             {
-                if ((double)rand() / RAND_MAX < dropout_rate)
+                if ((float)rand() / RAND_MAX < dropout_rate)
                 {
                     hidden1[i][j] = 0;
                 }
@@ -52,7 +52,7 @@ void forward(int nb_letter,
 
             if (dropout_rate > 0)
             {
-                if ((double)rand() / RAND_MAX < dropout_rate)
+                if ((float)rand() / RAND_MAX < dropout_rate)
                 {
                     hidden2[i][j] = 0;
                 }

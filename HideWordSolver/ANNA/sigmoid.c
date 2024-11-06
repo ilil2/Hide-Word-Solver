@@ -1,6 +1,6 @@
 #include <math.h>
 
-double sigmoid(double d)
+float sigmoid(float d)
 {
 	return 1/(1 + exp(-d));
 }

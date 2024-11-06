@@ -1,10 +1,10 @@
 #include "neural_network.h"
 
-void softmax(int nb_letter, double **output)
+void softmax(int nb_letter, float **output)
 {
 	for (int n = 0; n < nb_letter; n++)
     {
-        double max = output[0][n];
+        float max = output[0][n];
         for (int i = 1; i < output_neuron; i++)
         {
             if (output[i][n] > max)
@@ -13,7 +13,7 @@ void softmax(int nb_letter, double **output)
             }
         }
 
-        double sum = 0.0;
+        float sum = 0.0;
         for (int i = 0; i < output_neuron; i++)
         {
             output[i][n] = exp(output[i][n] - max);
