@@ -12,7 +12,7 @@ void forward(int nb_letter,
              float *b_hidden,      // hidden_neuron2
              float *b_output,      // output_neuron
              float dropout_rate,
-             char threads)
+             int threads)
 {
     // Apply forward propagation to neurons in the first hidden layer
     matrix_product(hidden_neuron1, input_neuron, w_input, input_neuron,

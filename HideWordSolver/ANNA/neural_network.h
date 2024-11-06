@@ -118,7 +118,7 @@ void forward(int nb_letter,
         float *b_hidden,
         float *b_output,
 	float dropout_rate,
-	char threads);
+	int threads);
 void backward(int nb_letter,
         float **w_output,
         float **w_hidden,
@@ -136,7 +136,7 @@ void backward(int nb_letter,
         float **hidden1_error,
         float **dw_input,
         float *db_input,
-	char threads);
+	int threads);
 void update(float **w_input,
         float **w_hidden,
         float **w_output,
@@ -175,7 +175,7 @@ void train(int nb_letter,
 	float* b_input,
 	float* b_hidden,
 	float* b_output,
-	char threads);
+	int threads);
 void predict(int nb_letter,
 	char *anna_result,
 	float **input,
@@ -208,7 +208,7 @@ float test(size_t test_size,
 	float *b_input,
 	float *b_hidden,
 	float *b_output,
-	char thread_nbr);
+	int thread_nbr);
 void save_stats(size_t i,
 	float log_loss,
 	float train_set,

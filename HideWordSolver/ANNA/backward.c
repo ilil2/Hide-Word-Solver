@@ -17,7 +17,7 @@ void backward(int nb_letter,
               float **hidden1_error,   // hidden_neuron1 x nb_letter
               float **dw_input,        // hidden_neuron1 x input_neuron
               float *db_input,         // hidden_neuron1
-              char threads)
+              int threads)
 {
     // Apply back propagation on weights and biases between output and second hidden layer
     for (int i = 0; i < output_neuron; i++)

@@ -8,7 +8,7 @@ void train(int nb_letter,
 		float* b_input,    // hidden_neuron1
 		float* b_hidden,   // hidden_neuron2
 		float* b_output,   // output_neuron
-		char threads)
+		int threads)
 {
 	if(nb_letter > 13001)
 	{
@@ -129,7 +129,7 @@ void train(int nb_letter,
 	float beta1 = 0.9;
 	float beta2 = 0.999;
 	float epsilon = 1e-8;
-	float lambda = 0.0001;
+	float lambda = 0.00001;
 
 	float dropout_rate = 0.3;
 

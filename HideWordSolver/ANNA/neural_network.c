@@ -45,7 +45,7 @@ int main(int argc, char** argv)
         {
             if (argc > 2)
             {
-				char threads = 2;
+				int threads = 2;
 				if (argc > 3)
 				{
 					threads = atoi(argv[3]);
