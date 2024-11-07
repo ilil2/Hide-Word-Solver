@@ -31,5 +31,6 @@ void matrix_shuffle(float **array, float **array2, int rows1,
 	int rows2, int cols);
 void shuffle(char array[], int n);
 float max(float d1, float d2);
+char create_file(char* path);
 
 #endif
