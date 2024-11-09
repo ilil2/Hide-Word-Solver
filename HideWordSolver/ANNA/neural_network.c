@@ -31,7 +31,7 @@ int main(int argc, char** argv)
         {
             printf("Resetting ANNA parameters...\n");
 
-            reset_parameter(w_input, w_hidden, w_output, b_input,
+            reset_anna(w_input, w_hidden, w_output, b_input,
                 b_hidden, b_output);
 
             printf("ANNA's parameters have been reset.\n");

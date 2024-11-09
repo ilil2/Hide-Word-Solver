@@ -17,7 +17,7 @@ void load_parameter(float **w_input, // hidden_neuron1 x input_neuron
     // Loads the weights of the first hidden layer
 	file_w_input = fopen("ANNAParameter/w_input.csv", "r");
 
-    if(file_w_input != NULL)
+    if (file_w_input != NULL)
     {
         for (int i = 0; i < hidden_neuron1; i++)
         {
@@ -37,7 +37,7 @@ void load_parameter(float **w_input, // hidden_neuron1 x input_neuron
     // Loads the weights of the second hidden layer
     file_w_hidden = fopen("ANNAParameter/w_hidden.csv", "r");
 
-    if(file_w_hidden != NULL)
+    if (file_w_hidden != NULL)
     {
         for (int i = 0; i < hidden_neuron2; i++)
         {
@@ -57,7 +57,7 @@ void load_parameter(float **w_input, // hidden_neuron1 x input_neuron
     // Loads the weights of the output
 	file_w_output = fopen("ANNAParameter/w_output.csv", "r");
 
-    if(file_w_output != NULL)
+    if (file_w_output != NULL)
     {
         for (int i = 0; i < output_neuron; i++)
         {
@@ -77,7 +77,7 @@ void load_parameter(float **w_input, // hidden_neuron1 x input_neuron
     // Loads the bias of the first hidden layer
 	file_b_input = fopen("ANNAParameter/b_input.csv", "r");
 
-    if(file_b_input != NULL)
+    if (file_b_input != NULL)
     {
         for (size_t i = 0; i < hidden_neuron1; i++)
         {
@@ -94,7 +94,7 @@ void load_parameter(float **w_input, // hidden_neuron1 x input_neuron
     // Loads the bias of the second hidden layer
     file_b_hidden = fopen("ANNAParameter/b_hidden.csv", "r");
 
-    if(file_b_hidden != NULL)
+    if (file_b_hidden != NULL)
     {
         for (size_t i = 0; i < hidden_neuron2; i++)
         {
@@ -111,7 +111,7 @@ void load_parameter(float **w_input, // hidden_neuron1 x input_neuron
     // Loads the bias of the output
 	file_b_output = fopen("ANNAParameter/b_output.csv", "r");
 
-    if(file_b_output != NULL)
+    if (file_b_output != NULL)
     {
         for (int i = 0; i < output_neuron; i++)
         {

@@ -34,7 +34,7 @@ void bmp_to_csv(const SDL_Surface *tmp, int i, char output)
             unsigned char b = pixels[y * pitch + x + 2];
 
             // Apply grayscale
-            unsigned char grayscale = (unsigned char)((r + g + b) / 3);
+            unsigned char grayscale = (unsigned char)(0.3 * r + 0.59 * g + 0.11 * b);
 
             fprintf(input_file, "%d", grayscale);
 

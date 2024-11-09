@@ -26,7 +26,7 @@ void load_image(char *file_path,
 	output_file = fopen(ybuffer, "r");
 
     // Load input and output data from csv file
-    if(input_file != NULL && output_file != NULL)
+    if (input_file != NULL && output_file != NULL)
     {
         for (size_t i = 0; i < file_size; i++)
         {

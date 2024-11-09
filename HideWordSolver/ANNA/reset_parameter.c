@@ -62,13 +62,4 @@ void reset_parameter(float **w_input, // hidden_neuron1 x input_neuron
 
     // Save the new parameter
     save_parameter(w_input, w_hidden, w_output, b_input, b_hidden, b_output);
-
-    // Reset ANNA stats file
-    FILE* save_file = NULL;
-
-    save_file = fopen("ANNAStats/anna_stats.csv", "w");
-
-    fprintf(save_file, "iteration,log loss,train result,test result\n");
-
-    fclose(save_file);
 }

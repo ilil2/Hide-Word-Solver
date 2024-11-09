@@ -125,38 +125,34 @@ void train(int nb_letter,
 		dataset_order[i] = i;
 	}
 
-	float beta1 = 0.9;
-	float beta2 = 0.999;
-	float epsilon = 1e-8;
-	float lambda = 0.00001;
+	HyperParam hp;
+	Param p;
+	Adam a;
+	Test t;
+	Info i;
+	Var v;
 
-	float init_learning_rate = 0.001;
-	float learning_rate = init_learning_rate;
-	float decay_factor = 0.5;
-	float threshold = 1e-4;
-	float best_loss = INFINITY;
-	int change_iteration = 0;
-	int max_change_iteration = 5;
+	load_hyperparameter(&hp, &a, &v);
 
-	float init_dropout_rate = 0.5;
-	float dropout_rate = init_dropout_rate;
-	float dropout_decay_rate = 0.02;
-	float min_dropout_rate = 0.1;
-
-	int t = 0;
+	ANNA anna = {
+		&hp,
+		&p,
+		&a,
+		&t,
+		&i,
+		&v
+	};
 
 	// Loading neural network biases and weights
 	load_parameter(w_input, w_hidden, w_output, b_input, b_hidden, b_output);
-
-	unsigned long long epoch = 0;
 	size_t nb_while = 42;
 
 	while (nb_while)
 	{
 		//nb_while -= 1;
-		epoch++;
+		anna.v->epoch++;
 
-		printf("Epoch : %llu\n", epoch);
+		printf("Epoch : %zu\n", anna.v->epoch);
 
 		// Mixing the dataset
 		shuffle(dataset_order, nb_dataset);
@@ -165,15 +161,16 @@ void train(int nb_letter,
 		float log_loss_t = 0;
 
 		// Update dropout rate
-		dropout_rate = init_dropout_rate * exp(-dropout_decay_rate * epoch);
-		if (dropout_rate < min_dropout_rate)
+		anna.hp->dropout_rate = anna.hp->init_dropout_rate
+			* exp(-anna.hp->dropout_decay_rate * anna.v->epoch);
+		if (anna.hp->dropout_rate < anna.hp->min_dropout_rate)
 		{
-			dropout_rate = min_dropout_rate;
+			anna.hp->dropout_rate = anna.hp->min_dropout_rate;
 		}
 
 		for (int i = 0; i < nb_dataset; i++)
 		{
-			t++;
+			anna.a->t++;
 			printf("\t%i, Data Set %i :\n", i, dataset_order[i]);
 			// Loading images
 			load_image("Dataset/Train/", dataset_order[i], nb_letter, input,
@@ -185,8 +182,8 @@ void train(int nb_letter,
 
 			// Applying forward propagation
 			forward(nb_letter, input, hidden1, hidden2, output, w_input,
-				w_hidden, w_output, b_input, b_hidden, b_output, dropout_rate,
-				threads);
+				w_hidden, w_output, b_input, b_hidden, b_output,
+				anna.hp->dropout_rate, threads);
 
 			// Applying back propagation
 			backward(nb_letter, w_output, w_hidden, input, hidden1, hidden2,
@@ -199,8 +196,8 @@ void train(int nb_letter,
             	dw_output, db_output, dw_hidden, db_hidden, dw_input, db_input,
             	m_w_input, v_w_input, m_w_hidden, v_w_hidden, m_w_output,
 				v_w_output, m_b_input, v_b_input, m_b_hidden, v_b_hidden,
-            	m_b_output, v_b_output, learning_rate, beta1, beta2, epsilon,
-				lambda, t);
+            	m_b_output, v_b_output, anna.hp->learning_rate, anna.a->beta1,
+				anna.a->beta2, anna.hp->espilon, anna.hp->lambda, anna.a->t);
 
 			// Applying softmax function
 			softmax(nb_letter, output);
@@ -227,33 +224,34 @@ void train(int nb_letter,
 		printf("\n");
 
 		// Update learning rate
-		if (log_loss_t > best_loss - threshold)
+		if (log_loss_t > anna.hp->best_loss - anna.hp->espilon)
 		{
-			change_iteration += 1;
+			anna.hp->change_iteration += 1;
 
-			if (change_iteration >= max_change_iteration)
+			if (anna.hp->change_iteration >= anna.hp->max_change_iteration)
 			{
-				learning_rate *= decay_factor;
-				change_iteration = 0;
+				anna.hp->learning_rate *= anna.hp->learning_decay_rate;
+				anna.hp->change_iteration = 0;
 			}
 		}
 		else
 		{
-			best_loss = log_loss_t;
-			change_iteration = 0;
+			anna.hp->best_loss = log_loss_t;
+			anna.hp->change_iteration = 0;
 		}
 		
 		// Save parameter and stats
-		if (epoch % 1 == 0)
+		if (anna.v->epoch % 1 == 0)
 		{
 			printf("\tTotal log loss = %f\n", log_loss_t / nb_dataset);
 			printf("\tTotal train success = %f\n", train_success_t / nb_dataset);
 			float test_succes_t = test(test_size, test_input, test_hidden1,
 				test_hidden2, test_expected, test_output, w_input, w_hidden,
 				w_output, b_input, b_hidden, b_output, threads);
-			save_stats(epoch, log_loss_t / nb_dataset, train_success_t / nb_dataset,
+			save_stats(anna.v->epoch, log_loss_t / nb_dataset, train_success_t / nb_dataset,
 				test_succes_t);
 			save_parameter(w_input, w_hidden, w_output, b_input, b_hidden, b_output);
+			save_hyperparameter(&anna);
 			printf("\tSave ! \n\n");
 		}
 	}

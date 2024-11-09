@@ -21,10 +21,23 @@
 // Define Structs
 typedef struct
 {
-	float learning_rate;
 	float lambda;
 	float espilon;
+
+	// Learning Rate
+	float init_learning_rate;
+	float learning_rate;
+	float learning_decay_rate;
+	float best_loss;
+	int change_iteration;
+	int max_change_iteration;
+
+	// Dropout Rate
+	float init_dropout_rate;
 	float dropout_rate;
+	float dropout_decay_rate;
+	float min_dropout_rate;
+
 } HyperParam;
 
 typedef struct
@@ -103,30 +116,30 @@ void load_parameter(float **w_input,
 	float *b_output);
 void load_image(char *file_path,
 	int file_nb,
-        size_t file_size,
-        float **input,
-        float **output);
+    size_t file_size,
+    float **input,
+    float **output);
 void forward(int nb_letter,
 	float **input,
-        float **hidden1,
-        float **hidden2,
-        float **output,
-        float **w_input,
-        float **w_hidden,
-        float **w_output,
-        float *b_input,
-        float *b_hidden,
-        float *b_output,
+    float **hidden1,
+    float **hidden2,
+    float **output,
+    float **w_input,
+    float **w_hidden,
+    float **w_output,
+    float *b_input,
+    float *b_hidden,
+    float *b_output,
 	float dropout_rate,
 	int threads);
 void backward(int nb_letter,
-        float **w_output,
-        float **w_hidden,
-        float **input,
-        float **hidden1,
-        float **hidden2,
-        float **output,
-        float **expected_output,
+    float **w_output,
+    float **w_hidden,
+    float **input,
+    float **hidden1,
+    float **hidden2,
+    float **output,
+    float **expected_output,
         float **output_error,
         float **dw_output,
         float *db_output,
@@ -233,5 +246,15 @@ void pooling(size_t nb_letter,
 void layers(size_t nb_letter,
 	float **input,
 	float **output);
-
+void save_hyperparameter(ANNA* anna);
+void load_hyperparameter(HyperParam* hp,
+    Adam* a,
+    Var* v);
+void reset_hyperparameter();
+void reset_anna(float **w_input,
+		float **w_hidden,
+		float **w_output,
+		float *b_input,
+		float *b_hidden,
+		float *b_output);
 #endif

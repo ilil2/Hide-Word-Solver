@@ -1,7 +1,7 @@
 # Makefile
 
 CC = gcc
-CFLAGS = -Wall -Wextra -g -O3
+CFLAGS = -Wall -Wextra -g -O3 -I/opt/homebrew/include
 LDFLAGS = -lSDL2
 SRC = main_dataset.c add_to_dataset.c bmp_to_csv.c ../../Lib/atoi.c
 OBJ = $(SRC:.c=.o)
