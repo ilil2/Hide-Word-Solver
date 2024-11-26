@@ -57,11 +57,12 @@ void *_matrix_product(void *arg)
 	{
 		for (size_t j = 0; j < data->col; j++)
 		{
-			data->mat3[i][j] = 0;
+			float sum = 0;
 			for (size_t k = 0; k < data->both; k++)
 			{
-				data->mat3[i][j] += data->mat1[i][k] * data->mat2[k][j];
+				sum += data->mat1[i][k] * data->mat2[k][j];
 			}
+			data->mat3[i][j] = sum;
 		}
 	}
 
