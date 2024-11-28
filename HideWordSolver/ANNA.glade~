@@ -181,12 +181,13 @@
           </packing>
         </child>
         <child>
-          <!-- n-columns=1 n-rows=3 -->
+          <!-- n-columns=2 n-rows=3 -->
           <object class="GtkGrid" id="StepByStep">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <property name="halign">center</property>
             <property name="valign">center</property>
+            <property name="column-spacing">20</property>
             <child>
               <object class="GtkBox">
                 <property name="visible">True</property>
@@ -195,6 +196,8 @@
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkImage" id="SBSImage">
+                    <property name="width-request">500</property>
+                    <property name="height-request">500</property>
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                   </object>
@@ -228,7 +231,6 @@
               <object class="GtkSpinButton" id="SBSRotationAngle">
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="halign">center</property>
                 <property name="valign">center</property>
                 <property name="input-purpose">number</property>
                 <property name="adjustment">adjustment1</property>
@@ -239,6 +241,23 @@
                 <property name="left-attach">0</property>
                 <property name="top-attach">1</property>
               </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="SBSList">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">label</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+            <child>
+              <placeholder/>
             </child>
           </object>
           <packing>

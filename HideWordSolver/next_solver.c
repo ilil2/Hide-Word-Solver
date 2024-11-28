@@ -21,6 +21,9 @@ void next_solver(GtkWidget *button, gpointer user_data)
 
 	SDL_Surface* surface = IMG_Load("image.png");
 
+	char **markup = malloc(sizeof(char *));
+	GtkLabel *label = GTK_LABEL(gtk_builder_get_object(builder, "SBSList"));
+
 	if (state == 0)
 	{
 		surface = preprocess_image(surface);
@@ -32,6 +35,13 @@ void next_solver(GtkWidget *button, gpointer user_data)
             GTK_WIDGET(gtk_builder_get_object(builder,
                 "SBSRotationAngle"));
         gtk_widget_show(spin_button);
+
+		*markup =
+			"<span foreground='white'>• <b>Binarization</b></span>\n"
+			"<span foreground='red'>• Rotation</span>\n"
+			"<span foreground='red'>• Detection</span>\n"
+			"<span foreground='red'>• Solver</span>\n";
+
 	}
 	else if (state == 1)
 	{
@@ -44,6 +54,12 @@ void next_solver(GtkWidget *button, gpointer user_data)
 		surface = IMG_Load("image2.png");
 		median_filter(surface);
 		IMG_SavePNG(surface, "image.png");
+
+		*markup =
+			"<span foreground='green'>• Binarization</span>\n"
+			"<span foreground='white'>• <b>Rotation</b></span>\n"
+			"<span foreground='red'>• Detection</span>\n"
+			"<span foreground='red'>• Solver</span>\n";
 	}
 	else if (state == 2)
 	{
@@ -57,11 +73,26 @@ void next_solver(GtkWidget *button, gpointer user_data)
 		gtk_image_set_from_file(image, "image.png");
 		SDL_Quit();
 		SDL_FreeSurface(surface2);
+
+		*markup =
+			"<span foreground='green'>• Binarization</span>\n"
+			"<span foreground='green'>• Rotation</span>\n"
+			"<span foreground='white'>• <b>Detection</b></span>\n"
+			"<sapn foreground='red'>• Solver</span>\n";
 	}
 	else if (state == 3)
 	{
 		// Call ANNA + Solver
+
+		*markup =
+			"<span foreground='green'>• Binarization</span>\n"
+			"<span foreground='green'>• Rotation</span>\n"
+			"<span foreground='green'>• Detection</span>\n"
+			"<span foreground='white'>• <b>Solver</b></span>\n";
 	}
+	resize_image(image);
+	gtk_label_set_markup(label, *markup);
 	SDL_FreeSurface(surface);
+	free(markup);
 	state++;
 }

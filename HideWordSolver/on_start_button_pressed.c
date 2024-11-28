@@ -42,6 +42,8 @@ void on_start_button_pressed(GtkWidget *button, gpointer user_data)
 		gtk_image_set_from_pixbuf(image, pixbuf);
 		gtk_image_set_pixel_size(image, 500);
 
+		resize_image(image);
+
 		// Free
 		g_object_unref(pixbuf);
 		g_free(path);

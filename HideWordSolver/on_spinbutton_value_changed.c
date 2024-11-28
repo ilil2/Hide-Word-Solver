@@ -10,4 +10,5 @@ void on_spinbutton_value_changed(GtkSpinButton *spin_button,
 	double angle = gtk_spin_button_get_value(spin_button);
     save_image("image.png", "image2.png", angle);
     gtk_image_set_from_file(image, "image2.png");
+	resize_image(image);
 }
