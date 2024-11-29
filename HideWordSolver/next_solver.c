@@ -37,8 +37,8 @@ void next_solver(GtkWidget *button, gpointer user_data)
         gtk_widget_show(spin_button);
 
 		*markup =
-			"<span foreground='white'>• <b>Binarization</b></span>\n"
-			"<span foreground='red'>• Rotation</span>\n"
+			"<span foreground='green'>• Binarization</span>\n"
+			"<span foreground='white'>• <b>Rotation</b></span>\n"
 			"<span foreground='red'>• Detection</span>\n"
 			"<span foreground='red'>• Solver</span>\n";
 
@@ -57,8 +57,8 @@ void next_solver(GtkWidget *button, gpointer user_data)
 
 		*markup =
 			"<span foreground='green'>• Binarization</span>\n"
-			"<span foreground='white'>• <b>Rotation</b></span>\n"
-			"<span foreground='red'>• Detection</span>\n"
+			"<span foreground='green'>• Rotation</span>\n"
+			"<span foreground='white'>• <b>Detection</b></span>\n"
 			"<span foreground='red'>• Solver</span>\n";
 	}
 	else if (state == 2)
@@ -77,8 +77,8 @@ void next_solver(GtkWidget *button, gpointer user_data)
 		*markup =
 			"<span foreground='green'>• Binarization</span>\n"
 			"<span foreground='green'>• Rotation</span>\n"
-			"<span foreground='white'>• <b>Detection</b></span>\n"
-			"<sapn foreground='red'>• Solver</span>\n";
+			"<span foreground='green'>• Detection</span>\n"
+			"<span foreground='white'>• <b>Solver</b></span>\n";
 	}
 	else if (state == 3)
 	{
@@ -88,7 +88,7 @@ void next_solver(GtkWidget *button, gpointer user_data)
 			"<span foreground='green'>• Binarization</span>\n"
 			"<span foreground='green'>• Rotation</span>\n"
 			"<span foreground='green'>• Detection</span>\n"
-			"<span foreground='white'>• <b>Solver</b></span>\n";
+			"<span foreground='green'>• Solver</span>\n";
 	}
 	resize_image(image);
 	gtk_label_set_markup(label, *markup);

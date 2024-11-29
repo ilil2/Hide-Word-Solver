@@ -44,10 +44,23 @@ void on_start_button_pressed(GtkWidget *button, gpointer user_data)
 
 		resize_image(image);
 
+		char **markup = malloc(sizeof(char *));
+		GtkLabel *label = GTK_LABEL(gtk_builder_get_object(builder, "SBSList"));
+
+		*markup =
+                        "<span foreground='white'>• <b>Binarization</b></span>\n"
+                        "<span foreground='red'>• Rotation</span>\n"
+                        "<span foreground='red'>• Detection</span>\n"
+                        "<span foreground='red'>• Solver</span>\n";
+
+		gtk_label_set_markup(label, *markup);
+
+
 		// Free
 		g_object_unref(pixbuf);
 		g_free(path);
 		SDL_FreeSurface(sdl_surface);
 		SDL_FreeSurface(optimized_surface);
+		free(markup);
 	}
 }
