@@ -48,6 +48,14 @@ void train(ANNA* anna)
 			// Applying forward propagation
 			forward(anna);
 
+			// Applying back propagation
+			backward(anna);
+
+			// Applying Adam optimizer
+			update(anna);
+
+			softmax(anna);
+
 			// Check result
 			convert_output_to_char(anna->v->train_data,
 				anna->i->nb_neuron[anna->i->nb_layer-1],
@@ -68,12 +76,6 @@ void train(ANNA* anna)
 			float _log_loss = log_loss(anna);
 			train_success_t += success / anna->v->train_data;
 			log_loss_t += _log_loss;
-
-			// Applying back propagation
-			backward(anna);
-
-			// Applying Adam optimizer
-			update(anna);
 
 			printf("\t\tLog Loss (%zu) = %f\n", i, _log_loss);
 			printf("\t\tSuccess (%zu) = %f\n", i,
@@ -106,8 +108,8 @@ void train(ANNA* anna)
 			//float test_succes_t = test(test_size, test_input, test_hidden1,
 			//	test_hidden2, test_expected, test_output, w_input, w_hidden,
 			//	w_output, b_input, b_hidden, b_output, threads);
-			//save_stats(anna->v->epoch, log_loss_t / nb_dataset, train_success_t / nb_dataset,
-			//	test_succes_t);
+			save_stats(anna->v->epoch, log_loss_t / anna->v->batch_nb,
+				train_success_t / anna->v->batch_nb, 0); //test_succes_t
 			save_parameter(anna->p, anna->i);
 			save_hyperparameter(anna);
 			printf("\tSave ! \n\n");
