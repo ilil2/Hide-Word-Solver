@@ -9,8 +9,8 @@ void save_hyperparameter(ANNA* anna)
 
 	if (file_hyperparameter != NULL)
 	{
-        fprintf(file_hyperparameter, "%zu,%.10f,%.10f,%.10f,%.10f,%.10f,%i,"
-        "%i,%.10f,%.10f,%.10f,%.10f,%.10f,%.10f,%i",
+        fprintf(file_hyperparameter,
+        "%zu,%f,%f,%f,%f,%f,%i,%i,%f,%f,%f,%f,%f,%f,%i",
         anna->v->epoch, anna->hp->lambda, anna->hp->init_learning_rate,
         anna->hp->learning_rate, anna->hp->learning_decay_rate,
         anna->hp->best_loss, anna->hp->change_iteration,

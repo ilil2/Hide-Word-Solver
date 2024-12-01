@@ -10,9 +10,8 @@ void forward(int nb_letter,
 		float *b_output) // output_neuron
 {
     // Apply forward propagation to neurons in the hidden layer
-	poc_matrix_product(hidden_neuron, input_neuron, w_input, input_neuron,
-		nb_letter, input, hidden);
-
+	matrix_product(hidden_neuron, input_neuron, w_input, input_neuron,
+		nb_letter, input, hidden, 1);
 	for (size_t i = 0; i < hidden_neuron; i++)
 	{
 		for (int j = 0; j < nb_letter; j++)
@@ -23,9 +22,8 @@ void forward(int nb_letter,
 	}
 
     // Apply forward propagation to neurons in the output
-	poc_matrix_product(output_neuron, hidden_neuron, w_output, hidden_neuron,
-		nb_letter, hidden, output);
-
+	matrix_product(output_neuron, hidden_neuron, w_output, hidden_neuron,
+		nb_letter, hidden, output, 1);
 	for (size_t i = 0; i < output_neuron; i++)
 	{
 		for (int j = 0; j < nb_letter; j++)

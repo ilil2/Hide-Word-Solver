@@ -4,49 +4,40 @@ typedef struct
 {
 	size_t start;
 	size_t end;
+	size_t output_neuron;
 	float **output;
 	float **expected;
 } ThreadTest;
 
 void *_test(void *arg);
 
-float test(size_t test_size,
-		float **test_input,
-		float **test_hidden1,
-		float **test_hidden2,
-		float **test_expected,
-		float **test_output,
-		float **w_input,
-		float **w_hidden,
-		float **w_output,
-		float *b_input,
-		float *b_hidden,
-		float *b_output,
-		int thread_nbr)
+float test(ANNA* anna)
 {
+	int neuron = anna->p->neuron;
+	anna->p->neuron = anna->t->neuron;
 	load_image("Dataset/Train/t", -1, test_size, test_input, test_expected);
 	matrix_shuffle(test_input, test_expected, input_neuron, output_neuron, test_size);
-    forward(test_size, test_input, test_hidden1, test_hidden2, test_output,
-		w_input, w_hidden, w_output, b_input, b_hidden, b_output, -1,
-		thread_nbr);
+    forward(anna);
 
 	float test_sum = 0;
 
-	pthread_t threads[thread_nbr];
-	ThreadTest* data[thread_nbr];
+	pthread_t threads[anna->v->threads];
+	ThreadTest* data[anna->v->threads];
 
-	for (size_t i = 0; i < (size_t)thread_nbr; i++)
+	for (size_t i = 0; i < (size_t)anna->v->threads; i++)
 	{
-		size_t start = (i * test_size) / thread_nbr;
-    	size_t end = ((i + 1) * test_size) / thread_nbr;
+		size_t start = (i * test_size) / anna->v->threads;
+    	size_t end = ((i + 1) * test_size) / anna->v->threads;
 
 		data[i] = malloc(sizeof(ThreadTest));
-		*data[i] = (ThreadTest){start, end, test_output, test_expected};
+		*data[i] = (ThreadTest){start, end,
+			anna->i->nb_neuron[anna->i->nb_layer-1],
+			anna->p->neuron[anna->i->nb_layer-1], test_expected};
 
 		pthread_create(&threads[i], NULL, _test, data[i]);
 	}
 
-	for (size_t i = 0; i < (size_t)thread_nbr; i++)
+	for (size_t i = 0; i < (size_t)anna->v->threads; i++)
 	{
 		int* res;
 		pthread_join(threads[i], (void**)&res);
@@ -58,6 +49,7 @@ float test(size_t test_size,
 	test_sum /= (float)test_size;
 	printf("\tTotal test success : %f\n", test_sum);
 
+	anna->p->neuron = neuron;
 	return test_sum;
 }
 

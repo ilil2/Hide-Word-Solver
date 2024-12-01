@@ -1,11 +1,12 @@
 #include "neural_network.h"
 
-void convert_output_to_char(int nb_letter,
+void convert_output_to_char(size_t nb_letter,
+		size_t output_neuron,
 		float **output, // output_neuron x nb_letter
 		char *anna_result) // nb_letter
 {
 	// Converts a matrix of 1's and 0's into char
-	for (int i = 1; i < nb_letter; i++)
+	for (size_t i = 1; i < nb_letter; i++)
 	{
 		float max = output[0][i];
 		size_t jmax = 0;
@@ -16,6 +17,21 @@ void convert_output_to_char(int nb_letter,
 				jmax = j;
 			}
 		}
-		anna_result[i] = 'A' + jmax;
+
+		if (jmax < 26)
+		{
+			// Capital letter
+			anna_result[i] = 'A' + jmax;
+		}
+		else if (jmax < 52)
+		{
+			// Lowercase letter
+			anna_result[i] = 'a' + (jmax - 26);
+		}
+		else
+		{
+			anna_result[i] = '?';
+		}
+		
 	}
 }

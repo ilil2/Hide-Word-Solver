@@ -1,19 +1,22 @@
 #include "neural_network.h"
 
-float log_loss(int nb_letter,
-                float **expected_output, // output_neuron x nb_letter
-                float **output) // output_neuron x nb_letter
+float log_loss(ANNA* anna)
 {
-    float sum = 0;
-    float epsilon = 1e-15;
-    for (size_t i = 0; i < output_neuron; i++)
+    float sum = 0.0f;
+    size_t output_layer = anna->i->nb_layer - 1;
+    size_t output_neurons = anna->i->nb_neuron[output_layer];
+    size_t batch_size = anna->v->train_data;
+
+    for (size_t n = 0; n < batch_size; n++)
     {
-        for (int j = 0; j < nb_letter; j++)
+        for (size_t i = 0; i < output_neurons; i++)
         {
-            sum += expected_output[i][j] * log(output[i][j] + epsilon) +
-            (1 - expected_output[i][j]) * log(1 - output[i][j] + epsilon);
+            float predicted = anna->p->neuron[output_layer][i][n];
+            float expected = anna->p->expected_output[i][n];
+
+            sum += -expected * logf(predicted + anna->hp->espilon);
         }
     }
-    
-    return -((float)1 / nb_letter) * sum;
+
+    return sum / batch_size;
 }

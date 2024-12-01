@@ -7,32 +7,13 @@
 // train to train the AI with the number of images in the dataset as the second parameter and the number of threads to be used as the third parameter
 int main(int argc, char** argv)
 {
-    float **w_input = malloc(hidden_neuron1 * sizeof(float *));
-    for (int i = 0; i < hidden_neuron1; i++)
-        w_input[i] = malloc(input_neuron * sizeof(float));
-
-    float **w_hidden = malloc(hidden_neuron2 * sizeof(float *));
-    for (int i = 0; i < hidden_neuron2; i++)
-        w_hidden[i] = malloc(hidden_neuron1 * sizeof(float));
-
-    float **w_output = malloc(output_neuron * sizeof(float *));
-    for (int i = 0; i < output_neuron; i++)
-        w_output[i] = malloc(hidden_neuron2 * sizeof(float));
-
-    float *b_input = malloc(hidden_neuron1 * sizeof(float));
-
-    float *b_hidden = malloc(hidden_neuron2 * sizeof(float));
-
-    float *b_output = malloc(output_neuron * sizeof(float));
-
     if(argc > 1)
     {
         if (strcomp(argv[1], "reset"))
         {
             printf("Resetting ANNA parameters...\n");
 
-            reset_anna(w_input, w_hidden, w_output, b_input,
-                b_hidden, b_output);
+            reset_all();
 
             printf("ANNA's parameters have been reset.\n");
         }
@@ -43,51 +24,111 @@ int main(int argc, char** argv)
         }
         else if (strcomp(argv[1], "train"))
         {
-            if (argc > 2)
+            if (argc > 1)
             {
-				int threads = 2;
-				if (argc > 3)
-				{
-					threads = atoi(argv[3]);
-				}
-                int nb_letter = atoi(argv[2]);
-                char *anna_result = malloc(nb_letter * sizeof(char));
+                size_t max_train_data = 2600;
+                size_t max_test_data = 68068;
+                size_t max_batch_nb = 90;
+
+                HyperParam* hp = malloc(sizeof(HyperParam));
+                Param* p;
+                Adam* a;
+                Test* t = malloc(sizeof(Test));
+                Info* i = malloc(sizeof(Info));
+                Var* v = malloc(sizeof(Var));
+
+                if (argc > 2)
+                {
+                    v->train_data = atoi(argv[2]);
+                    if (v->train_data < 1 || v->train_data > max_train_data)
+                    {
+                        v->train_data = max_train_data;
+                    }
+
+                    if (argc > 3)
+                    {
+                        v->test_data = atoi(argv[3]);
+                        if (v->test_data < 1 || v->test_data > max_test_data)
+                        {
+                            v->test_data = max_test_data;
+                        }
+
+                        if (argc > 4)
+                        {
+                            v->batch_nb = atoi(argv[4]);
+                            if (v->batch_nb < 1 || v->batch_nb > max_batch_nb)
+                            {
+                                v->batch_nb = max_batch_nb;
+                            }
+
+                            if (argc > 5)
+                            {
+                                v->threads = atoi(argv[5]);
+                                if (v->threads < 1)
+                                {
+                                    v->threads = 2;
+                                }
+                            }
+                            else
+                            {
+                                v->threads = 2;
+                            }
+                        }
+                        else
+                        {
+                            v->batch_nb = max_batch_nb;
+                            v->threads = 2;
+                        }
+                    }
+                    else
+                    {
+                        v->test_data = max_test_data;
+                        v->batch_nb = max_batch_nb;
+                        v->threads = 2;
+                    }
+                }
+                else
+                {
+                    v->train_data = max_train_data;
+                    v->test_data = max_test_data;
+                    v->batch_nb = max_batch_nb;
+                    v->threads = 2;
+                }
+
+                load_layer(i);
+                a = init_adam(i);
+                load_hyperparameter(hp, a, v);
+                p = init_param(i, v);
+                load_parameter(p, i);
+
+                ANNA anna = {
+                    hp,
+                    p,
+                    a,
+                    t,
+                    i,
+                    v
+                };
+
                 printf("ANNA's training start.\n");
 
-                train(nb_letter, anna_result, w_input, w_hidden, w_output,
-                    b_input, b_hidden, b_output, threads);
+                train(&anna);
             }
             else
             {
-                errx(10, "The number of images to be taken has not been "
+                err(1, "The number of images to be taken has not been "
                     "indicated.");
             }
         }
         else
         {
-            errx(10, "Incorrect argument");
+            err(1, "Incorrect argument");
         }
     }
     else
     {
-        errx(400, "The number of arguments is invalid.");
+        err(1, "The number of arguments is invalid.");
     }
-
-    for (int i = 0; i < hidden_neuron1; i++)
-        free(w_input[i]);
-    free(w_input);
-
-    for (int i = 0; i < hidden_neuron2; i++)
-        free(w_hidden[i]);
-    free(w_hidden);
-
-    for (int i = 0; i < output_neuron; i++)
-        free(w_output[i]);
-    free(w_output);
-
-    free(b_input);
-    free(b_hidden);
-    free(b_output);
 
     return 0;
 }

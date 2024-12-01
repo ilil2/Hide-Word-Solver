@@ -7,10 +7,10 @@ void reset_all()
 
 	printf("Reset layers:\n");
 	printf("First layer: ");
-	scanf("%zu\n", &(info->nb_neuron[0]));
+	scanf("%zu", &(info->nb_neuron[0]));
 
 	printf("Hidden layers number: ");
-	scanf("%zu\n", &(info->nb_layer));
+	scanf("%zu", &(info->nb_layer));
 	info->nb_layer += 2;
 	info->nb_neuron = realloc(info->nb_neuron, sizeof(size_t) * info->nb_layer);
 
@@ -18,9 +18,13 @@ void reset_all()
 	for (i = 1; i < info->nb_layer - 1; i++)
 	{
 		printf("Hidden layer %zu: ", i);
-		scanf("%zu\n", &(info->nb_neuron[i]));
+		scanf("%zu", &(info->nb_neuron[i]));
 	}
 
 	printf("Last layer: ");
 	scanf("%zu", &(info->nb_neuron[i]));
+
+	Param* param = init_param(info, NULL);
+
+	reset_anna(param, info);
 }

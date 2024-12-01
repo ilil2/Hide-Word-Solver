@@ -1,7 +1,7 @@
 #include "lib.h"
 #include <unistd.h>
 #include <err.h>
-#include <wait.h>
+#include <sys/wait.h>
 
 char create_file(char* path)
 {

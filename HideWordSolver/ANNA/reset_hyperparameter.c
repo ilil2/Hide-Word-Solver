@@ -9,9 +9,9 @@ void reset_hyperparameter()
 
 	if (file_hyperparameter != NULL)
 	{
-        fprintf(file_hyperparameter, "%i,%.10f,%.10f,%.10f,%.10f,%.10f,%i,"
-        "%i,%.10f,%.10f,%.10f,%.10f,%.10f,%.10f,%i",
-        0, 0.00001, 0.001, 0.001, 0.1, INFINITY, 0, 5, 0.5, 0.5, 0.02, 0.1,
+        fprintf(file_hyperparameter,
+		"%i,%f,%f,%f,%f,%f,%i,%i,%f,%f,%f,%f,%f,%f,%i",
+        0, 0.00001, 0.001, 0.001, 0.1, 100.0, 0, 5, 0.5, 0.5, 0.02, 0.1,
         0.9, 0.999, 0);
     }
 	else

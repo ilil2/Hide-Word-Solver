@@ -1,127 +1,50 @@
 #include "neural_network.h"
 
-void load_parameter(float **w_input, // hidden_neuron1 x input_neuron
-		float **w_hidden, // hidden_neuron2 x hidden_neuron1
-		float **w_output, // output_neuron x hidden_neuron
-		float *b_input, // hidden_neuron1
-		float *b_hidden, // hidden_neuron2
-		float *b_output) // output_neuron
+void load_parameter(Param* param,
+		Info* info)
 {
-    FILE* file_w_input = NULL;
-    FILE* file_w_hidden = NULL;
-	FILE* file_w_output = NULL;
-	FILE* file_b_input = NULL;
-	FILE* file_b_hidden = NULL;
-	FILE* file_b_output = NULL;
+    FILE* w_file = NULL;
+    FILE* b_file = NULL;
 
-    // Loads the weights of the first hidden layer
-	file_w_input = fopen("ANNAParameter/w_input.csv", "r");
-
-    if (file_w_input != NULL)
+    for (size_t i = 0; i < info->nb_layer - 1; i++)
     {
-        for (int i = 0; i < hidden_neuron1; i++)
+        char w_buffer[50];
+		sprintf(w_buffer, "ANNAParameter/w_%zu.csv", i);
+		w_file = fopen(w_buffer, "r");
+
+        if (w_file != NULL)
         {
-            for (int j = 0; j < input_neuron; j++)
-            {
-                fscanf(file_w_input, "%f,", &w_input[i][j]);
-            }
+            for (size_t j = 0; j < info->nb_neuron[i+1]; j++)
+			{
+				for (size_t k = 0; k < info->nb_neuron[i]; k++)
+				{
+                    fscanf(w_file, "%f,", &(param->weight[i][j][k]));
+				}
+			}
         }
-    }
-    else
-    {
-		printf("Error opening w_input.csv files.\n");
-    }
-
-	fclose(file_w_input);
-
-    // Loads the weights of the second hidden layer
-    file_w_hidden = fopen("ANNAParameter/w_hidden.csv", "r");
-
-    if (file_w_hidden != NULL)
-    {
-        for (int i = 0; i < hidden_neuron2; i++)
+        else
         {
-            for (int j = 0; j < hidden_neuron1; j++)
-            {
-                fscanf(file_w_hidden, "%f,", &w_hidden[i][j]);
-            }
+            err(1, "fopen()");
         }
-    }
-    else
-    {
-		printf("Error opening w_hidden.csv files.\n");
-    }
 
-	fclose(file_w_hidden);
+        fclose(w_file);
 
-    // Loads the weights of the output
-	file_w_output = fopen("ANNAParameter/w_output.csv", "r");
+        char b_buffer[50];
+		sprintf(b_buffer, "ANNAParameter/b_%zu.csv", i);
+		b_file = fopen(b_buffer, "r");
 
-    if (file_w_output != NULL)
-    {
-        for (int i = 0; i < output_neuron; i++)
+        if (b_file != NULL)
         {
-            for (int j = 0; j < hidden_neuron2; j++)
-            {
-                fscanf(file_w_output, "%f,", &w_output[i][j]);
-            }
+            for (size_t j = 0; j < info->nb_neuron[i+1]; j++)
+			{
+				fscanf(b_file, "%f", &(param->bias[i][j]));
+			}
         }
-    }
-    else
-    {
-		printf("Error opening w_output.csv files.\n");  
-    }
-
-	fclose(file_w_output);
-
-    // Loads the bias of the first hidden layer
-	file_b_input = fopen("ANNAParameter/b_input.csv", "r");
-
-    if (file_b_input != NULL)
-    {
-        for (size_t i = 0; i < hidden_neuron1; i++)
+        else
         {
-            fscanf(file_b_input, "%f", &b_input[i]);
+            err(1, "fopen()");
         }
+        
+        fclose(b_file);
     }
-    else
-    {
-		printf("Error opening b_input.csv files.\n");  
-    }
-
-	fclose(file_b_input);
-
-    // Loads the bias of the second hidden layer
-    file_b_hidden = fopen("ANNAParameter/b_hidden.csv", "r");
-
-    if (file_b_hidden != NULL)
-    {
-        for (size_t i = 0; i < hidden_neuron2; i++)
-        {
-            fscanf(file_b_hidden, "%f", &b_hidden[i]);
-        }
-    }
-    else
-    {
-		printf("Error opening b_hidden.csv files.\n");  
-    }
-
-	fclose(file_b_hidden);
-
-    // Loads the bias of the output
-	file_b_output = fopen("ANNAParameter/b_output.csv", "r");
-
-    if (file_b_output != NULL)
-    {
-        for (int i = 0; i < output_neuron; i++)
-        {
-            fscanf(file_b_output, "%f", &b_output[i]);
-        }
-    }
-    else
-    {
-		printf("Error opening b_output.csv files.\n"); 
-    }
-
-	fclose(file_b_output);
 }

@@ -115,7 +115,7 @@ int main()
 	float learning_rate = 3;
 
 	unsigned long long loop = 0;
-	size_t nb_while = 5000;
+	size_t nb_while = 500;
 
 	// Train loop
 	while (nb_while)

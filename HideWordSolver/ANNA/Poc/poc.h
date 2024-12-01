@@ -55,10 +55,5 @@ void train(int nb_letter,
 float log_loss(int nb_letter,
         float **expected_output,
         float **output);
-void poc_matrix_product_t(size_t row1, size_t col1, float **mat1,
-        size_t row2, size_t col2, float **mat2, float **res,
-		char trans_nbr);
-void poc_matrix_product(size_t row1, size_t col1, float **mat1,
-		size_t row2, size_t col2, float **mat2, float **res);
 
 #endif

@@ -2,9 +2,7 @@
 
 void load_image(char *file_path,
         int file_nb,
-        size_t file_size,
-        float **input, // input_neuron x file_size
-        float **output) // output_neuron x file_size
+        ANNA* anna)
 {
     FILE* input_file = NULL;
     FILE* output_file = NULL;
@@ -28,18 +26,18 @@ void load_image(char *file_path,
     // Load input and output data from csv file
     if (input_file != NULL && output_file != NULL)
     {
-        for (size_t i = 0; i < file_size; i++)
+        for (size_t i = 0; i < anna->v->train_data; i++)
         {
-            for (size_t j = 0; j < input_neuron; j++)
+            for (size_t j = 0; j < anna->i->nb_neuron[0]; j++)
             {
-                fscanf(input_file, "%f,", &input[j][i]);
+                fscanf(input_file, "%f,", &anna->p->neuron[0][j][i]);
                 // Set the data between 0 and 1
-                input[j][i] /= 255.0;
+                anna->p->neuron[0][j][i] /= 255.0;
             }
 
-            for (size_t j = 0; j < output_neuron; j++)
+            for (size_t j = 0; j < anna->i->nb_neuron[anna->i->nb_layer-1]; j++)
             {
-                fscanf(output_file, "%f,", &output[j][i]);
+                fscanf(output_file, "%f,", &anna->p->expected_output[j][i]);
             }
             
         }
