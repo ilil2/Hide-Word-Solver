@@ -36,7 +36,8 @@ Param* init_param(Info* info, Var* var)
 				param->neuron[i][j] = malloc(var->train_data * sizeof(float));
 			}
 		}
-		param->neuron[i] = malloc(info->nb_neuron[i] * sizeof(float));
+
+		param->neuron[i] = malloc(info->nb_neuron[i] * sizeof(float *));
 
 		for (size_t j = 0; j < info->nb_neuron[i]; j++)
 		{

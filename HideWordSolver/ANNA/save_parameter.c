@@ -25,7 +25,7 @@ void save_parameter(Param* param,
 				{
 					fprintf(w_file, "%.15f", param->weight[i][j][k]);
 
-					if (j < info->nb_neuron[i] - 1)
+					if (k < info->nb_neuron[i] - 1)
 					{
 						fprintf(w_file, ",");
 					}
