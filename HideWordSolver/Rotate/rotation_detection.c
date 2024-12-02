@@ -6,98 +6,58 @@
 
 #define M_PI 3.14159265358979323846
 
-// Fonction pour convertir une SDL_Surface en niveaux de gris
-void convertToGrayscale(SDL_Surface* surface) {
+// Fonction de détection de l'angle de rotation avec la transformée de Hough
+double detectRotationAngle(SDL_Surface* surface) 
+{
+    int width = surface->w;
+    int height = surface->h;
+
+    // Créer un tableau d'accumulation pour l'espace de Hough
+    int diag_len = (int)sqrt(width * width + height * height);
+    int* houghSpace = (int*)calloc(diag_len * 180, sizeof(int));
+
+    // Convertir l'image en niveaux de gris (si pas déjà fait)
     Uint32* pixels = (Uint32*)surface->pixels;
-    int width = surface->w;
-    int height = surface->h;
 
-    for (int y = 0; y < height; y++) {
-        for (int x = 0; x < width; x++) {
+    // Parcourir chaque pixel de l'image
+    for (int y = 0; y < height; y++) 
+	{
+        for (int x = 0; x < width; x++) 
+		{
             Uint32 pixel = pixels[y * width + x];
+            Uint8 gray;
+            SDL_GetRGB(pixel, surface->format, &gray, &gray, &gray);
 
-            Uint8 r, g, b;
-            SDL_GetRGB(pixel, surface->format, &r, &g, &b);
+            // Si le pixel est un bord (noir dans l'image en niveaux de gris)
+            if (gray < 128) {  // Seulement les pixels "bord" (sombres)
+                // Pour chaque pixel de bord, calculer les valeurs de Hough
+                for (int theta = 0; theta < 180; theta++) {
+                    double theta_rad = theta * M_PI / 180.0;
+                    int r = (int)(x * cos(theta_rad) + y * sin(theta_rad));
 
-            // Conversion en niveaux de gris
-            Uint8 gray = (Uint8)(0.299 * r + 0.587 * g + 0.114 * b);
-            pixels[y * width + x] = SDL_MapRGB(surface->format, gray, gray, gray);
-        }
-    }
-}
-
-// Calcul du noyau de passe-bas circulaire X (sans fonction Bessel)
-void circularLowpassKernelX(double omega_c, int N, double* kernel) {
-    int mid = (N - 1) / 2;
-    for (int y = 0; y < N; y++) {
-        for (int x = 0; x < N; x++) {
-            double dist_x = (x - mid) / ((N - 1) / 2 + 1);
-            double dist_y = (y - mid) / ((N - 1) / 2 + 1);
-            double dist = sqrt(dist_x * dist_x + dist_y * dist_y);
-
-            // Utilisation d'une approche simplifiée sans la fonction Bessel (juste une forme de filtre radiale)
-            kernel[y * N + x] = omega_c * omega_c * dist_x * exp(-dist * dist / 2.0) / (2 * M_PI * dist);
-        }
-    }
-}
-
-// Calcul du noyau de passe-bas circulaire Y (sans fonction Bessel)
-void circularLowpassKernelY(double omega_c, int N, double* kernel) {
-    int mid = (N - 1) / 2;
-    for (int y = 0; y < N; y++) {
-        for (int x = 0; x < N; x++) {
-            double dist_x = (x - mid) / ((N - 1) / 2 + 1);
-            double dist_y = (y - mid) / ((N - 1) / 2 + 1);
-            double dist = sqrt(dist_x * dist_x + dist_y * dist_y);
-
-            // Utilisation d'une approche simplifiée sans la fonction Bessel (juste une forme de filtre radiale)
-            kernel[y * N + x] = omega_c * omega_c * dist_y * exp(-dist * dist / 2.0) / (2 * M_PI * dist);
-        }
-    }
-}
-
-// Fonction principale de détection de l'angle de rotation
-double detectRotationAngle(SDL_Surface* surface, double omega_c, int N) {
-    int width = surface->w;
-    int height = surface->h;
-
-    // Convertir l'image en niveaux de gris
-    convertToGrayscale(surface);
-
-    // Créer les noyaux circulaires
-    double* kernelX = (double*)malloc(N * N * sizeof(double));
-    double* kernelY = (double*)malloc(N * N * sizeof(double));
-    circularLowpassKernelX(omega_c, N, kernelX);
-    circularLowpassKernelY(omega_c, N, kernelY);
-
-    // Étape 1 : Appliquer les noyaux à l'image
-    double sumX = 0.0, sumY = 0.0;
-
-    for (int y = 0; y < height - N; y++) {
-        for (int x = 0; x < width - N; x++) {
-            // Appliquer les noyaux à la région de l'image
-            double sumKernelX = 0.0, sumKernelY = 0.0;
-
-            for (int ky = 0; ky < N; ky++) {
-                for (int kx = 0; kx < N; kx++) {
-                    int pixel = ((Uint32*)surface->pixels)[(y + ky) * width + (x + kx)] & 0xFF; // Niveaux de gris
-                    sumKernelX += pixel * kernelX[ky * N + kx];
-                    sumKernelY += pixel * kernelY[ky * N + kx];
+                    // Indexer dans l'espace de Hough
+                    int houghIndex = (r + diag_len / 2) * 180 + theta;
+                    houghSpace[houghIndex]++;
                 }
             }
-
-            // Accumuler les valeurs
-            sumX += sumKernelX;
-            sumY += sumKernelY;
         }
     }
 
-    // Étape 2 : Calculer l'angle de rotation
-    double angle = atan2(sumY, sumX) * 180.0 / M_PI;  // Convertir de radians en degrés
+    // Chercher l'angle avec le maximum d'accumulation
+    int maxAcc = 0;
+    int bestTheta = 0;
+    for (int theta = 0; theta < 180; theta++) {
+        for (int r = -diag_len / 2; r < diag_len / 2; r++) {
+            int houghIndex = (r + diag_len / 2) * 180 + theta;
+            if (houghSpace[houghIndex] > maxAcc) {
+                maxAcc = houghSpace[houghIndex];
+                bestTheta = theta;
+            }
+        }
+    }
 
-    free(kernelX);
-    free(kernelY);
+    free(houghSpace);
 
-    return angle;
+    // L'angle de la ligne détectée en degrés
+    return (double)bestTheta;
 }
-
