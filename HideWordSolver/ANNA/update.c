@@ -2,6 +2,7 @@
 
 void update(ANNA* anna)
 {
+    anna->a->t += 1;
     float beta1_t = pow(anna->a->beta1, anna->a->t);
     float beta2_t = pow(anna->a->beta2, anna->a->t);
 

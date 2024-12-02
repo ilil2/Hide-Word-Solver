@@ -13,9 +13,7 @@ void *_test(void *arg);
 
 float test(ANNA* anna)
 {
-	int neuron = anna->p->neuron;
-	anna->p->neuron = anna->t->neuron;
-	load_image("Dataset/Train/t", -1, test_size, test_input, test_expected);
+	load_image("Dataset/Train/t", -1, anna->v->test_data, test_input, test_expected);
 	matrix_shuffle(test_input, test_expected, input_neuron, output_neuron, test_size);
     forward(anna);
 
@@ -49,7 +47,6 @@ float test(ANNA* anna)
 	test_sum /= (float)test_size;
 	printf("\tTotal test success : %f\n", test_sum);
 
-	anna->p->neuron = neuron;
 	return test_sum;
 }
 

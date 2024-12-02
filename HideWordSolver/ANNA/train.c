@@ -35,7 +35,6 @@ void train(ANNA* anna)
 
 		for (size_t i = 0; i < anna->v->batch_nb; i++)
 		{
-			anna->a->t += 1;
 			printf("\t%zu, Data Set %i :\n", i, dataset_order[i]);
 			// Loading images
 			load_image("Dataset/Train/", dataset_order[i], anna);
@@ -47,14 +46,6 @@ void train(ANNA* anna)
 
 			// Applying forward propagation
 			forward(anna);
-
-			// Applying back propagation
-			backward(anna);
-
-			// Applying Adam optimizer
-			update(anna);
-
-			softmax(anna);
 
 			// Check result
 			convert_output_to_char(anna->v->train_data,
@@ -76,6 +67,12 @@ void train(ANNA* anna)
 			float _log_loss = log_loss(anna);
 			train_success_t += success / anna->v->train_data;
 			log_loss_t += _log_loss;
+
+			// Applying back propagation
+			backward(anna);
+
+			// Applying Adam optimizer
+			update(anna);
 
 			printf("\t\tLog Loss (%zu) = %f\n", i, _log_loss);
 			printf("\t\tSuccess (%zu) = %f\n", i,

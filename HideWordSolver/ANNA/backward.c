@@ -7,9 +7,8 @@ void backward(ANNA* anna)
         for (size_t j = 0; j < anna->v->train_data; j++)
         {
             anna->p->neuron_error[anna->i->nb_layer - 2][i][j] = 
-                (anna->p->neuron[anna->i->nb_layer - 1][i][j] -
-                anna->p->expected_output[i][j]) *
-                activ_prime(anna->p->neuron[anna->i->nb_layer - 1][i][j]);
+                anna->p->neuron[anna->i->nb_layer - 1][i][j] -
+                anna->p->expected_output[i][j];
         }
     }
 

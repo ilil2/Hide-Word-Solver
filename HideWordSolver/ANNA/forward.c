@@ -19,10 +19,10 @@ void forward(ANNA* anna)
             for (size_t k = 0; k < nb_letter; k++)
             {
                 anna->p->neuron[i+1][j][k] += anna->p->bias[i][j];
-                anna->p->neuron[i+1][j][k] = activ(anna->p->neuron[i+1][j][k]);
 
                 if (i != nb_layers - 2)
                 {
+                    anna->p->neuron[i+1][j][k] = activ(anna->p->neuron[i+1][j][k]);
                     if (anna->hp->dropout_rate > 0)
                     {
                         if ((float)rand() / RAND_MAX < anna->hp->dropout_rate)
@@ -38,4 +38,6 @@ void forward(ANNA* anna)
             }
         }
     }
+
+    softmax(anna);
 }

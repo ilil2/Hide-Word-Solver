@@ -6,17 +6,18 @@ void convert_output_to_char(size_t nb_letter,
 		char *anna_result) // nb_letter
 {
 	// Converts a matrix of 1's and 0's into char
-	for (size_t i = 1; i < nb_letter; i++)
-	{
-		float max = output[0][i];
-		size_t jmax = 0;
-		for (size_t j = 0; j < output_neuron; j++)
-		{
-			if (output[j][i] > max)
-			{
-				jmax = j;
-			}
-		}
+	for (size_t i = 0; i < nb_letter; i++)
+    {
+        float max = output[0][i];
+        size_t jmax = 0;
+        for (size_t j = 1; j < output_neuron; j++)
+        {
+            if (output[j][i] > max)
+            {
+                max = output[j][i];
+                jmax = j;
+            }
+        }
 
 		if (jmax < 26)
 		{
