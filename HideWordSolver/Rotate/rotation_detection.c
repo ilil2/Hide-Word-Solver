@@ -1,8 +1,10 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 
 #define M_PI 3.14159265358979323846
 
@@ -14,16 +16,19 @@ double detectRotationAngle(SDL_Surface* surface)
 
     // Créer un tableau d'accumulation pour l'espace de Hough
     int diag_len = (int)sqrt(width * width + height * height);
-    int* houghSpace = (int*)calloc(diag_len * 180, sizeof(int));
+    int* houghSpace = (int*)calloc((2 * diag_len) * 180, sizeof(int));  // Correction ici
+
+    if (!houghSpace) {
+        fprintf(stderr, "Erreur d'allocation mémoire pour houghSpace\n");
+        return 0.0;
+    }
 
     // Convertir l'image en niveaux de gris (si pas déjà fait)
     Uint32* pixels = (Uint32*)surface->pixels;
 
     // Parcourir chaque pixel de l'image
-    for (int y = 0; y < height; y++) 
-	{
-        for (int x = 0; x < width; x++) 
-		{
+    for (int y = 0; y < height; y++) {
+        for (int x = 0; x < width; x++) {
             Uint32 pixel = pixels[y * width + x];
             Uint8 gray;
             SDL_GetRGB(pixel, surface->format, &gray, &gray, &gray);
@@ -35,9 +40,11 @@ double detectRotationAngle(SDL_Surface* surface)
                     double theta_rad = theta * M_PI / 180.0;
                     int r = (int)(x * cos(theta_rad) + y * sin(theta_rad));
 
-                    // Indexer dans l'espace de Hough
-                    int houghIndex = (r + diag_len / 2) * 180 + theta;
-                    houghSpace[houghIndex]++;
+                    // Correction : Vérifier que l'index reste dans les limites
+                    int houghIndex = (r + diag_len) * 180 + theta;
+                    if (houghIndex >= 0 && houghIndex < (2 * diag_len) * 180) {
+                        houghSpace[houghIndex]++;
+                    }
                 }
             }
         }
@@ -47,8 +54,8 @@ double detectRotationAngle(SDL_Surface* surface)
     int maxAcc = 0;
     int bestTheta = 0;
     for (int theta = 0; theta < 180; theta++) {
-        for (int r = -diag_len / 2; r < diag_len / 2; r++) {
-            int houghIndex = (r + diag_len / 2) * 180 + theta;
+        for (int r = 0; r < 2 * diag_len; r++) {
+            int houghIndex = r * 180 + theta;
             if (houghSpace[houghIndex] > maxAcc) {
                 maxAcc = houghSpace[houghIndex];
                 bestTheta = theta;
