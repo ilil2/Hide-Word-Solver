@@ -77,7 +77,7 @@ void save_parameter(Param* param,
 			fprintf(file_parameter, "%zu", info->nb_neuron[i]);
 			if (i < info->nb_layer - 1)
 			{
-				fprintf(w_file, ",");
+				fprintf(file_parameter, ",");
 			}
 		}
 	}

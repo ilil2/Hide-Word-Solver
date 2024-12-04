@@ -148,4 +148,5 @@ void reset_all();
 Param* init_param(Info* info, Var* var);
 Adam* init_adam(Info* info);
 void load_layer(Info* info);
+void free_param(Param **param, Info *info, Var* var);
 #endif
