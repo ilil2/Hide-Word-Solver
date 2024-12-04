@@ -111,18 +111,17 @@ int main(int argc, char** argv)
                 p = init_param(i, v);
                 load_parameter(p, i);
 
-                ANNA anna = {
-                    hp,
-                    p,
-                    a,
-                    t,
-                    i,
-                    v
-                };
+                ANNA* anna = malloc(sizeof(ANNA));
+                anna->hp = hp;
+                anna->p = p;
+                anna->a = a;
+                anna->t = t;
+                anna->i = i;
+                anna->v = v;
 
                 printf("ANNA's training start.\n");
 
-                train(&anna);
+                train(anna);
             }
             else
             {

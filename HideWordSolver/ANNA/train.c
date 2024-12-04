@@ -79,34 +79,6 @@ void train(ANNA* anna)
 				success / anna->v->train_data);
 		}
 		printf("\n");
-
-		// Update learning rate
-		/*if (log_loss_t > anna->hp->best_loss - anna->hp->espilon)
-		{
-			anna->hp->change_iteration += 1;
-
-			if (anna->hp->change_iteration >= anna->hp->max_change_iteration)
-			{
-				float new_learning_rate = anna->hp->learning_rate *
-					anna->hp->learning_decay_rate;
-
-				if (new_learning_rate < anna->hp->min_learning_rate)
-				{
-					anna->hp->learning_rate = new_learning_rate;
-				}
-				else
-				{
-					anna->hp->learning_rate = new_learning_rate;
-				}
-
-				anna->hp->change_iteration = 0;
-			}
-		}
-		else
-		{
-			anna->hp->best_loss = log_loss_t;
-			anna->hp->change_iteration = 0;
-		}*/
 		
 		// Save parameter and stats
 		if (anna->v->epoch % 1 == 0)
