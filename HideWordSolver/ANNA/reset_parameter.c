@@ -3,8 +3,6 @@
 void reset_parameter(Param* param,
 		Info* info)
 {
-    srand(time(0));
-
     for (size_t i = 0; i < info->nb_layer - 1; i++)
     {
         // Calculates a new random weight for all layer

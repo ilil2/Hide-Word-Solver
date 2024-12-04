@@ -6,8 +6,6 @@
 void matrix_shuffle(float **array, float **array2, int rows1, int rows2,
     int cols)
 {
-    srand(time(NULL));
-
     for (int i = cols - 1; i > 0; i--)
     {
         int j = rand() % (i + 1);

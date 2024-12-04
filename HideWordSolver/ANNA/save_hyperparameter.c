@@ -10,14 +10,15 @@ void save_hyperparameter(ANNA* anna)
 	if (file_hyperparameter != NULL)
 	{
         fprintf(file_hyperparameter,
-        "%zu,%f,%f,%f,%f,%f,%i,%i,%f,%f,%f,%f,%f,%f,%i",
-        anna->v->epoch, anna->hp->lambda, anna->hp->init_learning_rate,
-        anna->hp->learning_rate, anna->hp->learning_decay_rate,
-        anna->hp->best_loss, anna->hp->change_iteration,
-        anna->hp->max_change_iteration, anna->hp->init_dropout_rate,
-        anna->hp->dropout_rate, anna->hp->dropout_decay_rate,
-        anna->hp->min_dropout_rate, anna->a->beta1, anna->a->beta2,
-        anna->a->t);
+            "%zu,%.10f,%.10f,%.10f,%.10f,%.10f,%.10f,%i,%i,%.10f,%.10f,%.10f,"
+            "%.10f,%.10f,%.10f,%i",
+            anna->v->epoch, anna->hp->lambda, anna->hp->init_learning_rate,
+            anna->hp->learning_rate, anna->hp->min_learning_rate,
+            anna->hp->learning_decay_rate, anna->hp->best_loss,
+            anna->hp->change_iteration, anna->hp->max_change_iteration,
+            anna->hp->init_dropout_rate, anna->hp->dropout_rate,
+            anna->hp->dropout_decay_rate, anna->hp->min_dropout_rate,
+            anna->a->beta1, anna->a->beta2, anna->a->t);
     }
 	else
 	{

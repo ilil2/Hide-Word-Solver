@@ -1,18 +1,11 @@
 #include "neural_network.h"
 
-void predict(int nb_letter,
-		char *anna_result,
-		float **input,
-        float **hidden,
-		float **output,
-		float **w_input,
-		float **w_output,
-		float *b_input,
-		float *b_output,
-		float threads)
+void predict(ANNA* anna)
 {
-    forward(nb_letter, input, hidden, output, w_input, w_output,
-		b_input, b_output, -1, threads);
+    forward(anna);
 
-    convert_output_to_char(nb_letter, output, anna_result);
+    convert_output_to_char(anna->v->train_data,
+		anna->i->nb_neuron[anna->i->nb_layer-1],
+		anna->p->neuron[anna->i->nb_layer-1],
+		anna->p->result[0]);
 }

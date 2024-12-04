@@ -13,8 +13,8 @@ void *_test(void *arg);
 
 float test(ANNA* anna)
 {
-	load_image("Dataset/Train/t", -1, anna->v->test_data, test_input, test_expected);
-	matrix_shuffle(test_input, test_expected, input_neuron, output_neuron, test_size);
+	load_dataset("Dataset/Train/t", -1, anna->v->test_data, test_input, test_expected);
+	matrix_shuffle(test_input, test_expected, input_neuron, output_neuron, anna->v->test_data);
     forward(anna);
 
 	float test_sum = 0;
@@ -24,8 +24,8 @@ float test(ANNA* anna)
 
 	for (size_t i = 0; i < (size_t)anna->v->threads; i++)
 	{
-		size_t start = (i * test_size) / anna->v->threads;
-    	size_t end = ((i + 1) * test_size) / anna->v->threads;
+		size_t start = (i * anna->v->test_data) / anna->v->threads;
+    	size_t end = ((i + 1) * anna->v->test_data) / anna->v->threads;
 
 		data[i] = malloc(sizeof(ThreadTest));
 		*data[i] = (ThreadTest){start, end,
@@ -44,7 +44,7 @@ float test(ANNA* anna)
 		free(res);
 	}
 	
-	test_sum /= (float)test_size;
+	test_sum /= (float)(anna->v->test_data);
 	printf("\tTotal test success : %f\n", test_sum);
 
 	return test_sum;

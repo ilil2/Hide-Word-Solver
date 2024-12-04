@@ -9,7 +9,7 @@ void load_parameter(Param* param,
     for (size_t i = 0; i < info->nb_layer - 1; i++)
     {
         char w_buffer[50];
-		sprintf(w_buffer, "ANNAParameter/w_%zu.csv", i);
+		snprintf(w_buffer, sizeof(w_buffer), "ANNAParameter/w_%zu.csv", i);
 		w_file = fopen(w_buffer, "r");
 
         if (w_file != NULL)
@@ -30,7 +30,7 @@ void load_parameter(Param* param,
         fclose(w_file);
 
         char b_buffer[50];
-		sprintf(b_buffer, "ANNAParameter/b_%zu.csv", i);
+		snprintf(b_buffer, sizeof(b_buffer), "ANNAParameter/b_%zu.csv", i);
 		b_file = fopen(b_buffer, "r");
 
         if (b_file != NULL)

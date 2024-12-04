@@ -7,6 +7,16 @@
 // train to train the AI with the number of images in the dataset as the second parameter and the number of threads to be used as the third parameter
 int main(int argc, char** argv)
 {
+    int seed = 42;
+    if (seed == -1)
+    {
+        srand(time(NULL));
+    }
+    else
+    {
+        srand(seed);
+    }
+
     if(argc > 1)
     {
         if (strcomp(argv[1], "reset"))

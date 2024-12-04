@@ -20,6 +20,7 @@ typedef struct
 	// Learning Rate
 	float init_learning_rate;
 	float learning_rate;
+	float min_learning_rate;
 	float learning_decay_rate;
 	float best_loss;
 	int change_iteration;
@@ -42,7 +43,7 @@ typedef struct
 	float** d_bias;		     // info->nb_layer-1 x info->nb_neuron[i+1]
 	float*** neuron_error; 	 // info->nb_layer-1 x info->nb_neuron[i+1] x var->train_data
 	float** expected_output; // info->nb_neuron[nb_layer-1] x var->train_data
-	char** result;          // 2 x var->train_data
+	char** result;           // 2 x var->train_data
 } Param;
 
 typedef struct
@@ -95,23 +96,14 @@ void save_parameter(Param* param,
 	Info* info);
 void load_parameter(Param* param,
 	Info* info);
-void load_image(char *file_path,
+void load_dataset(char *file_path,
         int file_nb,
         ANNA* anna);
 void forward(ANNA* anna);
 void backward(ANNA* anna);
 void update(ANNA* anna);
 void train(ANNA* anna);
-void predict(int nb_letter,
-	char *anna_result,
-	float **input,
-    float **hidden,
-	float **output,
-	float **w_input,
-	float **w_output,
-	float *b_input,
-	float *b_output,
-	float threads);
+void predict(ANNA* anna);
 float log_loss(ANNA* anna);
 void convert_char_to_output(char *c,
 	size_t row,

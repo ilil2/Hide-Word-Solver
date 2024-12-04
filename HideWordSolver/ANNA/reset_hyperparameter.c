@@ -10,9 +10,24 @@ void reset_hyperparameter()
 	if (file_hyperparameter != NULL)
 	{
         fprintf(file_hyperparameter,
-		"%i,%f,%f,%f,%f,%f,%i,%i,%f,%f,%f,%f,%f,%f,%i",
-        0, 0.00001, 0.001, 0.001, 0.1, 100.0, 0, 5, 0.5, 0.5, 0.02, 0.1,
-        0.9, 0.999, 0);
+			"%i,%.10f,%.10f,%.10f,%.10f,%.10f,%.10f,%i,%i,%.10f,%.10f,%.10f,%.10f,"
+			"%.10f,%.10f,%i",
+			0,         // epoch
+			0.00001f,  // lambda
+			0.01f,     // init_learning_rate
+			0.01f,     // learning_rate
+			0.000001f, // min_learning_rate
+			0.1f,      // learning_decay_rate
+			100.0f,    // best_loss
+			0,         // change_iteration
+			5,         // max_change_iteration
+			0.5f,      // init_dropout_rate
+			0.5f,      // dropout_rate
+			0.01f,     // dropout_decay_rate
+			0.1f,      // min_dropout_rate
+			0.9f,      // beta1
+			0.999f,    // beta2
+			0);        // t
     }
 	else
 	{
