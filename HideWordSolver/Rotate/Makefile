@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -O2 -fsanitize=address
 LDFLAGS = -lSDL2 -lSDL2_image -lm -fsanitize=address
 
-OBJ = main.o auto_rotation.o manual_rotation.o rotation_detection.o display.o ../Preprocessing/binarization.o ../Preprocessing/grayscale.o ../Preprocessing/medianfilter.o ../Preprocessing/sort.o sobel.o
+OBJ = main.o auto_rotation.o manual_rotation.o detection_angle.o display.o ../Preprocessing/binarization.o ../Preprocessing/grayscale.o ../Preprocessing/medianfilter.o ../Preprocessing/sort.o sobel.o
 
 all: rotation
 
@@ -18,8 +18,8 @@ auto_rotation.o: auto_rotation.c rotation.h
 manual_rotation.o: manual_rotation.c rotation.h
 	$(CC) $(CFLAGS) -c manual_rotation.c
 
-rotation_detection.o: rotation_detection.c rotation.h
-	$(CC) $(CFLAGS) -c rotation_detection.c
+detection_angle.o: detection_angle.c rotation.h
+	$(CC) $(CFLAGS) -c detection_angle.c
 
 display.o: display.c rotation.h
 	$(CC) $(CFLAGS) -c display.c
