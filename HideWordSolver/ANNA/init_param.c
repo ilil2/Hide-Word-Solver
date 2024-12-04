@@ -69,8 +69,9 @@ Param* init_param(Info* info, Var* var)
 		}
 
 		param->neuron[i] = malloc(info->nb_neuron[i] * sizeof(float *));
+		param->expected_output = malloc(sizeof(float *) * info->nb_neuron[i]);
 
-		if (param->neuron[i] == NULL)
+		if (param->neuron[i] == NULL || param->expected_output == NULL)
 		{
 			err(1, "malloc()");
 		}
@@ -78,25 +79,9 @@ Param* init_param(Info* info, Var* var)
 		for (size_t j = 0; j < info->nb_neuron[i]; j++)
 		{
 			param->neuron[i][j] = malloc(var->train_data * sizeof(float));
-
-			if (param->neuron[i][j] == NULL)
-			{
-				err(1, "malloc()");
-			}
-		}
-
-		param->expected_output = malloc(sizeof(float *) * info->nb_neuron[i]);
-
-		if (param->expected_output == NULL)
-		{
-			err(1, "malloc()");
-		}
-
-		for (size_t j = 0; j < info->nb_neuron[i]; j++)
-		{
 			param->expected_output[j] = malloc(sizeof(float) * var->train_data);
 
-			if (param->expected_output[j] == NULL)
+			if (param->neuron[i][j] == NULL || param->expected_output[j] == NULL)
 			{
 				err(1, "malloc()");
 			}

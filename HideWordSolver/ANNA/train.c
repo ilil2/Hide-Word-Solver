@@ -113,11 +113,9 @@ void train(ANNA* anna)
 		{
 			printf("\tTotal log loss = %f\n", log_loss_t / anna->v->batch_nb);
 			printf("\tTotal train success = %f\n", train_success_t / anna->v->batch_nb);
-			//float test_succes_t = test(test_size, test_input, test_hidden1,
-			//	test_hidden2, test_expected, test_output, w_input, w_hidden,
-			//	w_output, b_input, b_hidden, b_output, threads);
+			float test_succes_t = test(anna);
 			save_stats(anna->v->epoch, log_loss_t / anna->v->batch_nb,
-				train_success_t / anna->v->batch_nb, 0); //test_succes_t
+				train_success_t / anna->v->batch_nb, test_succes_t);
 			save_parameter(anna->p, anna->i);
 			save_hyperparameter(anna);
 			printf("\tSave ! \n\n");
