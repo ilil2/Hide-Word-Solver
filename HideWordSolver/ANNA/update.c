@@ -15,10 +15,10 @@ void update(ANNA* anna)
                 anna->a->m_weight[i][j][k] = anna->a->beta1 *
                     anna->a->m_weight[i][j][k] + (1 - anna->a->beta1) *
                     anna->p->d_weight[i][j][k];
-                anna->a->v_weight[i][j][k] = anna->a->beta2 *
+				anna->a->v_weight[i][j][k] = anna->a->beta2 *
                     anna->a->v_weight[i][j][k] + (1 - anna->a->beta2) *
                     anna->p->d_weight[i][j][k] * anna->p->d_weight[i][j][k];
-                
+
                 float m_hat = anna->a->m_weight[i][j][k] / (1 - beta1_t);
                 float v_hat = anna->a->v_weight[i][j][k] / (1 - beta2_t);
 
@@ -32,7 +32,7 @@ void update(ANNA* anna)
             anna->a->v_bias[i][j] = anna->a->beta2 * anna->a->v_bias[i][j] +
                 (1 - anna->a->beta2) * anna->p->d_bias[i][j] *
                 anna->p->d_bias[i][j];
-            
+
             float m_hat = anna->a->m_bias[i][j] / (1 - beta1_t);
             float v_hat = anna->a->v_bias[i][j] / (1 - beta2_t);
 

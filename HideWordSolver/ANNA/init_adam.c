@@ -24,8 +24,8 @@ Adam* init_adam(Info* info)
     {
         adam->m_weight[i] = malloc(sizeof(float *) * info->nb_neuron[i+1]);
         adam->v_weight[i] = malloc(sizeof(float *) * info->nb_neuron[i+1]);
-        adam->m_bias[i] = malloc(sizeof(float) * info->nb_neuron[i+1]);
-        adam->v_bias[i] = malloc(sizeof(float) * info->nb_neuron[i+1]);
+        adam->m_bias[i] = calloc(info->nb_neuron[i+1], sizeof(float));
+        adam->v_bias[i] = calloc(info->nb_neuron[i+1], sizeof(float));
 
         if (adam->m_weight[i] == NULL || adam->v_weight[i] == NULL ||
             adam->m_bias[i] == NULL || adam->v_bias[i] == NULL)
@@ -35,12 +35,12 @@ Adam* init_adam(Info* info)
 
         for (size_t j = 0; j < info->nb_neuron[i+1]; j++)
         {
-            adam->m_weight[i][j] = malloc(sizeof(float) * info->nb_neuron[i]);
-            adam->v_weight[i][j] = malloc(sizeof(float) * info->nb_neuron[i]);
+            adam->m_weight[i][j] = calloc(info->nb_neuron[i], sizeof(float));
+            adam->v_weight[i][j] = calloc(info->nb_neuron[i], sizeof(float));
 
             if (adam->m_weight[i][j] == NULL || adam->v_weight[i][j] == NULL)
             {
-                err(1, "malloc()");
+                err(1, "calloc()");
             }
         }
     }
