@@ -9,10 +9,11 @@ void predict(ANNA* anna, char* directory, size_t grid_width,
 	anna->v->train_data = grid_width * grid_height;
 	anna->p = init_param(anna->i, anna->v, 1);
 
+    load_parameter(anna->p, anna->i);
 	load_image(grid_buffer, anna);
 
     forward(anna);
-
+	
     convert_output_to_char(anna->v->train_data,
 		anna->i->nb_neuron[anna->i->nb_layer-1],
 		anna->p->neuron[anna->i->nb_layer-1],
@@ -44,6 +45,7 @@ void predict(ANNA* anna, char* directory, size_t grid_width,
 		anna->v->train_data = word_size;
 		anna->p = init_param(anna->i, anna->v, 1);
 
+    	load_parameter(anna->p, anna->i);
 		load_image(word_buffer, anna);
 
 		forward(anna);
