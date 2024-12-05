@@ -4,12 +4,12 @@ void save_word(char* path, size_t word_size, char* result)
 {
     FILE* word_file = NULL;
 
-    word_file = fopen(path, "w");
+    word_file = fopen(path, "a");
 
     if (word_file == NULL)
     {
         create_file(path);
-        word_file = fopen(path, "w");
+        word_file = fopen(path, "a");
     }
     
     if (word_file != NULL)
