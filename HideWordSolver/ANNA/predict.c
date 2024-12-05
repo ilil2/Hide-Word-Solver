@@ -61,5 +61,10 @@ void predict(ANNA* anna, char* directory, size_t grid_width,
 
 		free_param(anna->p, anna->i, anna->v, 1);
 	}
-	
+
+	free(anna->i->nb_neuron);
+    free(anna->i);
+    free(anna->hp);
+    free(anna->v);
+    free(anna);
 }
