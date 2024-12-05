@@ -59,12 +59,6 @@ typedef struct
 
 typedef struct
 {
-	float*** neuron; // info->nb_layer x info->nb_neuron[i] x var->test_data
-	float** result;  // info->nb_neuron[nb_layer-1] x var->test_data
-} Test;
-
-typedef struct
-{
 	size_t nb_layer;
 	size_t* nb_neuron; // info->nb_layer
 } Info;
@@ -83,7 +77,6 @@ typedef struct
 	HyperParam* hp; // Hyperparamter
 	Param* p; // Parameter
 	Adam* a; // Adam optimizer
-	Test* t; // Test parameter
 	Info* i; // Layer info
 	Var* v; // Train info
 } ANNA;
@@ -148,5 +141,7 @@ void reset_all();
 Param* init_param(Info* info, Var* var);
 Adam* init_adam(Info* info);
 void load_layer(Info* info);
-void free_param(Param **param, Info *info, Var* var);
+void free_param(Param *param, Info *info, Var *var);
+void free_adam(Adam* adam, Info* info);
+void free_all(ANNA* anna);
 #endif

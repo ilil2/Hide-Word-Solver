@@ -43,7 +43,6 @@ int main(int argc, char** argv)
                 HyperParam* hp = malloc(sizeof(HyperParam));
                 Param* p;
                 Adam* a;
-                Test* t = malloc(sizeof(Test));
                 Info* i = malloc(sizeof(Info));
                 Var* v = malloc(sizeof(Var));
 
@@ -115,13 +114,14 @@ int main(int argc, char** argv)
                 anna->hp = hp;
                 anna->p = p;
                 anna->a = a;
-                anna->t = t;
                 anna->i = i;
                 anna->v = v;
 
                 printf("ANNA's training start.\n");
 
                 train(anna);
+
+                free_all(anna);
             }
             else
             {

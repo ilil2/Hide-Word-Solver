@@ -28,7 +28,7 @@ void reset_all()
 
 	reset_anna(param, info);
 
-	free_param(&param, info, NULL);
+	free_param(param, info, NULL);
 
 	free(info->nb_neuron);
 
