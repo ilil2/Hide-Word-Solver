@@ -7,7 +7,7 @@
 
 double detectRotationAngle(SDL_Surface* surface) 
 {
-	//Def variable
+	//Def variables
     int imgWidth = surface->w;
     int imgHeight = surface->h;
     int diagonal = (int)sqrt(imgWidth * imgWidth + imgHeight * imgHeight);
@@ -27,12 +27,17 @@ double detectRotationAngle(SDL_Surface* surface)
 	//on parcours image
     for (int y = 0; y < imgHeight; y++) {
         for (int x = 0; x < imgWidth; x++) {
-            Uint8 red;
-            SDL_GetRGB(imgPixels[y * imgWidth + x], surface->format, &red, &red, &red);
+            Uint8 r, g, b;
+            SDL_GetRGB(imgPixels[y * imgWidth + x], surface->format, &r, &g, &b);
+            Uint8 intensity = (Uint8)(0.3 * r + 0.59 * g + 0.11 * b);
 
 			//check si pixel est blanc
-            if (red == 255) {
+            if (intensity > 128) {
                 for (int theta = 0; theta < thetaMax; theta++) {
+
+					//ignorer les lignes verticales
+                    if (theta < 45 || theta > 135) continue;
+
                     double thetaRad = theta * M_PI / 180.0;
                     int rValue = (int)(x * cos(thetaRad) + y * sin(thetaRad)) + diagonal;
 
@@ -62,10 +67,10 @@ double detectRotationAngle(SDL_Surface* surface)
 
 	//check si il l'a met pas a l'envers ou de coté
 	//(test bancale) 
-    if (detectedAngle > 120) {
-        detectedAngle += 180;
+    if (detectedAngle > 135) {
+        detectedAngle -= 180;
     } 
-	else if (detectedAngle > 50) {
+	else if (detectedAngle > 45) {
         detectedAngle -= 90;
     }
 
