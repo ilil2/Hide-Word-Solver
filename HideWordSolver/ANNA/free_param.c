@@ -1,8 +1,7 @@
 #include "neural_network.h"
 
-void free_param(Param **p, Info *info, Var *var)
+void free_param(Param *param, Info *info, Var *var)
 {
-	Param *param = *p;
 	if (var != NULL)
 	{
 		size_t i = 0;
