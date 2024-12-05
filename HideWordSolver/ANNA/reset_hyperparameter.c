@@ -31,7 +31,7 @@ void reset_hyperparameter()
     }
 	else
 	{
-		printf("Error opening hyperparameter.csv files.\n");
+        err(1, "fopen()");
 	}
 
 	fclose(file_hyperparameter);

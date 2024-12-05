@@ -9,7 +9,7 @@ void save_stats(size_t i, float log_loss, float train_set, float test_set)
 
     if (!save_file)
 	{
-		errx(404, "Error opening ANNAStats/anna_stats.csv files.");
+        err(1, "fopen()");
     }
 
     fprintf(save_file, "%zu,%f,%f,%f\n", i, log_loss, train_set, test_set);

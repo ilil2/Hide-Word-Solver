@@ -24,11 +24,11 @@ void reset_all()
 	printf("Last layer: ");
 	scanf("%zu", &(info->nb_neuron[i]));
 
-	Param* param = init_param(info, NULL);
+	Param* param = init_param(info, NULL, 0);
 
 	reset_anna(param, info);
 
-	free_param(param, info, NULL);
+	free_param(param, info, NULL, 0);
 
 	free(info->nb_neuron);
 

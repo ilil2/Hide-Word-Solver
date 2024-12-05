@@ -17,14 +17,9 @@ void bmp_to_csv(const SDL_Surface *tmp, int i, char output, char test)
     FILE *input_file = fopen(ibuffer, "a");
     FILE *output_file = fopen(obuffer, "a");
 
-    if (!input_file)
+    if (!input_file || !output_file)
 	{
-		errx(404, "Error opening %s files.", ibuffer);
-    }
-
-    if (!output_file)
-    {
-		errx(404, "Error opening %s files.", obuffer);
+        err(1, "fopen()");
     }
 
     unsigned char *pixels = (unsigned char *)tmp->pixels;

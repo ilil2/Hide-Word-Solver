@@ -83,7 +83,7 @@ void save_parameter(Param* param,
 	}
 	else
 	{
-		printf("Error opening parameter.csv files.\n");
+        err(1, "fopen()");
 	}
 
 	fclose(file_parameter);

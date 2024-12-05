@@ -22,7 +22,7 @@ void save_hyperparameter(ANNA* anna)
     }
 	else
 	{
-		printf("Error opening hyperparameter.csv files.\n");
+        err(1, "fopen()");
 	}
 
 	fclose(file_hyperparameter);

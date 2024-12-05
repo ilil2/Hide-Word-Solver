@@ -29,8 +29,29 @@ int main(int argc, char** argv)
         }
         else if (strcomp(argv[1], "start"))
         {
-            //char *anna_result = malloc(1 * sizeof(char));
+            // ./ANNA start (directory) (grid_width) (grid_height) (word_nb)
+
             printf("ANNA's character recognition activated !\n");
+
+            HyperParam* hp = malloc(sizeof(HyperParam));
+            Param* p = NULL;
+            Adam* a = NULL;
+            Info* i = malloc(sizeof(Info));
+            Var* v = malloc(sizeof(Var));
+
+            load_layer(i);
+            v->threads = 1;
+            hp->dropout_rate = 0;
+
+            ANNA* anna = malloc(sizeof(ANNA));
+            anna->hp = hp;
+            anna->p = p;
+            anna->a = a;
+            anna->i = i;
+            anna->v = v;
+
+            predict(anna, argv[2], atoi(argv[3]), atoi(argv[4]),
+                atoi(argv[5]));
         }
         else if (strcomp(argv[1], "train"))
         {
@@ -107,7 +128,7 @@ int main(int argc, char** argv)
                 load_layer(i);
                 a = init_adam(i);
                 load_hyperparameter(hp, a, v);
-                p = init_param(i, v);
+                p = init_param(i, v, 0);
                 load_parameter(p, i);
 
                 ANNA* anna = malloc(sizeof(ANNA));

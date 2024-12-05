@@ -3,7 +3,7 @@
 void free_all(ANNA* anna)
 {
     // Free parameter
-    free_param(anna->p, anna->i, anna->v);
+    free_param(anna->p, anna->i, anna->v, 0);
 
     // Free adam
     free_adam(anna->a, anna->i);

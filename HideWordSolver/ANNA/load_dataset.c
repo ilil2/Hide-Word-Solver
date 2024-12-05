@@ -44,7 +44,7 @@ void load_dataset(char *file_path,
     }
     else
     {
-		printf("Error opening files.\n");
+        err(1, "fopen()");
     }
 
 	fclose(input_file);

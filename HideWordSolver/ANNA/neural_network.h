@@ -90,13 +90,17 @@ void save_parameter(Param* param,
 void load_parameter(Param* param,
 	Info* info);
 void load_dataset(char *file_path,
-        int file_nb,
-        ANNA* anna);
+    int file_nb,
+    ANNA* anna);
 void forward(ANNA* anna);
 void backward(ANNA* anna);
 void update(ANNA* anna);
 void train(ANNA* anna);
-void predict(ANNA* anna);
+void predict(ANNA* anna,
+	char* directory,
+	size_t grid_width,
+	size_t grid_height,
+	size_t word_nb);
 float log_loss(ANNA* anna);
 void convert_char_to_output(char *c,
 	size_t row,
@@ -138,10 +142,25 @@ void reset_hyperparameter();
 void reset_anna(Param* param,
 	Info* info);
 void reset_all();
-Param* init_param(Info* info, Var* var);
+Param* init_param(Info* info,
+	Var* var,
+	char state);
 Adam* init_adam(Info* info);
 void load_layer(Info* info);
-void free_param(Param *param, Info *info, Var *var);
-void free_adam(Adam* adam, Info* info);
+void free_param(Param *param,
+	Info *info,
+	Var *var,
+	char state);
+void free_adam(Adam* adam,
+	Info* info);
 void free_all(ANNA* anna);
+void load_image(char *file_path,
+    ANNA* anna);
+void save_grid(char* path,
+	size_t grid_width,
+	size_t grid_height,
+	char* result);
+void save_word(char* path,
+	size_t word_size,
+	char* result);
 #endif

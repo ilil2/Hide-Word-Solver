@@ -16,7 +16,7 @@ void add_to_dataset(const char *img, int i, char output, char test)
 
 		if (SDL_Init(SDL_INIT_VIDEO) != 0)
 		{
-			errx(7, "Cannot initialise SDL: %s", SDL_GetError());
+			errx(1, "Cannot initialise SDL: %s", SDL_GetError());
 		}
 		else
 		{
@@ -39,6 +39,6 @@ void add_to_dataset(const char *img, int i, char output, char test)
 	}
 	else
 	{
-		printf("Error : The file does not exist\n");
+        err(1, "fopen()");
 	}
 }

@@ -6,7 +6,7 @@ int main(int argc, char **argv)
 
     if (argc < 4)
 	{
-		errx(400, "The number of argment is invalid.");
+		err(1, "The number of argment is invalid.");
 	}
 
 	int nb_file = atoi(argv[1]);
