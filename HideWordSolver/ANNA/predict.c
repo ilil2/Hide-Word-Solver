@@ -55,7 +55,7 @@ void predict(ANNA* anna, char* directory, size_t grid_width,
 		anna->p->neuron[anna->i->nb_layer-1],
 		anna->p->result[0]);
 
-		snprintf(word_buffer, sizeof(word_buffer), "%s/word.txt", directory, i);
+		snprintf(word_buffer, sizeof(word_buffer), "%s/word.txt", directory);
 
 		save_word(word_buffer, word_size, anna->p->result[0]);
 
