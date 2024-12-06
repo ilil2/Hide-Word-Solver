@@ -27,7 +27,8 @@ void train(ANNA* anna)
 
 		// Update dropout rate
 		anna->hp->dropout_rate = anna->hp->init_dropout_rate
-			* exp(-anna->hp->dropout_decay_rate * anna->v->epoch);
+			- anna->hp->dropout_decay_rate * anna->v->epoch;
+
 		if (anna->hp->dropout_rate < anna->hp->min_dropout_rate)
 		{
 			anna->hp->dropout_rate = anna->hp->min_dropout_rate;

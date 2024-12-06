@@ -18,13 +18,7 @@ typedef struct
 	float espilon;
 
 	// Learning Rate
-	float init_learning_rate;
 	float learning_rate;
-	float min_learning_rate;
-	float learning_decay_rate;
-	float best_loss;
-	int change_iteration;
-	int max_change_iteration;
 
 	// Dropout Rate
 	float init_dropout_rate;
