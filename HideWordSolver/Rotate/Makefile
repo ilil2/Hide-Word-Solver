@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -O2 -fsanitize=address -Wextra
+CFLAGS = -Wall -fsanitize=address -Wextra
 LDFLAGS = -lSDL2 -lSDL2_image -lm -fsanitize=address
 
 OBJ = main.o auto_rotation.o manual_rotation.o detection_angle.o display.o ../Preprocessing/binarization.o ../Preprocessing/grayscale.o ../Preprocessing/medianfilter.o ../Preprocessing/sort.o sobel.o
