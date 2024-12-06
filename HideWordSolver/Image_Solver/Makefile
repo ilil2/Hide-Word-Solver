@@ -1,7 +1,7 @@
 # Makefile
 
 CC=gcc
-CFLAGS=-Wall -Wextra -lSDL2 -lSDL2_image -fsanitize=address -O3
+CFLAGS=-Wall -Wextra -lSDL2 -lSDL2_image -fsanitize=address
 SRC=main.c draw.c
 OBJ=$(SRC:.c=.o)
 EXE=draw
