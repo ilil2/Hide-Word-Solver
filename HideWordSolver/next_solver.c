@@ -5,6 +5,7 @@ extern char state;
 // Do the next step on StepByStep mode
 void next_solver(GtkWidget *button, gpointer user_data)
 {
+	button++;
 	GtkBuilder* builder = GTK_BUILDER(user_data);
 	GtkStack* stack = GTK_STACK(gtk_builder_get_object(builder, "Stack"));
 	const gchar *current_page_name = gtk_stack_get_visible_child_name(stack);

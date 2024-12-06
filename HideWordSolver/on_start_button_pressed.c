@@ -3,6 +3,7 @@
 // Call when start button is pressed
 void on_start_button_pressed(GtkWidget *button, gpointer user_data)
 {
+	button++;
 	GtkBuilder* builder = GTK_BUILDER(user_data);
 	GtkFileChooser* file_chooser = GTK_FILE_CHOOSER(
 			gtk_builder_get_object(builder, "ImageChooser"));
