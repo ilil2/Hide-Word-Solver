@@ -55,7 +55,9 @@ int main(int argc, char** argv)
 			}
 			else
 			{
-				errx(1, "The number of arguments is invalid.");
+				printf("Usage: %s <directory_path> <grid_width>"
+						" <grid_height> <word_number>", argv[0]);
+				return 1;
 			}
         }
         else if (strcomp(argv[1], "train"))
@@ -162,7 +164,7 @@ int main(int argc, char** argv)
     }
     else
     {
-        errx(1, "The number of arguments is invalid.");
+        printf("Usage: %s <reset|train|start>", argv[0]);
     }
 
     return 0;
