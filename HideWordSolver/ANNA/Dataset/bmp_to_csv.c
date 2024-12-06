@@ -22,6 +22,9 @@ void bmp_to_csv(const SDL_Surface *tmp, int i, char output, char test)
         err(1, "fopen()");
     }
 
+    int threshold = otsus(256, tmp->pixels, tmp->format);
+    surface_to_black_and_white(tmp, threshold);
+
     unsigned char *pixels = (unsigned char *)tmp->pixels;
     int width = tmp->w;
     int height = tmp->h;
@@ -33,14 +36,8 @@ void bmp_to_csv(const SDL_Surface *tmp, int i, char output, char test)
         for (int x = 0; x < width; x++)
 		{
             unsigned char r = pixels[y * pitch + x + 0];
-            unsigned char g = pixels[y * pitch + x + 1];
-            unsigned char b = pixels[y * pitch + x + 2];
 
-            // Apply grayscale
-            unsigned char grayscale =
-                (unsigned char)(0.3 * r + 0.59 * g + 0.11 * b);
-
-            fprintf(input_file, "%d", grayscale);
+            fprintf(input_file, "%d", r);
 
             if (!(x == width - 1 && y == height - 1))
 			{
