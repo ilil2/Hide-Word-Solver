@@ -8,7 +8,8 @@
 
 void save_image(const char* image_file, const char* save_path, float angle)
 {
-    if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) == 0) {
+    if (IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG) == 0)
+	{
         fprintf(stderr, "SDL_image Error: %s\n", IMG_GetError());
         SDL_Quit();
         exit(1);
@@ -34,7 +35,8 @@ void save_image(const char* image_file, const char* save_path, float angle)
             SDL_GetError());
 
     SDL_Surface* surface = IMG_Load(image_file);
-    if (!surface) {
+    if (!surface)
+	{
         fprintf(stderr, "Error loading image %s: %s\n", image_file,
             IMG_GetError());
         SDL_Quit();
@@ -42,7 +44,8 @@ void save_image(const char* image_file, const char* save_path, float angle)
     }
 
     texture = SDL_CreateTextureFromSurface(renderer, surface);
-    if (!texture) {
+    if (!texture)
+	{
         fprintf(stderr, "Error creating texture: %s\n", SDL_GetError());
         SDL_FreeSurface(surface);
         SDL_Quit();
@@ -69,9 +72,12 @@ void save_image(const char* image_file, const char* save_path, float angle)
 	IMG_SavePNG(resultSurface, save_path);
 
 	SDL_FreeSurface(resultSurface);
-    if (texture) SDL_DestroyTexture(texture);
-    if (renderer) SDL_DestroyRenderer(renderer);
-    if (window) SDL_DestroyWindow(window);
+    if (texture)
+		SDL_DestroyTexture(texture);
+    if (renderer)
+		SDL_DestroyRenderer(renderer);
+    if (window)
+		SDL_DestroyWindow(window);
     IMG_Quit();
     SDL_Quit();
 }

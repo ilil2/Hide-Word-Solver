@@ -1,7 +1,7 @@
 #ifndef ROTATION_H
 #define ROTATION_H
 
-#include <SDL2/SDL.h>         
+#include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 
 void auto_rotate(const char* image_path);
