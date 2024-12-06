@@ -85,7 +85,8 @@ void train(ANNA* anna)
 		if (anna->v->epoch % 1 == 0)
 		{
 			printf("\tTotal log loss = %f\n", log_loss_t / anna->v->batch_nb);
-			printf("\tTotal train success = %f\n", train_success_t / anna->v->batch_nb);
+			printf("\tTotal train success = %f\n",
+					train_success_t / anna->v->batch_nb);
 			float test_succes_t = test(anna);
 			save_stats(anna->v->epoch, log_loss_t / anna->v->batch_nb,
 				train_success_t / anna->v->batch_nb, test_succes_t);

@@ -30,28 +30,33 @@ int main(int argc, char** argv)
         else if (strcomp(argv[1], "start"))
         {
             // ./ANNA start (directory) (grid_width) (grid_height) (word_nb)
+			if (argc > 5)
+			{
+            	printf("ANNA's character recognition activated !\n");
+            	HyperParam* hp = malloc(sizeof(HyperParam));
+            	Param* p = NULL;
+            	Adam* a = NULL;
+            	Info* i = malloc(sizeof(Info));
+            	Var* v = malloc(sizeof(Var));
 
-            printf("ANNA's character recognition activated !\n");
+            	load_layer(i);
+            	v->threads = 1;
+            	hp->dropout_rate = 0;
 
-            HyperParam* hp = malloc(sizeof(HyperParam));
-            Param* p = NULL;
-            Adam* a = NULL;
-            Info* i = malloc(sizeof(Info));
-            Var* v = malloc(sizeof(Var));
+            	ANNA* anna = malloc(sizeof(ANNA));
+            	anna->hp = hp;
+            	anna->p = p;
+            	anna->a = a;
+            	anna->i = i;
+            	anna->v = v;
 
-            load_layer(i);
-            v->threads = 1;
-            hp->dropout_rate = 0;
-
-            ANNA* anna = malloc(sizeof(ANNA));
-            anna->hp = hp;
-            anna->p = p;
-            anna->a = a;
-            anna->i = i;
-            anna->v = v;
-
-            predict(anna, argv[2], atoi(argv[3]), atoi(argv[4]),
-                atoi(argv[5]));
+            	predict(anna, argv[2], atoi(argv[3]), atoi(argv[4]),
+						atoi(argv[5]));
+			}
+			else
+			{
+				errx(1, "The number of arguments is invalid.");
+			}
         }
         else if (strcomp(argv[1], "train"))
         {
@@ -146,18 +151,18 @@ int main(int argc, char** argv)
             }
             else
             {
-                err(1, "The number of images to be taken has not been "
+                errx(1, "The number of images to be taken has not been "
                     "indicated.");
             }
         }
         else
         {
-            err(1, "Incorrect argument");
+            errx(1, "Incorrect argument");
         }
     }
     else
     {
-        err(1, "The number of arguments is invalid.");
+        errx(1, "The number of arguments is invalid.");
     }
 
     return 0;

@@ -12,7 +12,8 @@ void reset_all()
 	printf("Hidden layers number: ");
 	scanf("%zu", &(info->nb_layer));
 	info->nb_layer += 2;
-	info->nb_neuron = realloc(info->nb_neuron, sizeof(size_t) * info->nb_layer);
+	info->nb_neuron = realloc(info->nb_neuron, sizeof(size_t) *
+			info->nb_layer);
 
 	size_t i = 0;
 	for (i = 1; i < info->nb_layer - 1; i++)

@@ -22,7 +22,8 @@ void forward(ANNA* anna)
 
                 if (i != nb_layers - 2)
                 {
-                    anna->p->neuron[i+1][j][k] = activ(anna->p->neuron[i+1][j][k]);
+                    anna->p->neuron[i+1][j][k] =
+						activ(anna->p->neuron[i+1][j][k]);
                     if (anna->hp->dropout_rate > 0)
                     {
                         if ((float)rand() / RAND_MAX < anna->hp->dropout_rate)
@@ -31,7 +32,8 @@ void forward(ANNA* anna)
                         }
                         else
                         {
-                            anna->p->neuron[i+1][j][k] /= (1 - anna->hp->dropout_rate);
+                            anna->p->neuron[i+1][j][k] /=
+								(1 - anna->hp->dropout_rate);
                         }
                     }
                 }

@@ -18,7 +18,8 @@ Param* init_param(Info* info, Var* var, char state)
 			param->neuron = malloc(sizeof(float **) * info->nb_layer);
 			param->d_weight = malloc(sizeof(float **) * (info->nb_layer - 1));
 			param->d_bias = malloc(sizeof(float *) * (info->nb_layer - 1));
-			param->neuron_error = malloc(sizeof(float **) * (info->nb_layer - 1));
+			param->neuron_error = malloc(sizeof(float **) *
+					(info->nb_layer - 1));
 
 			if (param->weight == NULL || param->bias == NULL ||
 				param->neuron == NULL || param->d_weight == NULL ||
@@ -31,16 +32,21 @@ Param* init_param(Info* info, Var* var, char state)
 			for (i = 0; i < info->nb_layer - 1; i++)
 			{
 				param->bias[i] = malloc(info->nb_neuron[i+1] * sizeof(float));
-				param->d_bias[i] = malloc(info->nb_neuron[i+1] * sizeof(float));
+				param->d_bias[i] = malloc(info->nb_neuron[i+1] *
+						sizeof(float));
 
 				param->neuron[i] = malloc(info->nb_neuron[i] * sizeof(float *));
-				param->neuron_error[i] = malloc(info->nb_neuron[i+1] * sizeof(float *));
+				param->neuron_error[i] = malloc(info->nb_neuron[i+1] *
+						sizeof(float *));
 
-				param->weight[i] = malloc(info->nb_neuron[i+1] * sizeof(float *));
-				param->d_weight[i] = malloc(info->nb_neuron[i+1] * sizeof(float *));
+				param->weight[i] = malloc(info->nb_neuron[i+1] *
+						sizeof(float *));
+				param->d_weight[i] = malloc(info->nb_neuron[i+1] *
+						sizeof(float *));
 
 				if (param->bias[i] == NULL || param->d_bias[i] == NULL ||
-					param->neuron[i] == NULL || param->neuron_error[i] == NULL ||
+					param->neuron[i] == NULL ||
+					param->neuron_error[i] == NULL ||
 					param->weight[i] == NULL || param->d_weight[i] == NULL)
 				{
 					err(1, "malloc()");
@@ -48,12 +54,15 @@ Param* init_param(Info* info, Var* var, char state)
 
 				for (size_t j = 0; j < info->nb_neuron[i+1]; j++)
 				{
-					param->weight[i][j] = malloc(info->nb_neuron[i] * sizeof(float));
-					param->d_weight[i][j] = malloc(info->nb_neuron[i] * sizeof(float));
+					param->weight[i][j] = malloc(info->nb_neuron[i] *
+							sizeof(float));
+					param->d_weight[i][j] = malloc(info->nb_neuron[i] *
+							sizeof(float));
 					param->neuron_error[i][j] = malloc(var->train_data *
 							sizeof(float));
 
-					if (param->weight[i][j] == NULL || param->d_weight[i][j] == NULL ||
+					if (param->weight[i][j] == NULL ||
+						param->d_weight[i][j] == NULL ||
 						param->neuron_error[i][j] == NULL)
 					{
 						err(1, "malloc()");
@@ -61,7 +70,8 @@ Param* init_param(Info* info, Var* var, char state)
 				}
 				for (size_t j = 0; j < info->nb_neuron[i]; j++)
 				{
-					param->neuron[i][j] = malloc(var->train_data * sizeof(float));
+					param->neuron[i][j] = malloc(var->train_data *
+							sizeof(float));
 
 					if (param->neuron[i][j] == NULL)
 					{
@@ -71,7 +81,8 @@ Param* init_param(Info* info, Var* var, char state)
 			}
 
 			param->neuron[i] = malloc(info->nb_neuron[i] * sizeof(float *));
-			param->expected_output = malloc(sizeof(float *) * info->nb_neuron[i]);
+			param->expected_output = malloc(sizeof(float *) *
+					info->nb_neuron[i]);
 
 			if (param->neuron[i] == NULL || param->expected_output == NULL)
 			{
@@ -81,9 +92,11 @@ Param* init_param(Info* info, Var* var, char state)
 			for (size_t j = 0; j < info->nb_neuron[i]; j++)
 			{
 				param->neuron[i][j] = malloc(var->train_data * sizeof(float));
-				param->expected_output[j] = malloc(sizeof(float) * var->train_data);
+				param->expected_output[j] = malloc(sizeof(float) *
+						var->train_data);
 
-				if (param->neuron[i][j] == NULL || param->expected_output[j] == NULL)
+				if (param->neuron[i][j] == NULL ||
+					param->expected_output[j] == NULL)
 				{
 					err(1, "malloc()");
 				}
@@ -119,7 +132,8 @@ Param* init_param(Info* info, Var* var, char state)
 			for (size_t i = 0; i < info->nb_layer - 1; i++)
 			{
 				param->bias[i] = malloc(info->nb_neuron[i+1] * sizeof(float));
-				param->weight[i] = malloc(info->nb_neuron[i+1] * sizeof(float *));
+				param->weight[i] = malloc(info->nb_neuron[i+1] *
+						sizeof(float *));
 
 				if (param->weight[i] == NULL || param->bias[i] == NULL)
 				{
@@ -128,7 +142,8 @@ Param* init_param(Info* info, Var* var, char state)
 
 				for (size_t j = 0; j < info->nb_neuron[i+1]; j++)
 				{
-					param->weight[i][j] = malloc(info->nb_neuron[i] * sizeof(float));
+					param->weight[i][j] = malloc(info->nb_neuron[i] *
+							sizeof(float));
 
 					if (param->weight[i][j] == NULL)
 					{
@@ -165,7 +180,8 @@ Param* init_param(Info* info, Var* var, char state)
 
 			for (size_t j = 0; j < info->nb_neuron[i+1]; j++)
 			{
-				param->weight[i][j] = malloc(info->nb_neuron[i] * sizeof(float));
+				param->weight[i][j] = malloc(info->nb_neuron[i] *
+						sizeof(float));
 
 				if (param->weight[i][j] == NULL)
 				{

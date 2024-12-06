@@ -8,7 +8,7 @@ int main(int argc, char** argv)
 {
 	if(argc != 3)
 	{
-		errx(400, "The number of arguments is invalid.");
+		errx(1, "The number of arguments is invalid.");
 	}
 
 	FILE* file = NULL;
@@ -54,7 +54,7 @@ int main(int argc, char** argv)
 	}
 	else
 	{
-		errx(404, "The file is not found.");
+		errx(1, "The file is not found.");
 	}
 
 	return 0;

@@ -28,7 +28,8 @@ void predict(ANNA* anna, char* directory, size_t grid_width,
 	for (size_t i = 0; i < word_nb; i++)
 	{
 		char word_buffer[100];
-    	snprintf(word_buffer, sizeof(word_buffer), "%s/word_%zu.csv", directory, i);
+    	snprintf(word_buffer, sizeof(word_buffer), "%s/word_%zu.csv",
+				directory, i);
 
 		FILE* file = fopen(word_buffer, "r");
 		size_t word_size = 0;

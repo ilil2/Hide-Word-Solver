@@ -21,7 +21,7 @@ char research_word(const char grid[MAX_SIZE][MAX_SIZE], int grid_size_x,
 			{
 				char direction[2] = {};
 				int start_position[2] = {i, j};
-				
+
 				// Check the left side
 				if (j - word_size + 1 >= 0)
 				{
@@ -40,7 +40,8 @@ char research_word(const char grid[MAX_SIZE][MAX_SIZE], int grid_size_x,
 							start_position, direction);
 					}
 
-					if (i + word_size < grid_size_y && grid[i+1][j-1] == word[1])
+					if (i + word_size < grid_size_y &&
+							grid[i+1][j-1] == word[1])
 					{
 						direction[0] = 1;
 						is_find += research(grid, word, word_position,
@@ -66,7 +67,8 @@ char research_word(const char grid[MAX_SIZE][MAX_SIZE], int grid_size_x,
 							start_position, direction);
 					}
 
-					if (i + word_size < grid_size_y && grid[i+1][j+1] == word[1])
+					if (i + word_size < grid_size_y &&
+							grid[i+1][j+1] == word[1])
 					{
 						direction[0] = 1;
 						is_find += research(grid, word, word_position,

@@ -18,8 +18,9 @@ float test(ANNA* anna)
 	{
 		for (size_t j = 0; j < anna->i->nb_neuron[r+1]; j++)
 		{
-			anna->p->neuron_error[r][j] = (float*)realloc(anna->p->neuron_error[r][j], anna->v->test_data *
-						sizeof(float));
+			anna->p->neuron_error[r][j] = (float *)
+				realloc(anna->p->neuron_error[r][j],
+					anna->v->test_data *sizeof(float));
 			if (anna->p->neuron_error[r][j] == NULL)
 			{
 				err(1, "realloc()");
@@ -28,7 +29,8 @@ float test(ANNA* anna)
 
 		for (size_t j = 0; j < anna->i->nb_neuron[r]; j++)
 		{
-			anna->p->neuron[r][j] = realloc(anna->p->neuron[r][j], anna->v->test_data * sizeof(float));
+			anna->p->neuron[r][j] = realloc(anna->p->neuron[r][j],
+					anna->v->test_data * sizeof(float));
 			if (anna->p->neuron[r][j] == NULL)
 			{
 				err(1, "realloc()");
@@ -38,10 +40,13 @@ float test(ANNA* anna)
 
 	for (size_t j = 0; j < anna->i->nb_neuron[r]; j++)
 	{
-		anna->p->neuron[r][j] = realloc(anna->p->neuron[r][j], anna->v->test_data * sizeof(float));
-		anna->p->expected_output[j] = realloc(anna->p->expected_output[j], sizeof(float) * anna->v->test_data);
+		anna->p->neuron[r][j] = realloc(anna->p->neuron[r][j],
+				anna->v->test_data * sizeof(float));
+		anna->p->expected_output[j] = realloc(anna->p->expected_output[j],
+				sizeof(float) * anna->v->test_data);
 
-		if (anna->p->neuron[r][j] == NULL || anna->p->expected_output[j] == NULL)
+		if (anna->p->neuron[r][j] == NULL ||
+			anna->p->expected_output[j] == NULL)
 		{
 			err(1, "realloc()");
 		}
@@ -49,7 +54,8 @@ float test(ANNA* anna)
 	
 	for (size_t j = 0; j < 2; j++)
 	{
-		anna->p->result[j] = realloc(anna->p->result[j], sizeof(float) * anna->v->test_data);
+		anna->p->result[j] = realloc(anna->p->result[j],
+				sizeof(float) * anna->v->test_data);
 
 		if (anna->p->result[j] == NULL)
 		{
@@ -102,8 +108,9 @@ float test(ANNA* anna)
 	{
 		for (size_t j = 0; j < anna->i->nb_neuron[r+1]; j++)
 		{
-			anna->p->neuron_error[r][j] = (float*)realloc(anna->p->neuron_error[r][j], anna->v->train_data *
-						sizeof(float));
+			anna->p->neuron_error[r][j] = (float *)
+				realloc(anna->p->neuron_error[r][j],
+						anna->v->train_data * sizeof(float));
 			if (anna->p->neuron_error[r][j] == NULL)
 			{
 				err(1, "realloc()");
@@ -112,7 +119,8 @@ float test(ANNA* anna)
 
 		for (size_t j = 0; j < anna->i->nb_neuron[r]; j++)
 		{
-			anna->p->neuron[r][j] = realloc(anna->p->neuron[r][j], anna->v->train_data * sizeof(float));
+			anna->p->neuron[r][j] = realloc(anna->p->neuron[r][j],
+					anna->v->train_data * sizeof(float));
 			if (anna->p->neuron[r][j] == NULL)
 			{
 				err(1, "realloc()");
@@ -122,10 +130,13 @@ float test(ANNA* anna)
 
 	for (size_t j = 0; j < anna->i->nb_neuron[r]; j++)
 	{
-		anna->p->neuron[r][j] = realloc(anna->p->neuron[r][j], anna->v->train_data * sizeof(float));
-		anna->p->expected_output[j] = realloc(anna->p->expected_output[j], sizeof(float) * anna->v->train_data);
+		anna->p->neuron[r][j] = realloc(anna->p->neuron[r][j],
+				anna->v->train_data * sizeof(float));
+		anna->p->expected_output[j] = realloc(anna->p->expected_output[j],
+				sizeof(float) * anna->v->train_data);
 
-		if (anna->p->neuron[r][j] == NULL || anna->p->expected_output[j] == NULL)
+		if (anna->p->neuron[r][j] == NULL ||
+			anna->p->expected_output[j] == NULL)
 		{
 			err(1, "realloc()");
 		}
@@ -133,7 +144,8 @@ float test(ANNA* anna)
 	
 	for (size_t j = 0; j < 2; j++)
 	{
-		anna->p->result[j] = realloc(anna->p->result[j], sizeof(float) * anna->v->train_data);
+		anna->p->result[j] = realloc(anna->p->result[j],
+				sizeof(float) * anna->v->train_data);
 
 		if (anna->p->result[j] == NULL)
 		{

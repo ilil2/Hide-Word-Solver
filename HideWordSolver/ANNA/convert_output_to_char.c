@@ -12,14 +12,12 @@ void convert_output_to_char(size_t nb_letter,
         size_t jmax = 0;
         for (size_t j = 1; j < output_neuron; j++)
         {
-			//printf("%f\n", output[j][i]);
             if (output[j][i] > max)
             {
                 max = output[j][i];
                 jmax = j;
             }
         }
-		//printf("\n");
 
 		if (jmax < 26)
 		{
