@@ -31,6 +31,7 @@ all: $(EXE)
 
 $(EXE): $(OBJ)
 	$(CC) -o $(EXE) $(OBJ) $(CFLAGS)
+	make -C ANNA all
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
