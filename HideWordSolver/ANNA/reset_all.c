@@ -2,6 +2,7 @@
 
 void reset_all()
 {
+	// Reset all the AI data with new dimention
 	Info* info = malloc(sizeof(Info));
 	info->nb_neuron = malloc(sizeof(size_t));
 

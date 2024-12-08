@@ -2,6 +2,7 @@
 
 void forward(ANNA* anna)
 {
+    // Forward propagation using ReLU function and softmax
     size_t nb_layers = anna->i->nb_layer;
     size_t nb_letter = anna->v->train_data;
 

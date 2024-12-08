@@ -2,6 +2,7 @@
 
 void backward(ANNA* anna)
 {
+    // Backward propagation function using ReLU prime function
     for (size_t i = 0; i < anna->i->nb_neuron[anna->i->nb_layer - 1]; i++)
     {
         for (size_t j = 0; j < anna->v->train_data; j++)

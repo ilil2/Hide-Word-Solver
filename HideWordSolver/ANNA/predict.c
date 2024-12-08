@@ -9,11 +9,14 @@ void predict(ANNA* anna, char* directory, size_t grid_width,
 	anna->v->train_data = grid_width * grid_height;
 	anna->p = init_param(anna->i, anna->v, 1);
 
+	// load parameter and images
     load_parameter(anna->p, anna->i);
 	load_image(grid_buffer, anna);
 
+	// Applying character recognition
     forward(anna);
 	
+	// Couvert output to letter
     convert_output_to_char(anna->v->train_data,
 		anna->i->nb_neuron[anna->i->nb_layer-1],
 		anna->p->neuron[anna->i->nb_layer-1],
@@ -21,6 +24,7 @@ void predict(ANNA* anna, char* directory, size_t grid_width,
 
 	snprintf(grid_buffer, sizeof(grid_buffer), "%s/grid.txt", directory);
 
+	// Save result
 	save_grid(grid_buffer, grid_width, grid_height, anna->p->result[0]);
 
 	free_param(anna->p, anna->i, anna->v, 1);
