@@ -39,4 +39,11 @@ void make_signals(GtkBuilder *builder)
 
 	g_signal_connect(sbsauto_button, "clicked",
 			G_CALLBACK(on_auto_button_pressed), builder);
+
+	// SaveButton button
+	GtkButton *save_button;
+	save_button = GTK_BUTTON(gtk_builder_get_object(builder, "SaveButton"));
+
+	g_signal_connect(save_button, "clicked",
+			G_CALLBACK(on_save_button_pressed), NULL);
 }

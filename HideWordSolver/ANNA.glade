@@ -301,7 +301,7 @@
             <property name="halign">center</property>
             <property name="valign">center</property>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="SaveButton">
                 <property name="label" translatable="yes">Save</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>

@@ -27,5 +27,6 @@ void on_size_allocate(GtkWidget *widget, GdkRectangle *allocation,
 		gpointer user_data);
 void resize_image(GtkImage *image_widget);
 void on_auto_button_pressed(GtkWidget *button, gpointer user_data);
+void on_save_button_pressed(GtkButton *button, gpointer user_data);
 
 #endif

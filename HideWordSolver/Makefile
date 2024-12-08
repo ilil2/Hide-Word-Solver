@@ -12,7 +12,8 @@ SRC = main.c \
 	  on_spinbutton_value_changed.c \
 	  preprocess_image.c \
 	  resize_image.c \
-	  on_auto_button_pressed.c
+	  on_auto_button_pressed.c \
+	  on_save_button_pressed.c
 
 PREPROSS_SRC = Preprocessing/grayscale.c \
 			   Preprocessing/binarization.c \

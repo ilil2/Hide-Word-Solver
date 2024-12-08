@@ -93,6 +93,12 @@ void next_solver(GtkWidget *button, gpointer user_data)
 			"<span foreground='green'>• Detection</span>\n"
 			"<span foreground='green'>• Solver</span>\n";
 	}
+	else
+	{
+		gtk_stack_set_visible_child_name(stack, "page3");
+
+		*markup = "";
+	}
 	resize_image(image);
 	gtk_label_set_markup(label, *markup);
 	SDL_FreeSurface(surface);
