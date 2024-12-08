@@ -19,7 +19,7 @@ PREPROSS_SRC = Preprocessing/grayscale.c \
 			   Preprocessing/sort.c \
 			   Preprocessing/extraction.c
 
-ROTATE_SRC = Rotate/rotation_detection.c \
+ROTATE_SRC = Rotate/detection_angle.c \
 			 Rotate/sobel.c \
 			 Rotate/display.c \
 			 Rotate/save.c
@@ -38,3 +38,4 @@ $(EXE): $(OBJ)
 
 clean:
 	rm -rf $(OBJ) $(EXE) *.png extracted_letters/*.png
+	make -C ANNA clean
