@@ -64,9 +64,9 @@ int main(int argc, char** argv)
         {
             if (argc > 1)
             {
-                size_t max_train_data = 2600;
-                size_t max_test_data = 68068;
-                size_t max_batch_nb = 90;
+                size_t max_train_data = 624;
+                size_t max_test_data = 1873;
+                size_t max_batch_nb = 10;
 
                 HyperParam* hp = malloc(sizeof(HyperParam));
                 Param* p;

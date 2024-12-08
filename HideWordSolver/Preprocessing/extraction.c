@@ -7,7 +7,6 @@
 
 #include "sort.h"
 
-#define PROXIMITY_THRESHOLD 10
 #define OUTPUT_SIZE 32
 #define OUTPUT_DIR "extracted_letters"
 
@@ -19,6 +18,20 @@ typedef struct
     int width, height;
     float aspect_ratio;
 } BoundingBox;
+
+SDL_Surface* load_image(const char* path)
+{
+    SDL_Surface * temp = IMG_Load(path);
+    if (temp == NULL)
+    {
+        fprintf(stderr, "Error loading image: %s\n", SDL_GetError());
+        exit(EXIT_FAILURE);
+    }
+
+    SDL_Surface * r = SDL_ConvertSurfaceFormat(temp, SDL_PIXELFORMAT_RGB888, 0);
+    SDL_FreeSurface(temp);
+    return r;
+}
 
 SDL_Surface* resize_surface(SDL_Surface* surface, int new_width, int new_height)
 {
@@ -37,53 +50,60 @@ SDL_Surface* resize_surface(SDL_Surface* surface, int new_width, int new_height)
     return resized;
 }
 
-void save_extracted_letter(SDL_Surface* surface, BoundingBox box, 
-		const char* filename) {
-    SDL_Surface* letter_surface = SDL_CreateRGBSurface(0, 32, 32, 32, 
+void save_extracted_letter(SDL_Surface* surface, BoundingBox box,
+		const char* filename)
+{
+    SDL_Surface* letter_surface = SDL_CreateRGBSurface(0, 32, 32, 32,
 		    0x00FF0000, 0x0000FF00, 0x000000FF, 0);
-    if (!letter_surface) {
-        fprintf(stderr, "Error creating surface for letter: %s\n", 
+    if (!letter_surface)
+	{
+        fprintf(stderr, "Error creating surface for letter: %s\n",
 			SDL_GetError());
         return;
     }
 
-    SDL_Rect src_rect = { box.x_min, box.y_min, box.width, box.height };
+    SDL_Rect src_rect = { box.x_min, box.y_min, box.width+10, box.height+10 };
     SDL_Rect dst_rect = { 0, 0, 32, 32 };
     SDL_BlitScaled(surface, &src_rect, letter_surface, &dst_rect);
-
-    // Construct full path including the output directory
+    
+	// Construct full path including the output directory
     char path[150];
     snprintf(path, sizeof(path), "%s/%s", OUTPUT_DIR, filename);
 
-    if (IMG_SavePNG(letter_surface, path) != 0) {
+    if (IMG_SavePNG(letter_surface, path) != 0)
+	{
         fprintf(stderr, "Error saving extracted letter: %s\n", SDL_GetError());
     }
 
     SDL_FreeSurface(letter_surface);
 }
 // Flood-fill algorithm to label connected components
-void flood_fill(Uint32* pixels, int width, int height, 
-		int x, int y, int label, int* labels)
+void flood_fill(Uint32* pixels, int width, int height,
+		int x, int y, int label, int* labels, int proximity_threshold)
 {
-    int dx[] = {-1, 1, 0, 0};  // Four possible directions (up, down, left, right)
+    // Four possible directions (up, down, left, right)
+	int dx[] = {-1, 1, 0, 0};
     int dy[] = {0, 0, -1, 1};
 
     // Initialize a queue for the flood-fill algorithm
     typedef struct { int x, y; } Point;
-    Point *queue = malloc(sizeof(Point) * width * height);
+    Point queue[width * height];
     int front = 0, back = 0;
     queue[back++] = (Point){x, y};
 
     // Fill while the queue is not empty
-    while (front < back) {
+    while (front < back)
+	{
         Point p = queue[front++];
         int px = p.x;
         int py = p.y;
 
         int index = py * width + px;
-        if (labels[index] != 0 
-			|| pixels[index] != SDL_MapRGB(SDL_AllocFormat
-				(SDL_PIXELFORMAT_RGB888), 255, 255, 255)) {
+        if (labels[index] != 0
+			|| pixels[index] !=
+				SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
+					255, 255, 255))
+		{
             continue;
         }
 
@@ -91,18 +111,22 @@ void flood_fill(Uint32* pixels, int width, int height,
         labels[index] = label;
 
         // Check all directions within the threshold range
-        for (int i = 0; i < 4; i++) {
-            for (int d = 1; d <= PROXIMITY_THRESHOLD; d++) {
+        for (int i = 0; i < 4; i++)
+		{
+            for (int d = 1; d <= proximity_threshold; d++)
+			{
                 int nx = px + dx[i] * d;
                 int ny = py + dy[i] * d;
 
                 // Make sure we're within bounds
-                if (nx >= 0 && nx < width && ny >= 0 && ny < height) {
+                if (nx >= 0 && nx < width && ny >= 0 && ny < height)
+				{
                     int neighbor_index = ny * width + nx;
-                    if (labels[neighbor_index] == 0 &&
-                        pixels[neighbor_index] == 
-			SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888), 
-				255, 255, 255)) {
+                    if (labels[neighbor_index] == 0
+						&& pixels[neighbor_index] ==
+							SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
+								255, 255, 255))
+					{
                         // Add neighbor to the queue
                         queue[back++] = (Point){nx, ny};
                     }
@@ -110,7 +134,6 @@ void flood_fill(Uint32* pixels, int width, int height,
             }
         }
     }
-    free(queue);
 }
 
 // Extract bounding boxes from labeled components
@@ -121,9 +144,9 @@ BoundingBox extract_bounding_box(int* labels, int width, int height, int label)
     for (int y = 0; y < height; y++)
     {
         for (int x = 0; x < width; x++)
-	{
-            if (labels[y * width + x] == label) 
-	    {
+		{
+            if (labels[y * width + x] == label)
+	    	{
                 if (x < box.x_min) box.x_min = x;
                 if (y < box.y_min) box.y_min = y;
                 if (x > box.x_max) box.x_max = x;
@@ -132,52 +155,64 @@ BoundingBox extract_bounding_box(int* labels, int width, int height, int label)
         }
     }
 
-    box.width = box.x_max - box.x_min + 1;
-    box.height = box.y_max - box.y_min + 1;
+	int offset = 3;
+    box.width = box.x_max - box.x_min + offset;
+    box.height = box.y_max - box.y_min + offset;
+	box.x_min -= offset;
+	box.y_min -= offset;
+	box.x_max += offset;
+	box.y_max += offset;
     box.aspect_ratio = (float)box.width / box.height;
 
     return box;
 }
-void process_letters_in_word(SDL_Surface* surface, BoundingBox word_box, 
-		int word_index) {
+
+void process_letters_in_word(SDL_Surface* surface, BoundingBox word_box,
+		int word_index)
+{
     int width = surface->w;
     int height = surface->h;
     Uint32* pixels = (Uint32*)surface->pixels;
 
     int* labels = (int*)calloc(width * height, sizeof(int));
-    if (!labels) {
+    if (!labels)
+	{
         fprintf(stderr, "Memory allocation failed.\n");
         exit(EXIT_FAILURE);
     }
 
     int label = 1;
-    for (int y = word_box.y_min; y <= word_box.y_max; y++) {
-        for (int x = word_box.x_min; x <= word_box.x_max; x++) {
+    for (int y = word_box.y_min; y <= word_box.y_max; y++)
+	{
+        for (int x = word_box.x_min; x <= word_box.x_max; x++)
+		{
             int index = y * width + x;
-            if (pixels[index] == SDL_MapRGB(
-				    SDL_AllocFormat(SDL_PIXELFORMAT_RGB888), 
+            if (pixels[index] ==
+				SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
 				    255, 255, 255)
 			    && labels[index] == 0)
-	    {
-                flood_fill(pixels, width, height, x, y, label, labels);
+	    	{
+                flood_fill(pixels, width, height, x, y, label, labels, 2);
                 label++;
             }
         }
     }
 
     int letter_index = 0;
-    for (int i = 1; i < label; i++) {
-        BoundingBox letter_box = extract_bounding_box(labels, width,
-				height, i);
+    for (int i = 1; i < label; i++)
+	{
+        BoundingBox letter_box = extract_bounding_box(labels, width, height, i);
 
         float aspect_ratio = letter_box.aspect_ratio;
         const float max_single_letter_aspect_ratio = 1.5;
 
-        if (aspect_ratio > max_single_letter_aspect_ratio) {
+        if (aspect_ratio > max_single_letter_aspect_ratio)
+		{
             int estimated_letters = (int)round(aspect_ratio);
             int sub_letter_width = letter_box.width / estimated_letters;
 
-            for (int j = 0; j < estimated_letters; j++) {
+            for (int j = 0; j < estimated_letters; j++)
+			{
                 BoundingBox sub_box = {
                     .x_min = letter_box.x_min + j * sub_letter_width,
                     .y_min = letter_box.y_min,
@@ -189,32 +224,39 @@ void process_letters_in_word(SDL_Surface* surface, BoundingBox word_box,
                 };
 
                 char filename[100];
-                snprintf(filename, sizeof(filename), "w%d_%d.png", 
+                snprintf(filename, sizeof(filename), "w%d_%d.png",
 				word_index, letter_index++);
                 save_extracted_letter(surface, sub_box, filename);
             }
-        } else {
+        }
+
+		else
+		{
             char filename[100];
-            snprintf(filename, sizeof(filename), "w%d_%d.png", 
+            snprintf(filename, sizeof(filename), "w%d_%d.png",
 			    word_index, letter_index++);
             save_extracted_letter(surface, letter_box, filename);
         }
-	for (int x = letter_box.x_min; x <= letter_box.x_max; x++) {
-                pixels[letter_box.y_min * width + x] = 
-			SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888), 
+
+		for (int x = letter_box.x_min; x <= letter_box.x_max; x++)
+		{
+                pixels[letter_box.y_min * width + x] =
+			SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
 					255, 0, 0);
-                pixels[letter_box.y_max * width + x] = 
-			SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888), 
+                pixels[letter_box.y_max * width + x] =
+			SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
 					255, 0, 0);
-            }
-            for (int y = letter_box.y_min; y <= letter_box.y_max; y++) {
-                pixels[y * width + letter_box.x_min] = 
-			SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888), 
-					255, 0, 0);
-                pixels[y * width + letter_box.x_max] = 
-			SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888), 
-					255, 0, 0);
-            }
+        }
+
+		for (int y = letter_box.y_min; y <= letter_box.y_max; y++)
+		{
+			pixels[y * width + letter_box.x_min] =
+		SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
+				255, 0, 0);
+			pixels[y * width + letter_box.x_max] =
+		SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
+				255, 0, 0);
+		}
     }
 
     free(labels);
@@ -228,7 +270,8 @@ void process_components(SDL_Surface* surface)
     Uint32* pixels = (Uint32*)surface->pixels;
 
     int* labels = (int*)calloc(width * height, sizeof(int));
-    if (!labels) {
+    if (!labels)
+	{
         fprintf(stderr, "Memory allocation failed.\n");
         exit(EXIT_FAILURE);
     }
@@ -239,56 +282,138 @@ void process_components(SDL_Surface* surface)
     for (int y = 1; y < height-1; y++)
     {
         for (int x = 1; x < width-1; x++)
-	{
+		{
             int index = y * width + x;
-            if (pixels[index] == SDL_MapRGB(SDL_AllocFormat(
-					    SDL_PIXELFORMAT_RGB888), 
-				    255, 255, 255) 
-			    && labels[index] == 0) 
-	    {
-                flood_fill(pixels, width, height, x, y, label, labels);
+            if (pixels[index] ==
+				SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
+				    255, 255, 255)
+			    && labels[index] == 0)
+	    	{
+                flood_fill(pixels, width, height, x, y, label, labels, 5);
                 label++;
             }
         }
     }
-int word_index = 0;
-    // Analyze bounding boxes of each labeled component
-    for (int i = 1; i < label; i++) {
-        BoundingBox box = extract_bounding_box(labels, width, height, i);
+/*
+	for (int i = 1; i < label; i++)
+	{
+		int proximity_threshold = 10;
+		BoundingBox box = extract_bounding_box(labels, width, height, i);
+		memset(labels, 0, width * height);
 
-	const float min_aspect_ratio_for_word = 2.5;
-        // Filter based on size and aspect ratio
-        if (box.width > 3 && box.height > 3 
-			&& box.aspect_ratio > min_aspect_ratio_for_word)
-	{
-            process_letters_in_word(surface, box, word_index);
-            word_index++; 
-        }
-	if (box.width > 2 && box.height > 10 
-			&& box.width < 50 && box.height < 50 
-			&& box.aspect_ratio < min_aspect_ratio_for_word)
-	{
-		for (int x = box.x_min; x <= box.x_max; x++) {
-                pixels[box.y_min * width + x] = 
-			SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888), 
-					0, 255, 0);
-                pixels[box.y_max * width + x] = 
-			SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888), 
-					0, 255, 0);
-            }
-            for (int y = box.y_min; y <= box.y_max; y++) {
-                pixels[y * width + box.x_min] = 
-			SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888), 
-					0, 255, 0);
-                pixels[y * width + box.x_max] = 
-			SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888), 
-					0, 255, 0);
-            }
-		char filename[100];
-            sprintf(filename, "g%d_%d.png", box.x_min, box.y_min);
-            save_extracted_letter(surface, box, filename);
+		while (box.height > 20)
+		{	
+			for (int y = 0; y < height-1; y++)
+			{
+				for (int x = 1; x < width-1; x++)
+				{
+					int index = y * width + x;
+					if (pixels[index] ==
+						SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
+							255, 255, 255)
+						&& labels[index] == 0)
+					{
+						flood_fill(pixels, width, height, x, y, label, labels, 
+							proximity_threshold);
+						label++;
+					}
+				}
+			}
+			proximity_threshold -= 1;
+		}
 	}
+*/
+	int word_index = 0;
+    // Analyze bounding boxes of each labeled component
+    for (int i = 1; i < label; i++)
+	{
+		BoundingBox box = extract_bounding_box(labels, width, height, i);
+
+		const float min_aspect_ratio_for_word = 1.5;
+		// Filter based on size and aspect ratio
+		if (box.width > 3 && box.height > 10
+			&& box.height < 50
+			&& box.aspect_ratio > min_aspect_ratio_for_word)
+		{
+			//process_letters_in_word(surface, box, word_index);
+			for (int x = box.x_min; x <= box.x_max; x++)
+			{
+				pixels[box.y_min * width + x] =
+					SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
+						255, 0, 0);
+				pixels[box.y_max * width + x] =
+					SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
+						255, 0, 0);
+			}
+
+			for (int y = box.y_min; y <= box.y_max; y++)
+			{
+				pixels[y * width + box.x_min] =
+					SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
+						255, 0, 0);
+				pixels[y * width + box.x_max] =
+					SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
+						255, 0, 0);
+			}	
+
+			word_index++;
+		}
+
+		if (box.width > 2 && box.height > 10
+				&& box.width < 50 && box.height < 50
+				&& box.aspect_ratio < min_aspect_ratio_for_word)
+		{
+			char filename[100];
+			sprintf(filename, "g%d_%d.png", box.x_min, box.y_min);
+			save_extracted_letter(surface, box, filename);
+
+			for (int x = box.x_min; x <= box.x_max; x++)
+			{
+				pixels[box.y_min * width + x] =
+					SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
+						0, 255, 0);
+				pixels[box.y_max * width + x] =
+					SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
+						0, 255, 0);
+			}
+
+			for (int y = box.y_min; y <= box.y_max; y++)
+			{
+				pixels[y * width + box.x_min] =
+					SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
+						0, 255, 0);
+				pixels[y * width + box.x_max] =
+					SDL_MapRGB(SDL_AllocFormat(SDL_PIXELFORMAT_RGB888),
+						0, 255, 0);
+			}	
+		}
     }
 
     free(labels);
+}
+
+int main(int argc, char** argv)
+{
+	if(argc != 2)
+	{
+		errx(1,"Usage : main [path_to_img]");
+	}
+
+    if(SDL_Init(SDL_INIT_VIDEO) != 0)
+	{
+        errx(1,"%s",SDL_GetError());
+	}
+
+	SDL_Surface* surface = load_image(argv[1]);
+
+	process_components(surface);
+
+	if (IMG_SavePNG(surface,"extractionIMG.png") != 0)
+	{
+                errx(EXIT_FAILURE,"%s", SDL_GetError());
+	}
+
+	SDL_FreeSurface(surface);
+	SDL_Quit();
+	return EXIT_SUCCESS;
 }

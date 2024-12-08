@@ -4,13 +4,15 @@
 #include <SDL2/SDL_image.h>
 
 // Function to swap two elements
-void swap(Uint32* a, Uint32* b) {
+void swap(Uint32* a, Uint32* b)
+{
     Uint32 t = *a;
     *a = *b;
     *b = t;
 }
 
-int partition(Uint32 arr[], int low, int high) {
+int partition(Uint32 arr[], int low, int high)
+{
   
     // Choose the pivot
     Uint32 pivot = arr[high];
@@ -22,8 +24,10 @@ int partition(Uint32 arr[], int low, int high) {
     // Traverse arr[low..high] and move all smaller
     // elements on the left side. Elements from low to 
     // i are smaller after every iteration
-    for (int j = low; j <= high - 1; j++) {
-        if (arr[j] < pivot) {
+    for (int j = low; j <= high - 1; j++)
+	{
+        if (arr[j] < pivot)
+		{
             i++;
             swap(&arr[i], &arr[j]);
         }
@@ -36,10 +40,11 @@ int partition(Uint32 arr[], int low, int high) {
 }
 
 // The QuickSort function implementation
-void quickSort(Uint32 arr[], int low, int high) {
+void quickSort(Uint32 arr[], int low, int high)
+{
   
-    if (low < high) {
-      
+    if (low < high)
+	{  
         // pi is the partition return index of pivot
         int pi = partition(arr, low, high);
 
