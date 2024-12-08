@@ -9,6 +9,9 @@ int main(int argc, char **argv)
 
 	gtk_init(&argc, &argv);
 
+	GtkSettings *settings = gtk_settings_get_default();
+    g_object_set(settings, "gtk-application-prefer-dark-theme", TRUE, NULL);
+
 	builder = gtk_builder_new_from_file("ANNA.glade");
 
 	window = GTK_WIDGET(gtk_builder_get_object(builder, "ANNA"));
