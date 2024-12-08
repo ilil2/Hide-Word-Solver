@@ -33,6 +33,20 @@ To test the Proof of Concept for ANNA, follow these steps:
 ### 2. Use the POC
 - Input `0` or `1` for letter `A`, add a space, then input `0` or `1` for letter `B` to perform an NXOR operation.
 
+## Neural network
+
+To test the neural network for ANNA, follow these steps:
+
+### 1. Compile the neural network
+- Navigate to `HideWordSolver/ANNA/`.
+- Run `make` to build the executable.
+- Start the neural network with `./ANNA {reset|train|start}`.
+
+### 2. Use the neural network
+- For the reset you just need to enter the number of layers you want and the number of neurons per layer.
+- For the train, simply enter the number of training data you want to train, then the number of test data, then the number of batches and finally the number of threads.
+- For the start you just need to put the folder containing the csv grid and the size of the grid as well as the number of words to be searched.
+
 ## Solver Usage
 
 The solver searches for a specified word within a text grid. The solver takes two arguments:
