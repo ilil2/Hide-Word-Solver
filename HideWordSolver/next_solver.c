@@ -21,6 +21,8 @@ void next_solver(GtkWidget *button, gpointer user_data)
     }
 
 	SDL_Surface* surface = IMG_Load("image.png");
+	if (surface == NULL)
+		err(1, "IMG_Load()\n");
 
 	char **markup = malloc(sizeof(char *));
 	GtkLabel *label = GTK_LABEL(gtk_builder_get_object(builder, "SBSList"));
@@ -32,10 +34,10 @@ void next_solver(GtkWidget *button, gpointer user_data)
 		IMG_SavePNG(surface, "image2.png");
 		gtk_image_set_from_file(image, "image.png");
 
-		GtkWidget *spin_button =
+		GtkWidget *rotation_grid =
             GTK_WIDGET(gtk_builder_get_object(builder,
-                "SBSRotationAngle"));
-        gtk_widget_show(spin_button);
+                "SBSRotationGrid"));
+        gtk_widget_show(rotation_grid);
 
 		*markup =
 			"<span foreground='green'>• Binarization</span>\n"
@@ -46,14 +48,14 @@ void next_solver(GtkWidget *button, gpointer user_data)
 	}
 	else if (state == 1)
 	{
-		GtkWidget *spin_button =
+		GtkWidget *rotation_grid =
             GTK_WIDGET(gtk_builder_get_object(builder,
-                "SBSRotationAngle"));
-        gtk_widget_hide(spin_button);
+                "SBSRotationGrid"));
+        gtk_widget_hide(rotation_grid);
 		
 		SDL_FreeSurface(surface);
 		surface = IMG_Load("image2.png");
-		median_filter(surface);
+		//median_filter(surface);
 		IMG_SavePNG(surface, "image.png");
 
 		*markup =

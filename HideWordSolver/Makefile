@@ -11,7 +11,8 @@ SRC = main.c \
 	  sdl_surface_to_pixbuf.c \
 	  on_spinbutton_value_changed.c \
 	  preprocess_image.c \
-	  resize_image.c
+	  resize_image.c \
+	  on_auto_button_pressed.c
 
 PREPROSS_SRC = Preprocessing/grayscale.c \
 			   Preprocessing/binarization.c \

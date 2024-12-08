@@ -31,4 +31,12 @@ void make_signals(GtkBuilder *builder)
 
 	g_signal_connect(spin_button, "value-changed",
 			G_CALLBACK(on_spinbutton_value_changed), builder);
+
+	// SBSAutoButton button
+	GtkButton *sbsauto_button;
+	sbsauto_button = GTK_BUTTON(gtk_builder_get_object(builder,
+				"SBSAutoButton"));
+
+	g_signal_connect(sbsauto_button, "clicked",
+			G_CALLBACK(on_auto_button_pressed), builder);
 }

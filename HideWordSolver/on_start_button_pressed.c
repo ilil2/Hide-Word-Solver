@@ -29,10 +29,10 @@ void on_start_button_pressed(GtkWidget *button, gpointer user_data)
 	 		image = GTK_IMAGE(gtk_builder_get_object(builder, "SBSImage"));
 			gtk_stack_set_visible_child_name(stack, "page2");
 
-			GtkWidget *spin_button =
+			GtkWidget *rotation_grid =
 				GTK_WIDGET(gtk_builder_get_object(builder,
-							"SBSRotationAngle"));
-			gtk_widget_hide(spin_button);
+							"SBSRotationGrid"));
+			gtk_widget_hide(rotation_grid);
 		}
 		else
 		{
